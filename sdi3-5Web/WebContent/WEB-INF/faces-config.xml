@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+	version="2.2">
+
+	<application>
+		<resource-bundle>
+			<base-name>messages</base-name>
+			<var>msgs</var>
+		</resource-bundle>
+	</application>
+
+	<managed-bean>
+		<managed-bean-name>settings</managed-bean-name>
+		<managed-bean-class>uo.sdi.presentation.BeanSettings</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>login</managed-bean-name>
+		<managed-bean-class>uo.sdi.presentation.BeanLogin</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>tasks</managed-bean-name>
+		<managed-bean-class>uo.sdi.presentation.BeanTasks</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>user</managed-bean-name>
+		<managed-bean-class>uo.sdi.presentation.BeanUser</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>users</managed-bean-name>
+		<managed-bean-class>uo.sdi.presentation.BeanUsers</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<navigation-rule>
+		<from-view-id>/register.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{user.signUp}</from-action>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/login.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/login.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{login.login}</from-action>
+			<from-outcome>exitoAdmin</from-outcome>
+			<to-view-id>/restrictedAdmin/panelAdmin.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-action>#{login.login}</from-action>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/restricted/listaTareasInbox.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/restricted/*</from-view-id>
+		<navigation-case>
+			<from-action>#{tasks.setTasksInbox}</from-action>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/restricted/listaTareasInbox.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-action>#{tasks.setTasksInbox}</from-action>
+			<from-outcome>fracaso</from-outcome>
+			<to-view-id>/restricted/listaTareasInbox.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/restricted/*</from-view-id>
+		<navigation-case>
+			<from-action>#{tasks.setTasksToday}</from-action>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/restricted/listaTareasToday.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-action>#{tasks.setTasksToday}</from-action>
+			<from-outcome>fracaso</from-outcome>
+			<to-view-id>/restricted/listaTareasToday.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/restricted/*</from-view-id>
+		<navigation-case>
+			<from-action>#{tasks.setTasksWeek}</from-action>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/restricted/listaTareasWeek.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-action>#{tasks.setTasksWeek}</from-action>
+			<from-outcome>fracaso</from-outcome>
+			<to-view-id>/restricted/listaTareasWeek.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/restricted/añadirTarea.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{tasks.addTask}</from-action>
+			<from-outcome>inbox</from-outcome>
+			<to-view-id>/restricted/listaTareasInbox.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-action>#{tasks.addTask}</from-action>
+			<from-outcome>today</from-outcome>
+			<to-view-id>/restricted/listaTareasToday.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-action>#{tasks.addTask}</from-action>
+			<from-outcome>week</from-outcome>
+			<to-view-id>/restricted/listaTareasWeek.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/restrictedAdmin/panelAdmin.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{login.logout}</from-action>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/login.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/restricted/*</from-view-id>
+		<navigation-case>
+			<from-action>#{login.logout}</from-action>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/login.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+</faces-config>

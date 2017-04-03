@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:o="http://omnifaces.org/ui">
+
+<o:importConstants type="uo.sdi.dto.types.UserStatus" />
+<f:view locale="#{settings.locale}">
+	<h:head>
+		<title>#{msgs.tituloHead}</title>
+	</h:head>
+	<h:body>
+		<h:outputScript library="omnifaces" name="fixviewstate.js"
+			target="head" />
+		<p:layout style="width:100%;height:100%;">
+		<p:layoutUnit position="north" size="100" >
+				<h1 style="text-align: center;">#{msgs.tituloHead}</h1>
+			</p:layoutUnit>
+			<p:layoutUnit position="west" size="250" minSize="200" maxSize="400">
+				<h:form id="formMenu">
+					<p:menu toggleable="true">
+						<p:submenu label="#{msgs.cambiarIdioma}">
+							<p:menuitem value="#{msgs.enlaceIdiomaES}"
+								actionListener="#{settings.setSpanish}"
+								update=":formMenu: :formUsers">
+							</p:menuitem>
+							<p:menuitem value="#{msgs.enlaceIdiomaEN}"
+								actionListener="#{settings.setEnglish}"
+								update=":formMenu: :formUsers">
+							</p:menuitem>
+						</p:submenu>
+						<p:submenu label="#{login.login}">
+							<p:menuitem id="signOutLink" value="#{msgs.signOut}"
+								action="#{login.logout}" icon="fa fa-sign-out" />
+						</p:submenu>
+					</p:menu>
+				</h:form>
+			</p:layoutUnit>
+			<p:layoutUnit position="center">
+				<h:form id="formUsers">
+					<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+					<p:dataTable id="usersTable" value="#{users.users}" var="u"
+						selection="#{users.selectedUsers}" rowKey="#{u.id}"
+						styleClass="table table-striped" style="margin-bottom:0">
+						<p:column selectionMode="multiple"
+							style="width:16px; text-align:center" />
+						<p:column headerText="#{msgs.id}">
+							<h:outputText value="#{u.id}" />
+						</p:column>
+						<p:column sortBy="#{u.login}" headerText="#{msgs.login}"
+							id="columnLogin">
+							<h:outputText value="#{u.login}" />
+						</p:column>
+						<p:column sortBy="#{u.email}" headerText="#{msgs.email}"
+							id="columnEmail">
+							<h:outputText value="#{u.email}" />
+						</p:column>
+						<p:column headerText="#{msgs.isAdmin}">
+							<h:outputText value="#{u.isAdmin}" />
+						</p:column>
+						<p:column sortBy="#{u.status}" headerText="#{msgs.status}"
+							id="columnStatus">
+							<h:outputText value="#{u.status}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{msgs.cambiarEstado}" />
+							</f:facet>
+							<p:commandButton id="disableButton"
+								rendered="#{!u.isAdmin and u.status eq 'ENABLED'}"
+								value="#{msgs.desactivar}" action="#{users.toggleActiveUser(u)}"
+								icon="fa fa-fw fa-close" process="usersTable"
+								update=":formUsers" />
+							<p:commandButton id="enableButton"
+								rendered="#{!u.isAdmin and u.status eq 'DISABLED'}"
+								value="#{msgs.activar}" action="#{users.toggleActiveUser(u)}"
+								icon="fa fa-fw fa-check" process="usersTable"
+								update=":formUsers" />
+						</p:column>
+						<f:facet name="footer">
+							<p:commandButton id="deleteButton" process="usersTable"
+								value="#{msgs.eliminar}" action="#{users.deleteUsers()}"
+								update=":formUsers">
+								<p:confirm header="#{msgs.confirmation}" message="#{msgs.areYouSure}"
+									icon="ui-icon-alert" />
+							</p:commandButton>
+							<p:commandButton id="resetDBButton" process="usersTable"
+								value="#{msgs.reset}" action="#{users.resetDatabase()}"
+								update=":formUsers" icon="fa fa-refresh"/>
+							<p:confirmDialog global="true" showEffect="fade"
+								hideEffect="fade">
+								<p:commandButton value="#{msgs.yes}" type="button" id="buttonYes"
+									styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+								<p:commandButton value="#{msgs.no}" type="button" id="buttonNo"
+									styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+							</p:confirmDialog>
+						</f:facet>
+					</p:dataTable>
+				</h:form>
+			</p:layoutUnit>
+			<p:layoutUnit position="south" size="100" >
+				<ui:include src="/snippets/pie.xhtml" />
+			</p:layoutUnit>
+		</p:layout>
+	</h:body>
+</f:view>
+</html>

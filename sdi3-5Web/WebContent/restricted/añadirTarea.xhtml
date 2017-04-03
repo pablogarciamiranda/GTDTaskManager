@@ -1,0 +1,35 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/template-general.xhtml">
+	<ui:define name="cuerpo">
+	<h:form id="addTaskForm">
+					<p:messages id="messages" autoUpdate="true" />
+					<p:panelGrid columns="2" styleClass="formTable">
+						<p:outputLabel for="title" value="#{msgs.title}" />
+						<p:inputText id="title" value="#{tasks.task.titleEditable}"
+							required="true" requiredMessage="#{msgs.titleIsNotEmpty}"
+							placeholder="#{msgs.phTitle}" />
+						<p:outputLabel for="comments" value="#{msgs.comments}" />
+						<p:inputTextarea id="comments"
+							value="#{tasks.task.commentsEditable}" rows="6" cols="33"
+							placeholder="#{msgs.phComments}" />
+						<p:outputLabel for="categoryMenu" value="#{msgs.category}" />
+						<p:selectOneMenu id="categoryMenu"
+							value="#{tasks.task.categoryEditable}" style="width:150px">
+							<f:selectItem itemLabel="#{msgs.noCategory}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{tasks.listOfCategories}" var="c"
+								itemValue="#{c.id}" itemLabel="#{c.name}" />
+						</p:selectOneMenu>
+						<h:outputLabel for="plannedDate" value="#{msgs.planned}" />
+						<p:calendar id="plannedDate" value="#{tasks.task.plannedEditable}"
+							required="true" requiredMessage="#{msgs.plannedIsNotEmpty}" />
+					</p:panelGrid>
+					<p:commandButton value="#{msgs.add}" id="task_to_add_button"
+						action="#{tasks.addTask}" styleClass="ui-priority-primary" />
+				</h:form>
+	</ui:define>
+</ui:composition>
