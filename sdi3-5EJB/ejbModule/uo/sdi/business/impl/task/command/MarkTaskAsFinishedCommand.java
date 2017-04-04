@@ -1,12 +1,12 @@
 package uo.sdi.business.impl.task.command;
 
-import alb.util.date.DateUtil;
 import uo.sdi.business.exception.BusinessCheck;
 import uo.sdi.business.exception.BusinessException;
 import uo.sdi.business.impl.command.Command;
 import uo.sdi.dto.Task;
-import uo.sdi.persistence.Persistence;
+import uo.sdi.infraestructure.Factories;
 import uo.sdi.persistence.TaskDao;
+import alb.util.date.DateUtil;
 
 public class MarkTaskAsFinishedCommand implements Command<Void> {
 
@@ -18,7 +18,7 @@ public class MarkTaskAsFinishedCommand implements Command<Void> {
 
 	@Override
 	public Void execute() throws BusinessException {
-		TaskDao tDao = Persistence.getTaskDao();
+		TaskDao tDao = Factories.persistence.getTaskDao();
 		
 		Task t = tDao.findById(id);
 		BusinessCheck.isNotNull(t, "The task does not exist");

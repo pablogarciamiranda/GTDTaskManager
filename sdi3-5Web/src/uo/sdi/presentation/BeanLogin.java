@@ -9,12 +9,12 @@ import javax.servlet.http.HttpSession;
 
 import alb.util.log.Log;
 import alb.util.log.LogLevel;
-import uo.sdi.business.Services;
 import uo.sdi.business.UserService;
 import uo.sdi.business.exception.BusinessCheck;
 import uo.sdi.business.exception.BusinessException;
 import uo.sdi.business.impl.util.MessageProvider;
 import uo.sdi.dto.User;
+import uo.sdi.infraestructure.Factories;
 
 
 @ManagedBean(name = "login")
@@ -30,7 +30,7 @@ public class BeanLogin implements Serializable {
 	public String login(){
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
-		UserService userService = Services.services.getUserService();
+		UserService userService = Factories.services.getUserService();
 		User user = null;
 		try {
 			Log.setLogLevel(LogLevel.DEBUG);

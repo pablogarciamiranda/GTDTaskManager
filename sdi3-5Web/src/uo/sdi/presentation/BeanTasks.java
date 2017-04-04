@@ -10,13 +10,13 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import uo.sdi.business.Services;
 import uo.sdi.business.TaskService;
 import uo.sdi.business.exception.BusinessCheck;
 import uo.sdi.business.exception.BusinessException;
 import uo.sdi.dto.Category;
 import uo.sdi.dto.Task;
 import uo.sdi.dto.User;
+import uo.sdi.infraestructure.Factories;
 import alb.util.date.DateUtil;
 import alb.util.log.Log;
 
@@ -59,7 +59,7 @@ public class BeanTasks implements Serializable {
 	 * performed in the system
 	 */
 	public String setTasksInbox() {
-		TaskService taskService = Services.services.getTaskService();
+		TaskService taskService = Factories.services.getTaskService();
 		try {
 			List<Task> listaTareas = new ArrayList<Task>();
 			currentList = "inbox";
@@ -88,7 +88,7 @@ public class BeanTasks implements Serializable {
 	 */
 	public String setTasksToday() {
 		currentList = "today";
-		TaskService taskService = Services.services.getTaskService();
+		TaskService taskService = Factories.services.getTaskService();
 		List<Task> listaTareas;
 		try {
 			// Metemos en la lista de tareas las listas de hoy
@@ -107,7 +107,7 @@ public class BeanTasks implements Serializable {
 	 */
 	public String setTasksWeek() {
 		currentList = "week";
-		TaskService taskService = Services.services.getTaskService();
+		TaskService taskService = Factories.services.getTaskService();
 		List<Task> listaTareas;
 		try {
 			// Metemos en la lista de tareas las listas de week
@@ -125,7 +125,7 @@ public class BeanTasks implements Serializable {
 	 * @return null because the page is ajaxified
 	 */
 	public String finishTasks() {
-		TaskService taskService = Services.services.getTaskService();
+		TaskService taskService = Factories.services.getTaskService();
 		try {
 			for (Task t : selectedTasks) {
 				taskService.markTaskAsFinished(t.getId());
@@ -167,7 +167,7 @@ public class BeanTasks implements Serializable {
 
 		task.setUserId(user.getId());
 		// Task is registered in db
-		TaskService taskService = Services.services.getTaskService();
+		TaskService taskService = Factories.services.getTaskService();
 		try {
 			taskService.createTask(task);
 			Log.debug("Added task: " + task.getTitle());
@@ -198,7 +198,7 @@ public class BeanTasks implements Serializable {
 	 */
 	public String edit(Task task) {
 		// Find the task we want to edit
-		TaskService taskService = Services.services.getTaskService();
+		TaskService taskService = Factories.services.getTaskService();
 		// Task is updated in db
 		try {
 			taskService.updateTask(task);
@@ -260,7 +260,7 @@ public class BeanTasks implements Serializable {
 	}
 
 	public List<Category> getListOfCategories() {
-		TaskService taskService = Services.services.getTaskService();
+		TaskService taskService = Factories.services.getTaskService();
 		try {
 			listOfCategories = taskService.findCategoriesByUserId(user.getId());
 		} catch (BusinessException e) {

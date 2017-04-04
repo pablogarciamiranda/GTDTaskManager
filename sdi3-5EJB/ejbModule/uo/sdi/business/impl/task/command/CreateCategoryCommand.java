@@ -4,7 +4,7 @@ import uo.sdi.business.exception.BusinessException;
 import uo.sdi.business.impl.command.Command;
 import uo.sdi.business.impl.util.CategoryCheck;
 import uo.sdi.dto.Category;
-import uo.sdi.persistence.Persistence;
+import uo.sdi.infraestructure.Factories;
 
 public class CreateCategoryCommand implements Command<Long> {
 
@@ -23,7 +23,7 @@ public class CreateCategoryCommand implements Command<Long> {
 		CategoryCheck.isUniqueName( category );
 		CategoryCheck.isNotForAdminUser( category );
 		
-		return Persistence.getCategoryDao().save( category );
+		return Factories.persistence.getCategoryDao().save( category );
 	}
 
 }

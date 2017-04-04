@@ -5,7 +5,7 @@ import uo.sdi.business.exception.BusinessException;
 import uo.sdi.business.impl.command.Command;
 import uo.sdi.business.impl.util.UserCheck;
 import uo.sdi.dto.User;
-import uo.sdi.persistence.Persistence;
+import uo.sdi.infraestructure.Factories;
 import uo.sdi.persistence.UserDao;
 
 public class UpdateUserDetailsCommand implements Command<Void> {
@@ -18,7 +18,7 @@ public class UpdateUserDetailsCommand implements Command<Void> {
 
 	@Override
 	public Void execute() throws BusinessException {
-		UserDao uDao = Persistence.getUserDao();
+		UserDao uDao = Factories.persistence.getUserDao();
 		User previous = uDao.findById( user.getId() );
 
 		checkUserExist( previous );

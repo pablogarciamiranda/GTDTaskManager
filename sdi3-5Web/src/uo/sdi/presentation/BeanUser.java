@@ -5,12 +5,12 @@ import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
-import uo.sdi.business.Services;
 import uo.sdi.business.UserService;
 import uo.sdi.business.exception.BusinessCheck;
 import uo.sdi.business.exception.BusinessException;
 import uo.sdi.business.impl.util.MessageProvider;
 import uo.sdi.dto.User;
+import uo.sdi.infraestructure.Factories;
 import alb.util.log.Log;
 
 /**
@@ -36,7 +36,7 @@ public class BeanUser implements Serializable {
 	 * @return String containing the next view to show
 	 */
 	public String signUp() {
-		UserService userService = Services.services.getUserService();
+		UserService userService = Factories.services.getUserService();
 		User user = null;
 		try {
 			user = userService.findLoggableUser(getLogin());

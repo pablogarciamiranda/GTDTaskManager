@@ -16,7 +16,7 @@ import uo.sdi.business.impl.task.command.UpdateCategoryCommand;
 import uo.sdi.business.impl.task.command.UpdateTaskCommand;
 import uo.sdi.dto.Category;
 import uo.sdi.dto.Task;
-import uo.sdi.persistence.Persistence;
+import uo.sdi.infraestructure.Factories;
 
 /**
  * Session Bean implementation class EJBTaskService
@@ -61,7 +61,7 @@ public class EJBTaskService implements RemoteTaskService,
 			@Override
 			public Category execute() throws BusinessException {
 
-				return Persistence.getCategoryDao().findById(id);
+				return Factories.persistence.getCategoryDao().findById(id);
 			}
 		});
 	}
@@ -74,7 +74,7 @@ public class EJBTaskService implements RemoteTaskService,
 					@Override
 					public List<Category> execute() throws BusinessException {
 
-						return Persistence.getCategoryDao().findByUserId(id);
+						return Factories.persistence.getCategoryDao().findByUserId(id);
 					}
 				});
 	}
@@ -89,7 +89,7 @@ public class EJBTaskService implements RemoteTaskService,
 		new CommandExecutor<Void>().execute(new Command<Void>() {
 			@Override
 			public Void execute() throws BusinessException {
-				Persistence.getTaskDao().delete(id);
+				Factories.persistence.getTaskDao().delete(id);
 				return null;
 			}
 		});
@@ -111,7 +111,7 @@ public class EJBTaskService implements RemoteTaskService,
 			@Override
 			public Task execute() throws BusinessException {
 
-				return Persistence.getTaskDao().findById(id);
+				return Factories.persistence.getTaskDao().findById(id);
 			}
 		});
 	}
@@ -124,7 +124,7 @@ public class EJBTaskService implements RemoteTaskService,
 					@Override
 					public List<Task> execute() throws BusinessException {
 
-						return Persistence.getTaskDao().findInboxTasksByUserId(
+						return Factories.persistence.getTaskDao().findInboxTasksByUserId(
 								id);
 					}
 				});
@@ -138,7 +138,7 @@ public class EJBTaskService implements RemoteTaskService,
 					@Override
 					public List<Task> execute() throws BusinessException {
 
-						return Persistence.getTaskDao().findWeekTasksByUserId(
+						return Factories.persistence.getTaskDao().findWeekTasksByUserId(
 								id);
 					}
 				});
@@ -152,7 +152,7 @@ public class EJBTaskService implements RemoteTaskService,
 					@Override
 					public List<Task> execute() throws BusinessException {
 
-						return Persistence.getTaskDao().findTodayTasksByUserId(
+						return Factories.persistence.getTaskDao().findTodayTasksByUserId(
 								id);
 					}
 				});
@@ -166,7 +166,7 @@ public class EJBTaskService implements RemoteTaskService,
 					@Override
 					public List<Task> execute() throws BusinessException {
 
-						return Persistence.getTaskDao().findTasksByCategoryId(
+						return Factories.persistence.getTaskDao().findTasksByCategoryId(
 								id);
 					}
 				});
@@ -180,7 +180,7 @@ public class EJBTaskService implements RemoteTaskService,
 					@Override
 					public List<Task> execute() throws BusinessException {
 
-						return Persistence.getTaskDao()
+						return Factories.persistence.getTaskDao()
 								.findFinishedTasksByCategoryId(id);
 					}
 				});
@@ -194,7 +194,7 @@ public class EJBTaskService implements RemoteTaskService,
 					@Override
 					public List<Task> execute() throws BusinessException {
 
-						return Persistence.getTaskDao()
+						return Factories.persistence.getTaskDao()
 								.findFinishedTasksInboxByUserId(id);
 					}
 				});

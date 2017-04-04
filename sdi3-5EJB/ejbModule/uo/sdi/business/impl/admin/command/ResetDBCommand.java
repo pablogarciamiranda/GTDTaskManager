@@ -1,23 +1,23 @@
 package uo.sdi.business.impl.admin.command;
 
-import alb.util.date.DateUtil;
 import uo.sdi.business.exception.BusinessException;
 import uo.sdi.business.impl.command.Command;
 import uo.sdi.dto.Category;
 import uo.sdi.dto.Task;
 import uo.sdi.dto.User;
+import uo.sdi.infraestructure.Factories;
 import uo.sdi.persistence.CategoryDao;
-import uo.sdi.persistence.Persistence;
 import uo.sdi.persistence.TaskDao;
 import uo.sdi.persistence.UserDao;
+import alb.util.date.DateUtil;
 
 public class ResetDBCommand implements Command<Void> {
 
 	@Override
 	public Void execute() throws BusinessException {
-		TaskDao tDao = Persistence.getTaskDao();
-		CategoryDao cDao = Persistence.getCategoryDao();
-		UserDao uDao = Persistence.getUserDao();
+		TaskDao tDao = Factories.persistence.getTaskDao();
+		CategoryDao cDao = Factories.persistence.getCategoryDao();
+		UserDao uDao = Factories.persistence.getUserDao();
 		
 		for (User u : uDao.findAll()){
 			if (!u.getLogin().equals("admin1")){

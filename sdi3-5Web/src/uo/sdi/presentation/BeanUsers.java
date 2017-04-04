@@ -1,18 +1,20 @@
 package uo.sdi.presentation;
 
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+
 import uo.sdi.business.AdminService;
-import uo.sdi.business.Services;
 import uo.sdi.business.exception.BusinessCheck;
 import uo.sdi.business.exception.BusinessException;
 import uo.sdi.business.impl.util.MessageProvider;
 import uo.sdi.dto.User;
 import uo.sdi.dto.types.UserStatus;
+import uo.sdi.infraestructure.Factories;
 import alb.util.log.Log;
 
 /**
@@ -48,7 +50,7 @@ public class BeanUsers {
 	 * the system
 	 */
 	private void setListOfUsers() {
-		AdminService adminService = Services.services.getAdminService();
+		AdminService adminService = Factories.services.getAdminService();
 		try {
 			users = adminService.findAllUsers();
 			Log.debug("List of users refreshed");
@@ -64,7 +66,7 @@ public class BeanUsers {
 	 * @return null because the page is ajaxified
 	 */
 	public String resetDatabase() {
-		AdminService adminService = Services.services.getAdminService();
+		AdminService adminService = Factories.services.getAdminService();
 		try {
 			// Database is reseted
 			adminService.resetDB();
@@ -85,7 +87,7 @@ public class BeanUsers {
 	 * @return null because the page is ajaxified
 	 */
 	public String toggleActiveUser(User user) {
-		AdminService adminService = Services.services.getAdminService();
+		AdminService adminService = Factories.services.getAdminService();
 		try {
 			// If user is enabled, we disable it
 			if (user.getStatus().equals(UserStatus.ENABLED)) {
@@ -113,7 +115,7 @@ public class BeanUsers {
 	 * @return null because the page is ajaxified
 	 */
 	public String deleteUser(User user) {
-		AdminService service = Services.services.getAdminService();
+		AdminService service = Factories.services.getAdminService();
 		try {
 			// The user can not delete to himself
 			if (user.equals(userSession)) {
@@ -141,7 +143,7 @@ public class BeanUsers {
 	 * @return null because the page is ajaxified
 	 */
 	public String deleteUsers() {
-		AdminService service = Services.services.getAdminService();
+		AdminService service = Factories.services.getAdminService();
 		try {
 			for (User u : selectedUsers) {
 				// The user can not delete to himself

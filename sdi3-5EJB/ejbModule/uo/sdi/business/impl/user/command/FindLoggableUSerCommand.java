@@ -4,7 +4,7 @@ import uo.sdi.business.exception.BusinessException;
 import uo.sdi.business.impl.command.Command;
 import uo.sdi.dto.User;
 import uo.sdi.dto.types.UserStatus;
-import uo.sdi.persistence.Persistence;
+import uo.sdi.infraestructure.Factories;
 
 public class FindLoggableUSerCommand<T> implements Command<User> {
 
@@ -18,7 +18,7 @@ public class FindLoggableUSerCommand<T> implements Command<User> {
 
 	@Override
 	public User execute() throws BusinessException {
-		User user = Persistence.getUserDao()
+		User user = Factories.persistence.getUserDao()
 						.findByLoginAndPassword(login, password);
 		
 		return (user != null && user.getStatus().equals( UserStatus.ENABLED ))

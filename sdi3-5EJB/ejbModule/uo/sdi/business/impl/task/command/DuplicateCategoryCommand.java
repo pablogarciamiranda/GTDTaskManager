@@ -10,8 +10,8 @@ import uo.sdi.dto.Task;
 import uo.sdi.dto.User;
 import uo.sdi.dto.types.UserStatus;
 import uo.sdi.dto.util.Cloner;
+import uo.sdi.infraestructure.Factories;
 import uo.sdi.persistence.CategoryDao;
-import uo.sdi.persistence.Persistence;
 import uo.sdi.persistence.TaskDao;
 
 public class DuplicateCategoryCommand implements Command<Long> {
@@ -31,7 +31,7 @@ public class DuplicateCategoryCommand implements Command<Long> {
 	}
 
 	private Long duplicateCategory(Long id) throws BusinessException {
-		CategoryDao cDao = Persistence.getCategoryDao();
+		CategoryDao cDao = Factories.persistence.getCategoryDao();
 		
 		Category original = cDao.findById(id);
 		BusinessCheck.isNotNull( original, "The category does not exist");
@@ -43,13 +43,13 @@ public class DuplicateCategoryCommand implements Command<Long> {
 	}
 
 	private void checkUserNotDisabled(Category c) throws BusinessException {
-		User u = Persistence.getUserDao().findById( c.getUserId() );
+		User u = Factories.persistence.getUserDao().findById( c.getUserId() );
 		BusinessCheck.isTrue( u.getStatus().equals( UserStatus.ENABLED ),
 				"User disables, category cannot be duplicated.");
 	}
 
 	private void duplicateTasks(Long catId, Long copyId) {
-		TaskDao tDao = Persistence.getTaskDao();
+		TaskDao tDao = Factories.persistence.getTaskDao();
 
 		List<Task> tasks = tDao.findTasksByCategoryId( catId );
 		for(Task t: tasks) {

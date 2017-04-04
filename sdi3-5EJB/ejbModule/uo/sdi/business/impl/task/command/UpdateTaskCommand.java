@@ -5,7 +5,7 @@ import uo.sdi.business.exception.BusinessException;
 import uo.sdi.business.impl.command.Command;
 import uo.sdi.business.impl.util.TaskCheck;
 import uo.sdi.dto.Task;
-import uo.sdi.persistence.Persistence;
+import uo.sdi.infraestructure.Factories;
 import uo.sdi.persistence.TaskDao;
 
 public class UpdateTaskCommand implements Command<Void> {
@@ -24,7 +24,7 @@ public class UpdateTaskCommand implements Command<Void> {
 			TaskCheck.categoryExists( task );
 		}
 		
-		TaskDao tDao = Persistence.getTaskDao();
+		TaskDao tDao = Factories.persistence.getTaskDao();
 		
 		Task previous = tDao.findById( task.getId() );
 		checktaskAlreadyExist(previous);

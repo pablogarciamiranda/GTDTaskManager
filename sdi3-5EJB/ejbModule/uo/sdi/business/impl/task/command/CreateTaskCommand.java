@@ -4,7 +4,7 @@ import uo.sdi.business.exception.BusinessException;
 import uo.sdi.business.impl.command.Command;
 import uo.sdi.business.impl.util.TaskCheck;
 import uo.sdi.dto.Task;
-import uo.sdi.persistence.Persistence;
+import uo.sdi.infraestructure.Factories;
 import alb.util.date.DateUtil;
 
 public class CreateTaskCommand implements Command<Long> {
@@ -28,7 +28,7 @@ public class CreateTaskCommand implements Command<Long> {
 		
 		task.setCreated( DateUtil.today() );
 		task.setFinished( null );
-		return Persistence.getTaskDao().save( task );
+		return Factories.persistence.getTaskDao().save( task );
 	}
 
 }

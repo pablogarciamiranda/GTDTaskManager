@@ -2,7 +2,7 @@ package uo.sdi.business.impl.task.command;
 
 import uo.sdi.business.exception.BusinessException;
 import uo.sdi.business.impl.command.Command;
-import uo.sdi.persistence.Persistence;
+import uo.sdi.infraestructure.Factories;
 
 public class DeleteCategoryCommand implements Command<Void> {
 
@@ -14,8 +14,8 @@ public class DeleteCategoryCommand implements Command<Void> {
 
 	@Override
 	public Void execute() throws BusinessException {
-		Persistence.getTaskDao().deleteAllFromCategory( catId );
-		Persistence.getCategoryDao().delete( catId );
+		Factories.persistence.getTaskDao().deleteAllFromCategory( catId );
+		Factories.persistence.getCategoryDao().delete( catId );
 		return null;
 	}
 

@@ -1,10 +1,11 @@
 package uo.sdi.business.impl.util;
 
 import java.util.regex.Pattern;
+
 import uo.sdi.business.exception.BusinessCheck;
 import uo.sdi.business.exception.BusinessException;
 import uo.sdi.dto.User;
-import uo.sdi.persistence.Persistence;
+import uo.sdi.infraestructure.Factories;
 import uo.sdi.persistence.UserDao;
 
 public class UserCheck {
@@ -30,7 +31,7 @@ public class UserCheck {
 	}
 
 	public static void notRepeatedLogin(User user) throws BusinessException {
-		UserDao uDao = Persistence.getUserDao();
+		UserDao uDao = Factories.persistence.getUserDao();
 		User u = uDao.findByLogin( user.getLogin() );
 		BusinessCheck.isNull(u, MessageProvider.getValue("notRepeatedLogin"));
 	}

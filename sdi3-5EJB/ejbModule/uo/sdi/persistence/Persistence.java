@@ -5,21 +5,25 @@ import uo.sdi.persistence.impl.TaskDaoJdbcImpl;
 import uo.sdi.persistence.impl.TransactionJdbcImpl;
 import uo.sdi.persistence.impl.UserDaoJdbcImpl;
 
-public class Persistence {
+public class Persistence implements PersistenceFactory {
 	
-	public static Transaction newTransaction() {
+	@Override
+	public Transaction newTransaction() {
 		return new TransactionJdbcImpl();
 	}
 	
-	public static UserDao getUserDao() {
+	@Override
+	public UserDao getUserDao() {
 		return new UserDaoJdbcImpl();
 	}
 
-	public static TaskDao getTaskDao() {
+	@Override
+	public TaskDao getTaskDao() {
 		return new TaskDaoJdbcImpl();
 	}
 
-	public static CategoryDao getCategoryDao() {
+	@Override
+	public CategoryDao getCategoryDao() {
 		return new CategoryDaoJdbcImpl();
 	}
 

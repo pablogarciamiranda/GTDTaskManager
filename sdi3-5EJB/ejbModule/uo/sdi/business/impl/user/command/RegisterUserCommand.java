@@ -4,7 +4,7 @@ import uo.sdi.business.exception.BusinessException;
 import uo.sdi.business.impl.command.Command;
 import uo.sdi.business.impl.util.UserCheck;
 import uo.sdi.dto.User;
-import uo.sdi.persistence.Persistence;
+import uo.sdi.infraestructure.Factories;
 
 public class RegisterUserCommand implements Command<Long> {
 
@@ -22,7 +22,7 @@ public class RegisterUserCommand implements Command<Long> {
 		UserCheck.minPasswordLength( user );
 		UserCheck.notRepeatedLogin( user );
 		
-		return Persistence.getUserDao().save( user );
+		return Factories.persistence.getUserDao().save( user );
 	}
 
 }

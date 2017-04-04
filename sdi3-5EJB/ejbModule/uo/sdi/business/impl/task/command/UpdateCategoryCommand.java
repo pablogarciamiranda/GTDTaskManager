@@ -5,8 +5,8 @@ import uo.sdi.business.exception.BusinessException;
 import uo.sdi.business.impl.command.Command;
 import uo.sdi.business.impl.util.CategoryCheck;
 import uo.sdi.dto.Category;
+import uo.sdi.infraestructure.Factories;
 import uo.sdi.persistence.CategoryDao;
-import uo.sdi.persistence.Persistence;
 
 public class UpdateCategoryCommand implements Command<Void> {
 
@@ -18,7 +18,7 @@ public class UpdateCategoryCommand implements Command<Void> {
 
 	@Override
 	public Void execute() throws BusinessException {
-		CategoryDao cDao = Persistence.getCategoryDao();
+		CategoryDao cDao = Factories.persistence.getCategoryDao();
 		Category previous = cDao.findById( category.getId() ); 
 
 		checkCategoryExists( previous );
