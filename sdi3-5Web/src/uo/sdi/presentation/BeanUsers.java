@@ -48,7 +48,7 @@ public class BeanUsers {
 	 * the system
 	 */
 	private void setListOfUsers() {
-		AdminService adminService = Services.getAdminService();
+		AdminService adminService = Services.services.getAdminService();
 		try {
 			users = adminService.findAllUsers();
 			Log.debug("List of users refreshed");
@@ -64,7 +64,7 @@ public class BeanUsers {
 	 * @return null because the page is ajaxified
 	 */
 	public String resetDatabase() {
-		AdminService adminService = Services.getAdminService();
+		AdminService adminService = Services.services.getAdminService();
 		try {
 			// Database is reseted
 			adminService.resetDB();
@@ -85,7 +85,7 @@ public class BeanUsers {
 	 * @return null because the page is ajaxified
 	 */
 	public String toggleActiveUser(User user) {
-		AdminService adminService = Services.getAdminService();
+		AdminService adminService = Services.services.getAdminService();
 		try {
 			// If user is enabled, we disable it
 			if (user.getStatus().equals(UserStatus.ENABLED)) {
@@ -113,7 +113,7 @@ public class BeanUsers {
 	 * @return null because the page is ajaxified
 	 */
 	public String deleteUser(User user) {
-		AdminService service = Services.getAdminService();
+		AdminService service = Services.services.getAdminService();
 		try {
 			// The user can not delete to himself
 			if (user.equals(userSession)) {
@@ -141,7 +141,7 @@ public class BeanUsers {
 	 * @return null because the page is ajaxified
 	 */
 	public String deleteUsers() {
-		AdminService service = Services.getAdminService();
+		AdminService service = Services.services.getAdminService();
 		try {
 			for (User u : selectedUsers) {
 				// The user can not delete to himself

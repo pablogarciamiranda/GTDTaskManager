@@ -36,7 +36,7 @@ public class BeanUser implements Serializable {
 	 * @return String containing the next view to show
 	 */
 	public String signUp() {
-		UserService userService = Services.getUserService();
+		UserService userService = Services.services.getUserService();
 		User user = null;
 		try {
 			user = userService.findLoggableUser(getLogin());

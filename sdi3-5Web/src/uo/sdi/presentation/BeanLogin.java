@@ -30,7 +30,7 @@ public class BeanLogin implements Serializable {
 	public String login(){
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
-		UserService userService = Services.getUserService();
+		UserService userService = Services.services.getUserService();
 		User user = null;
 		try {
 			Log.setLogLevel(LogLevel.DEBUG);
