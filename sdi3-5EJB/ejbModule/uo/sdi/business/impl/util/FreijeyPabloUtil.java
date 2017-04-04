@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import uo.sdi.business.Services;
+import uo.sdi.business.ServicesFactory;
 import uo.sdi.business.exception.BusinessException;
 import uo.sdi.dto.Task;
 
@@ -90,7 +91,7 @@ public class FreijeyPabloUtil {
 	
 	private static String getCatName(Task task){
 		try {
-			return Services.getTaskService().findCategoryById(task.getCategoryId()).getName();
+			return Services.services.getTaskService().findCategoryById(task.getCategoryId()).getName();
 		} catch (BusinessException e) {}
 		return "";
 	}

@@ -1,10 +1,15 @@
 package uo.sdi.dto;
 
-public class Category {
+import java.io.Serializable;
+
+public class Category implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	
 	private Long id;
 	private String name;
 	private Long userId;
-	
+
 	public String getName() {
 		return name;
 	}
@@ -34,9 +39,8 @@ public class Category {
 
 	@Override
 	public String toString() {
-		return "CategoryDto [id=" + id 
-				+ ", name=" + name 
-				+ ", userId=" + userId + "]";
+		return "CategoryDto [id=" + id + ", name=" + name + ", userId="
+				+ userId + "]";
 	}
 
 	@Override

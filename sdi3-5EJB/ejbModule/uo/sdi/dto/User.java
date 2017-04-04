@@ -1,5 +1,7 @@
 package uo.sdi.dto;
 
+import java.io.Serializable;
+
 import uo.sdi.dto.types.UserStatus;
 
 /**
@@ -7,7 +9,10 @@ import uo.sdi.dto.types.UserStatus;
  * 
  * @author alb
  */
-public class User {
+public class User implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+
 	private Long id;
 
 	private String login;
