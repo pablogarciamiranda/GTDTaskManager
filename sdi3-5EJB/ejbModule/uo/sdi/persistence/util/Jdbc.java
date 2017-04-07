@@ -23,70 +23,73 @@ public class Jdbc {
 	private static final String DATABASE_PROPERTIES_FILE = "database.properties";
 	private static final String QUERIES_PROPERTIES_FILE = "sql_queries.properties";
 	
-	private static final String DATABASE_URL;
-	private static final String DATABASE_USER;
-	private static final String DATABASE_PASSWORD;
-	private static final String DATABASE_DRIVER;
-	
+//	private static final String DATABASE_URL;
+//	private static final String DATABASE_USER;
+//	private static final String DATABASE_PASSWORD;
+//	private static final String DATABASE_DRIVER;
+//	
 	private static Properties sqlQueries;
 	private static DataSource dataSource;
 	private static String CONFIG_FILE = "/persistence.properties";
 
 	
 	static {
+		sqlQueries = loadProperties(CONFIG_FILE);
+	
+		String jndiKey = sqlQueries.getProperty("JNDI_DATASOURCE");
+
+		Context ctx = null;
 		try {
-			sqlQueries.load(Jdbc.class.getResourceAsStream(CONFIG_FILE));
-		} catch (IOException e) {
+			ctx = new InitialContext();
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			dataSource = (DataSource) ctx.lookup(jndiKey);
+		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		DATABASE_URL = sqlQueries.getProperty( "DATABASE_URL" );
-		DATABASE_USER = sqlQueries.getProperty( "DATABASE_USER" );
-		DATABASE_PASSWORD = sqlQueries.getProperty( "DATABASE_PASSWORD" );
-		DATABASE_DRIVER = sqlQueries.getProperty( "DATABASE_DRIVER" ); 
+//		DATABASE_URL = sqlQueries.getProperty( "DATABASE_URL" );
+//		DATABASE_USER = sqlQueries.getProperty( "DATABASE_USER" );
+//		DATABASE_PASSWORD = sqlQueries.getProperty( "DATABASE_PASSWORD" );
+//		DATABASE_DRIVER = sqlQueries.getProperty( "DATABASE_DRIVER" ); 
 	
 	}
 
-	private static DataSource configureDataSource(Properties dbConfig) {
-		BasicDataSource ds = new BasicDataSource();
-		ds.setDriverClassName( DATABASE_DRIVER );
-		ds.setUsername( DATABASE_USER );
-		ds.setPassword( DATABASE_PASSWORD );
-		ds.setUrl( DATABASE_URL );
-		return ds;
-	}
+//	private static DataSource configureDataSource(Properties dbConfig) {
+//		BasicDataSource ds = new BasicDataSource();
+//		ds.setDriverClassName( DATABASE_DRIVER );
+//		ds.setUsername( DATABASE_USER );
+//		ds.setPassword( DATABASE_PASSWORD );
+//		ds.setUrl( DATABASE_URL );
+//		return ds;
+//	}
 
 	private static ThreadLocal<Connection> threadLocal = new ThreadLocal<>();
 
 	public static Connection createConnection() {
 		try {
-			String jndiKey = sqlQueries.getProperty("JNDI_DATASOURCE");
-
-			Context ctx = new InitialContext();
-			dataSource = (DataSource) ctx.lookup(jndiKey);
-			
-			return dataSource.getConnection();
+			Connection con = dataSource.getConnection();
+			threadLocal.set(con);
+			return con;
 			
 			
 		} catch (SQLTimeoutException e) {
 			throw new PersistenceException("Timeout opennig JDBC conection", e);
 		} catch (SQLException e) {
 			throw new PersistenceException("An unexpected JDBC error has ocurred", e);
-		} catch (NamingException e) {
-			throw new RuntimeException("Can't open JDBC conection from JNDI", e);
 		}
 	}
 
 	public static Connection getCurrentConnection() {
-		if (dataSource == null) {
-			return createConnection();
+		Connection con = threadLocal.get();
+		if (con == null) {
+			con = createConnection();
 		}
-		try {
-			return dataSource.getConnection();
-		} catch (SQLException e) {
-			throw new RuntimeException("Can't open JDBC conection from JNDI", e);
-		}
+		return con;
 	}
 
 	public static String getSqlQuery(String queryKey) {

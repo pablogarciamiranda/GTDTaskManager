@@ -21,7 +21,7 @@ public class LocalEJBServicesLocator implements ServicesFactory {
 
 	private static final String TASK_SERVICE_JNDI_KEY = "java:global/"
 			+ "sdi3-5/" + "sdi3-5EJB/" + "EJBTaskService!"
-			+ "uo.sdi.business.impl.user.LocalTaskService";
+			+ "uo.sdi.business.impl.task.LocalTaskService";
 
 	@Override
 	public TaskService getTaskService() {

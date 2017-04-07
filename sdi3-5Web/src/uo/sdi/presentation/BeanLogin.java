@@ -50,7 +50,7 @@ public class BeanLogin implements Serializable {
 				session.setAttribute("LOGGEDIN_USER", user);
 				setIsSignedIn(true);
 				
-				BusinessCheck.showBusinessInfo(MessageProvider.getValue("loginOk"));
+				//BusinessCheck.showBusinessInfo(MessageProvider.getValue("loginOk"));
 				//If the user is admin
 				if (user.getIsAdmin()){
 					Log.debug("Admin user "+ login +" succesfully logged in");
