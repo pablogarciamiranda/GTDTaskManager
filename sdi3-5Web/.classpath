@@ -13,8 +13,6 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="lib/hsqldb.jar"/>
-	<classpathentry kind="lib" path="lib/dbcp-6.0.48.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/sdi3-5EJB"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

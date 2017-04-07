@@ -1,26 +1,11 @@
 package uo.sdi.business.impl.command;
 
 import uo.sdi.business.exception.BusinessException;
-import uo.sdi.infraestructure.Factories;
-import uo.sdi.persistence.PersistenceException;
-import uo.sdi.persistence.Transaction;
 
 public class CommandExecutor<T> {
-	
-	public T execute(Command<T> cmd) throws BusinessException {
-		Transaction trx = Factories.persistence.newTransaction();
-		trx.begin();
-		try {
 
-			T res = cmd.execute();
-			trx.commit();
-			
-			return res;
-		}
-		catch(PersistenceException | BusinessException ex) {
-			trx.rollback();
-			throw ex;
-		}
+	public T execute(Command<T> cmd) throws BusinessException {
+		return cmd.execute();
 	}
 
 }

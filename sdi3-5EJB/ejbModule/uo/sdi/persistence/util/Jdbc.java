@@ -10,6 +10,9 @@ import java.sql.SQLException;
 import java.sql.SQLTimeoutException;
 import java.util.Properties;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
@@ -27,17 +30,22 @@ public class Jdbc {
 	
 	private static Properties sqlQueries;
 	private static DataSource dataSource;
+	private static String CONFIG_FILE = "/persistence.properties";
+
 	
 	static {
-		Properties dbConfig = loadProperties( DATABASE_PROPERTIES_FILE );
-		sqlQueries = loadProperties( QUERIES_PROPERTIES_FILE );
+		try {
+			sqlQueries.load(Jdbc.class.getResourceAsStream(CONFIG_FILE));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		DATABASE_URL = dbConfig.getProperty( "DATABASE_URL" );
-		DATABASE_USER = dbConfig.getProperty( "DATABASE_USER" );
-		DATABASE_PASSWORD = dbConfig.getProperty( "DATABASE_PASSWORD" );
-		DATABASE_DRIVER = dbConfig.getProperty( "DATABASE_DRIVER" ); 
+		DATABASE_URL = sqlQueries.getProperty( "DATABASE_URL" );
+		DATABASE_USER = sqlQueries.getProperty( "DATABASE_USER" );
+		DATABASE_PASSWORD = sqlQueries.getProperty( "DATABASE_PASSWORD" );
+		DATABASE_DRIVER = sqlQueries.getProperty( "DATABASE_DRIVER" ); 
 	
-		dataSource = configureDataSource(dbConfig);
 	}
 
 	private static DataSource configureDataSource(Properties dbConfig) {
@@ -53,24 +61,32 @@ public class Jdbc {
 
 	public static Connection createConnection() {
 		try {
+			String jndiKey = sqlQueries.getProperty("JNDI_DATASOURCE");
+
+			Context ctx = new InitialContext();
+			dataSource = (DataSource) ctx.lookup(jndiKey);
 			
-			Connection con = dataSource.getConnection();
-			threadLocal.set(con);
-			return con;
+			return dataSource.getConnection();
+			
 			
 		} catch (SQLTimeoutException e) {
 			throw new PersistenceException("Timeout opennig JDBC conection", e);
 		} catch (SQLException e) {
 			throw new PersistenceException("An unexpected JDBC error has ocurred", e);
+		} catch (NamingException e) {
+			throw new RuntimeException("Can't open JDBC conection from JNDI", e);
 		}
 	}
 
 	public static Connection getCurrentConnection() {
-		Connection con = threadLocal.get();
-		if (con == null) {
-			con = createConnection();
+		if (dataSource == null) {
+			return createConnection();
 		}
-		return con;
+		try {
+			return dataSource.getConnection();
+		} catch (SQLException e) {
+			throw new RuntimeException("Can't open JDBC conection from JNDI", e);
+		}
 	}
 
 	public static String getSqlQuery(String queryKey) {
