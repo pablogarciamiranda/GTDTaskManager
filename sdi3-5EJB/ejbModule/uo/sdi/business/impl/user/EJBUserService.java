@@ -1,6 +1,7 @@
 package uo.sdi.business.impl.user;
 
 import javax.ejb.Stateless;
+import javax.jws.WebService;
 
 import uo.sdi.business.exception.BusinessException;
 import uo.sdi.business.impl.command.CommandExecutor;
@@ -14,6 +15,7 @@ import uo.sdi.dto.User;
  * Session Bean implementation class EJBUserService
  */
 @Stateless
+@WebService(name="UserService")
 public class EJBUserService implements RemoteUserService,
 		LocalUserService {
 
@@ -33,15 +35,6 @@ public class EJBUserService implements RemoteUserService,
 	@Override
 	public void updateUserDetails(User user) throws BusinessException {
 		new CommandExecutor<Void>().execute(new UpdateUserDetailsCommand(user));
-	}
-
-	@Override
-	public User findLoggableUser(final String login, final String password)
-			throws BusinessException {
-
-		return new CommandExecutor<User>()
-				.execute(new FindByLoginAndPasswordCommand<User>(login,
-						password));
 	}
 
 	@Override

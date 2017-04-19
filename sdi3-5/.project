@@ -3,8 +3,8 @@
 	<name>sdi3-5</name>
 	<comment></comment>
 	<projects>
-		<project>sdi3-5Web</project>
-		<project>sdi3-5EJB</project>
+		<project>sdi3-5.Web</project>
+		<project>sdi3-5.EJB</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

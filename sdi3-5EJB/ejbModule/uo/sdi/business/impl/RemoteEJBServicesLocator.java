@@ -12,15 +12,15 @@ import uo.sdi.business.UserService;
 public class RemoteEJBServicesLocator implements ServicesFactory {
 
 	private static final String USER_SERVICE_JNDI_KEY = "sdi3-5/"
-			+ "sdi3-5EJB/" + "EJBUserService!"
+			+ "sdi3-5.EJB/" + "EJBUserService!"
 			+ "uo.sdi.business.impl.user.RemoteUserService";
 
 	private static final String ADMIN_SERVICE_JNDI_KEY = "sdi3-5/"
-			+ "sdi3-5EJB/" + "EJBAdminService!"
+			+ "sdi3-5.EJB/" + "EJBAdminService!"
 			+ "uo.sdi.business.impl.admin.RemoteAdminService";
 
 	private static final String TASK_SERVICE_JNDI_KEY = "sdi3-5/"
-			+ "sdi3-5EJB/" + "EJBTaskService!"
+			+ "sdi3-5.EJB/" + "EJBTaskService!"
 			+ "uo.sdi.business.impl.user.RemoteTaskService";
 
 	@Override
