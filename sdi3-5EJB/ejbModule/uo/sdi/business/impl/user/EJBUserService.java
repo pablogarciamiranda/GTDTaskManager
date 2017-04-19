@@ -5,7 +5,6 @@ import javax.jws.WebService;
 
 import uo.sdi.business.exception.BusinessException;
 import uo.sdi.business.impl.command.CommandExecutor;
-import uo.sdi.business.impl.user.command.FindByLoginAndPasswordCommand;
 import uo.sdi.business.impl.user.command.FindByLoginCommand;
 import uo.sdi.business.impl.user.command.RegisterUserCommand;
 import uo.sdi.business.impl.user.command.UpdateUserDetailsCommand;

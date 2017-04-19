@@ -15,9 +15,8 @@ import javax.ws.rs.core.MediaType;
 import uo.sdi.business.exception.BusinessException;
 import uo.sdi.dto.Category;
 import uo.sdi.dto.Task;
-import uo.sdi.dto.User;
 
-@Path("/AlumnosServiceRs")
+@Path("/TaskServiceRs")
 public interface TaskServiceRest {
 
 	@PUT

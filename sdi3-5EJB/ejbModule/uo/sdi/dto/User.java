@@ -2,6 +2,9 @@ package uo.sdi.dto;
 
 import java.io.Serializable;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import uo.sdi.dto.types.UserStatus;
 
 /**
@@ -9,6 +12,7 @@ import uo.sdi.dto.types.UserStatus;
  * 
  * @author alb
  */
+@XmlRootElement(name = "user")
 public class User implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -25,7 +29,8 @@ public class User implements Serializable{
 		this.isAdmin = isAdmin;
 		return this;
 	}
-
+	
+	@XmlElement
 	public Long getId() {
 		return id;
 	}
@@ -34,7 +39,8 @@ public class User implements Serializable{
 		this.id = id;
 		return this;
 	}
-
+	
+	@XmlElement
 	public String getLogin() {
 		return login;
 	}
@@ -43,7 +49,8 @@ public class User implements Serializable{
 		this.login = login;
 		return this;
 	}
-
+	
+	@XmlElement
 	public String getEmail() {
 		return email;
 	}
@@ -52,7 +59,8 @@ public class User implements Serializable{
 		this.email = email;
 		return this;
 	}
-
+	
+	@XmlElement
 	public String getPassword() {
 		return password;
 	}
@@ -61,7 +69,8 @@ public class User implements Serializable{
 		this.password = password;
 		return this;
 	}
-
+	
+	@XmlElement
 	public Boolean getIsAdmin() {
 		return isAdmin;
 	}
@@ -74,7 +83,8 @@ public class User implements Serializable{
 				+ ", password=" + password 
 				+ ", isAdmin=" + isAdmin + "]";
 	}
-
+	
+	@XmlElement
 	public UserStatus getStatus() {
 		return status;
 	}

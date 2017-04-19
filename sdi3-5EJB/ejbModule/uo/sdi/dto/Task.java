@@ -3,9 +3,13 @@ package uo.sdi.dto;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import uo.sdi.business.impl.util.FreijeyPabloUtil;
 import alb.util.date.DateUtil;
 
+@XmlRootElement(name = "task")
 public class Task implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -20,7 +24,8 @@ public class Task implements Serializable {
 
 	private Long categoryId;
 	private Long userId;
-
+	
+	@XmlElement
 	public Long getId() {
 		return id;
 	}
@@ -29,11 +34,13 @@ public class Task implements Serializable {
 		this.id = id;
 		return this;
 	}
-
+	
+	@XmlElement
 	public String getTitle() {
 		return title;
 	}
-
+	
+	@XmlElement
 	public String getTitleEditable() {
 		return title;
 	}
@@ -46,11 +53,13 @@ public class Task implements Serializable {
 	public void setTitleEditable(String title) {
 		this.title = title;
 	}
-
+	
+	@XmlElement
 	public String getComments() {
 		return comments;
 	}
-
+	
+	@XmlElement
 	public String getCommentsEditable() {
 		return comments;
 	}
@@ -63,11 +72,13 @@ public class Task implements Serializable {
 	public void setCommentsEditable(String comments) {
 		this.comments = comments;
 	}
-
+	
+	@XmlElement
 	public Date getCreated() {
 		return created;
 	}
-
+	
+	@XmlElement
 	public Date getCreatedEditable() {
 		return created;
 	}
@@ -80,11 +91,13 @@ public class Task implements Serializable {
 	public void setCreatedEditable(Date created) {
 		this.created = created;
 	}
-
+	
+	@XmlElement
 	public Date getPlanned() {
 		return planned;
 	}
-
+	
+	@XmlElement
 	public Date getPlannedEditable() {
 		return planned;
 	}
@@ -97,7 +110,8 @@ public class Task implements Serializable {
 	public void setPlannedEditable(Date planned) {
 		this.planned = planned;
 	}
-
+	
+	@XmlElement
 	public Date getFinished() {
 		return finished;
 	}
@@ -105,7 +119,8 @@ public class Task implements Serializable {
 	public boolean isTaskFinished() {
 		return finished!=null;
 	}
-
+	
+	@XmlElement
 	public Date getFinishedEditable() {
 		return finished;
 	}
@@ -126,11 +141,13 @@ public class Task implements Serializable {
 			return true;
 		return false;
 	}
-
+	
+	@XmlElement
 	public Long getCategoryId() {
 		return categoryId;
 	}
-
+	
+	@XmlElement
 	public Long getCategoryEditable() {
 		return categoryId;
 	}
@@ -143,7 +160,8 @@ public class Task implements Serializable {
 	public void setCategoryEditable(Long category_id) {
 		this.categoryId = category_id;
 	}
-
+	
+	@XmlElement
 	public Long getUserId() {
 		return userId;
 	}

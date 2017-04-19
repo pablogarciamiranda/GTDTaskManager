@@ -12,7 +12,7 @@ import javax.ws.rs.core.MediaType;
 import uo.sdi.business.exception.BusinessException;
 import uo.sdi.dto.User;
 
-@Path("/AlumnosServiceRs")
+@Path("/UserServiceRs")
 public interface UserServiceRest {
 
 	@PUT
