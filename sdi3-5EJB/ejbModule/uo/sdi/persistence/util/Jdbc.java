@@ -18,8 +18,6 @@ import javax.sql.DataSource;
 import uo.sdi.persistence.PersistenceException;
 
 public class Jdbc {
-	private static final String DATABASE_PROPERTIES_FILE = "database.properties";
-	private static final String QUERIES_PROPERTIES_FILE = "sql_queries.properties";
 	
 //	private static final String DATABASE_URL;
 //	private static final String DATABASE_USER;
