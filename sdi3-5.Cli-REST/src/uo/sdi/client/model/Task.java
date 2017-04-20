@@ -1,4 +1,4 @@
-package uo.sdi.client;
+package uo.sdi.client.model;
 
 import java.io.Serializable;
 import java.util.Date;

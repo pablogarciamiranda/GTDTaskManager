@@ -17,27 +17,29 @@ import uo.sdi.dto.User;
 public interface AdminServiceRest {
 	
 	@DELETE
-	@Path("{id}")
+	@Path("users/{id}/delete")
 	public void deepDeleteUser(@PathParam("id") Long id) throws BusinessException;
 	
 	@POST
-	@Path("{id}")
+	@Path("users/{id}/disable")
 	public void disableUser(@PathParam("id") Long id) throws BusinessException;
 	
 	@POST
-	@Path("{id}")
+	@Path("users/{id}/enable")
 	public void enableUser(@PathParam("id") Long id) throws BusinessException;
 
 	@GET
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@Path("users")
 	public List<User> findAllUsers() throws BusinessException;
 	
 	@GET
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	@Path("{id}")
+	@Path("users/{id}")
 	public User findUserById(@PathParam("id")Long id) throws BusinessException;
 	
 	@POST
+	@Path("admin/reset")
 	public void resetDB() throws BusinessException;
 
 }

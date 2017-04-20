@@ -17,14 +17,16 @@ public interface UserServiceRest {
 
 	@PUT
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Path("user")
 	public Long registerUser(User user) throws BusinessException;
 
 	@POST
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Path("user")
 	public void updateUserDetails(User user) throws BusinessException;
 
 	@GET
-	@Path("{login}")
+	@Path("user/{login}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public User findLoggableUser(@PathParam("login") String login)
 			throws BusinessException;
