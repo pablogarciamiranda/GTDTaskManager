@@ -13,6 +13,7 @@ import uo.sdi.business.impl.admin.command.ResetDBCommand;
 import uo.sdi.business.impl.command.Command;
 import uo.sdi.business.impl.command.CommandExecutor;
 import uo.sdi.dto.User;
+import uo.sdi.dto.UserInfo;
 import uo.sdi.infraestructure.Factories;
 
 /**
@@ -53,6 +54,20 @@ public class EJBAdminService implements RemoteAdminService,
 					public List<User> execute() throws BusinessException {
 
 						return Factories.persistence.getUserDao().findAll();
+						
+					}
+				});
+	}
+	
+	@Override
+	public List<UserInfo> findAllUsersInfo() throws BusinessException {
+		return new CommandExecutor<List<UserInfo>>()
+				.execute(new Command<List<UserInfo>>() {
+					@Override
+					public List<UserInfo> execute() throws BusinessException {
+
+						return Factories.persistence.getUserDao().findAllInfo();
+						
 					}
 				});
 	}

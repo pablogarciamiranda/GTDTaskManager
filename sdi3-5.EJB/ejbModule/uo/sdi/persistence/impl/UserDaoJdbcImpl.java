@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import uo.sdi.dto.User;
+import uo.sdi.dto.UserInfo;
 import uo.sdi.dto.types.UserStatus;
 import uo.sdi.persistence.UserDao;
 import uo.sdi.persistence.util.JdbcTemplate;
@@ -22,6 +23,19 @@ public class UserDaoJdbcImpl implements UserDao {
 				.setEmail(  	rs.getString("email") )
 				.setIsAdmin( 	rs.getBoolean("isAdmin") )
 				.setStatus(  	UserStatus.valueOf( rs.getString("status") ));
+		}
+	}
+	
+	public class UserInfoMapper implements RowMapper<UserInfo> {
+		@Override
+		public UserInfo toObject(ResultSet rs) throws SQLException {
+			return new UserInfo()
+				.setId(  		rs.getLong("id") )
+				.setLogin(  	rs.getString("login") )
+				.setCompletedTasks(Integer.parseInt(rs.getString("finished")))
+				.setLateCompletedTasks(Integer.parseInt(rs.getString("finished_late")))
+				.setPlannedTasks(Integer.parseInt(rs.getString("planned")))
+				.setUnplannedTasks(Integer.parseInt(rs.getString("not_planned")));
 		}
 	}
 	
@@ -72,6 +86,11 @@ public class UserDaoJdbcImpl implements UserDao {
 	@Override
 	public List<User> findAll() {
 		return jdbcTemplate.queryForList("USER_FIND_ALL", new UserMapper());
+	}
+	
+	@Override
+	public List<UserInfo> findAllInfo() {
+		return jdbcTemplate.queryForList("USER_FIND_ALL_INFO", new UserInfoMapper());
 	}
 
 	@Override
