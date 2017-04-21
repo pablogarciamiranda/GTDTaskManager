@@ -10,11 +10,11 @@ import javax.servlet.http.HttpSession;
 import alb.util.log.Log;
 import alb.util.log.LogLevel;
 import uo.sdi.business.UserService;
-import uo.sdi.business.exception.BusinessCheck;
 import uo.sdi.business.exception.BusinessException;
-import uo.sdi.business.impl.util.MessageProvider;
 import uo.sdi.dto.User;
 import uo.sdi.infraestructure.Factories;
+import uo.sdi.presentation.util.BusinessCheck;
+import uo.sdi.presentation.util.MessageProvider;
 
 
 @ManagedBean(name = "login")
@@ -50,7 +50,7 @@ public class BeanLogin implements Serializable {
 				session.setAttribute("LOGGEDIN_USER", user);
 				setIsSignedIn(true);
 				
-				//BusinessCheck.showBusinessInfo(MessageProvider.getValue("loginOk"));
+				BusinessCheck.showBusinessInfo(MessageProvider.getValue("loginOk"));
 				//If the user is admin
 				if (user.getIsAdmin()){
 					Log.debug("Admin user "+ login +" succesfully logged in");

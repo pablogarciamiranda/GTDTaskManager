@@ -6,10 +6,13 @@ import java.util.Date;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 import uo.sdi.business.impl.util.FreijeyPabloUtil;
 import alb.util.date.DateUtil;
 
 @XmlRootElement(name = "task")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Task implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

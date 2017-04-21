@@ -6,11 +6,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
 import uo.sdi.business.UserService;
-import uo.sdi.business.exception.BusinessCheck;
 import uo.sdi.business.exception.BusinessException;
-import uo.sdi.business.impl.util.MessageProvider;
 import uo.sdi.dto.User;
 import uo.sdi.infraestructure.Factories;
+import uo.sdi.presentation.util.BusinessCheck;
+import uo.sdi.presentation.util.MessageProvider;
 import alb.util.log.Log;
 
 /**

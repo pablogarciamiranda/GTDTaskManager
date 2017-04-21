@@ -9,12 +9,12 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 import uo.sdi.business.AdminService;
-import uo.sdi.business.exception.BusinessCheck;
 import uo.sdi.business.exception.BusinessException;
-import uo.sdi.business.impl.util.MessageProvider;
 import uo.sdi.dto.User;
 import uo.sdi.dto.types.UserStatus;
 import uo.sdi.infraestructure.Factories;
+import uo.sdi.presentation.util.BusinessCheck;
+import uo.sdi.presentation.util.MessageProvider;
 import alb.util.log.Log;
 
 /**
