@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14927597830890" configfile="/sdi3-5.Web/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="register.xhtml" x="122" y="178" id="pf14927598085881" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf14927598086042" path="/register.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="login.xhtml" x="338" y="562" id="pf14927598086043" referenceLink="//@navigationRule.7/@navigationCase.0/@toViewId|" outlinks="pf14927598086044 pf14927598086045" inlinks="pf14927598086042 pf14927598086046 pf14927598086047" path="/login.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="restricted/*" x="122" y="946" id="pf14927598086048" referenceLink="//@navigationRule.7/@fromViewId|" outlinks="pf14927598086049 pf149275980860410 pf149275980860411 pf149275980860412 pf149275980860413 pf149275980860414 pf14927598086047" path="/user/*"/>
+  <nodes xsi:type="pageflow:PFPage" name="restricted/añadirTarea.xhtml" x="122" y="1377" id="pf149275980860415" referenceLink="//@navigationRule.5/@fromViewId|" outlinks="pf149275980860416 pf149275980860417 pf149275980860418" path="/user/añadirTarea.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="admin/panelAdmin.xhtml" id="pf149275980860419" referenceLink="//@navigationRule.6/@fromViewId|" outlinks="pf14927598086046" inlinks="pf14927598086044" path="/admin/panelAdmin.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="user/listaTareasInbox.xhtml" id="pf149275980860420" referenceLink="//@navigationRule.5/@navigationCase.0/@toViewId|" inlinks="pf14927598086045 pf14927598086049 pf149275980860410 pf149275980860416" path="/user/listaTareasInbox.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="user/listaTareasToday.xhtml" id="pf149275980860421" referenceLink="//@navigationRule.5/@navigationCase.1/@toViewId|" inlinks="pf149275980860411 pf149275980860412 pf149275980860417" path="/user/listaTareasToday.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="user/listaTareasWeek.xhtml" id="pf149275980860422" referenceLink="//@navigationRule.5/@navigationCase.2/@toViewId|" inlinks="pf149275980860413 pf149275980860414 pf149275980860418" path="/user/listaTareasWeek.xhtml"/>
+  <links id="pf14927598086042" target="pf14927598086043" source="pf14927598085881" outcome="exito" fromaction="#{user.signUp}"/>
+  <links id="pf14927598086044" target="pf149275980860419" source="pf14927598086043" outcome="exitoAdmin" fromaction="#{login.login}"/>
+  <links id="pf14927598086046" target="pf14927598086043" source="pf149275980860419" outcome="exito" fromaction="#{login.logout}"/>
+  <links id="pf14927598086045" target="pf149275980860420" source="pf14927598086043" outcome="exito" fromaction="#{login.login}"/>
+  <links id="pf14927598086049" target="pf149275980860420" source="pf14927598086048" outcome="exito" fromaction="#{tasks.setTasksInbox}"/>
+  <links id="pf149275980860410" target="pf149275980860420" source="pf14927598086048" outcome="fracaso" fromaction="#{tasks.setTasksInbox}"/>
+  <links id="pf149275980860411" target="pf149275980860421" source="pf14927598086048" outcome="exito" fromaction="#{tasks.setTasksToday}"/>
+  <links id="pf149275980860412" target="pf149275980860421" source="pf14927598086048" outcome="fracaso" fromaction="#{tasks.setTasksToday}"/>
+  <links id="pf149275980860413" target="pf149275980860422" source="pf14927598086048" outcome="exito" fromaction="#{tasks.setTasksWeek}"/>
+  <links id="pf149275980860414" target="pf149275980860422" source="pf14927598086048" outcome="fracaso" fromaction="#{tasks.setTasksWeek}"/>
+  <links id="pf149275980860416" target="pf149275980860420" source="pf149275980860415" outcome="inbox" fromaction="#{tasks.addTask}"/>
+  <links id="pf149275980860417" target="pf149275980860421" source="pf149275980860415" outcome="today" fromaction="#{tasks.addTask}"/>
+  <links id="pf149275980860418" target="pf149275980860422" source="pf149275980860415" outcome="week" fromaction="#{tasks.addTask}"/>
+  <links id="pf14927598086047" target="pf14927598086043" source="pf14927598086048" outcome="exito" fromaction="#{login.logout}"/>
+</pageflow:Pageflow>
