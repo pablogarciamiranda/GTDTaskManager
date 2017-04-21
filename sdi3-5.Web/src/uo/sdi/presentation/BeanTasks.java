@@ -11,12 +11,12 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import uo.sdi.business.TaskService;
-import uo.sdi.business.exception.BusinessCheck;
 import uo.sdi.business.exception.BusinessException;
 import uo.sdi.dto.Category;
 import uo.sdi.dto.Task;
 import uo.sdi.dto.User;
 import uo.sdi.infraestructure.Factories;
+import uo.sdi.presentation.util.BusinessCheck;
 import alb.util.date.DateUtil;
 import alb.util.log.Log;
 

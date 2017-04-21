@@ -38,19 +38,4 @@ public class BusinessCheck {
 		if ( condition == true ) return;
 		throw new BusinessException( errorMsg );
 	}
-	
-	public static String showBusinessError(String messg){
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", messg);
-		FacesContext context = FacesContext.getCurrentInstance();
-		context.addMessage(null, message);
-		return null;
-	}
-	
-	public static String showBusinessInfo(String messg){
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Info!", messg);
-		FacesContext context = FacesContext.getCurrentInstance();
-		context.addMessage(null, message);
-		return null;
-	}
-
 }

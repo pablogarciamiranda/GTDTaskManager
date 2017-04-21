@@ -1,4 +1,4 @@
-package uo.sdi.business.impl.util;
+package uo.sdi.presentation.util;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
