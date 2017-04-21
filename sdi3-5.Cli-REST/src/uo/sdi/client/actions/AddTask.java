@@ -1,8 +1,11 @@
 package uo.sdi.client.actions;
 
+import java.util.List;
+
 import alb.util.console.Console;
 import alb.util.date.DateUtil;
 import uo.sdi.client.exception.BusinessException;
+import uo.sdi.client.model.Category;
 import uo.sdi.client.model.Task;
 import uo.sdi.client.model.User;
 import uo.sdi.client.service.AdminServicesRest;
@@ -32,6 +35,8 @@ public class AddTask implements Action {
 			
 			task.setCreated(DateUtil.today());
 			
+			List<Category> categories = taskServicesRest.findCategoriesByUserId(user.getId());
+			showCategories(categories);
 			long category_id = Console.readLong("> Introduce the id of a category");
 			task.setCategoryId(category_id);
 			
@@ -39,7 +44,12 @@ public class AddTask implements Action {
 		
 			taskServicesRest.createTask(task);
 		}
-
+	}
+	
+	private void showCategories(List<Category> categories) {
+		for (Category c: categories){
+			System.out.println(c);
+		}
 	}
 
 }

@@ -28,7 +28,7 @@ public class FinishTask implements Action {
 			List<Category> categories = taskServicesRest.findCategoriesByUserId(user.getId());
 			showCategories(categories);
 			
-			long categoryId = Console.readInt("> Choose a category");
+			long categoryId = Console.readLong("> Choose a category");
 			List<Task> tasks = taskServicesRest.findTasksByCategoryId(categoryId);
 			showTasks(tasks);
 			

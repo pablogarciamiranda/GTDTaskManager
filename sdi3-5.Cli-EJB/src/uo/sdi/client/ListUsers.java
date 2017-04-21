@@ -1,5 +1,13 @@
 package uo.sdi.client;
 
-public class ListUsers {
+import alb.util.menu.Action;
+
+public class ListUsers implements Action{
+
+	@Override
+	public void execute() throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

@@ -6,9 +6,12 @@ import java.util.Date;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 import uo.sdi.util.FreijeyPabloUtil;
 import alb.util.date.DateUtil;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @XmlRootElement(name = "task")
 public class Task implements Serializable {
 	
