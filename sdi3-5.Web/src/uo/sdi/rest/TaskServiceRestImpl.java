@@ -2,6 +2,8 @@ package uo.sdi.rest;
 
 import java.util.List;
 
+import javax.ws.rs.core.Response;
+
 import uo.sdi.business.TaskService;
 import uo.sdi.business.exception.BusinessException;
 import uo.sdi.dto.Category;
@@ -38,9 +40,17 @@ public class TaskServiceRestImpl implements TaskServiceRest {
 	}
 
 	@Override
-	public List<Category> findCategoriesByUserId(Long id)
-			throws BusinessException {
-		return service.findCategoriesByUserId(id);
+	public Response findCategoriesByUserId(Long id) throws BusinessException {
+
+		List<Category> categories = service.findCategoriesByUserId(id);
+
+		return Response
+				.ok()
+				// 200
+				.entity(categories)
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods",
+						"GET, POST, DELETE, PUT").build();
 	}
 
 	@Override
