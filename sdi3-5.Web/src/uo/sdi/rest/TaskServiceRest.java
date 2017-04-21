@@ -11,6 +11,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import uo.sdi.business.exception.BusinessException;
 import uo.sdi.dto.Category;
@@ -44,9 +45,9 @@ public interface TaskServiceRest {
 	public Category findCategoryById(@PathParam("id") Long id) throws BusinessException;
 
 	@GET
-	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@Produces({MediaType.APPLICATION_JSON})
 	@Path("categories/user/{id}")
-	public List<Category> findCategoriesByUserId(@PathParam("id") Long id)
+	public Response findCategoriesByUserId(@PathParam("id") Long id)
 			throws BusinessException;
 
 	@PUT

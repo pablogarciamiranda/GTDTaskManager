@@ -1,9 +1,5 @@
 package uo.sdi.business.exception;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-
-
 public class BusinessCheck {
 
 	public static void isNull(Object o, String errorMsg) throws BusinessException {
