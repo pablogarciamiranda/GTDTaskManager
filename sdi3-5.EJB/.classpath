@@ -22,6 +22,6 @@
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/NotaneitorRemoteClient_v3.0/resteasy_libs/jackson-core-asl-1.9.12.jar"/>
+	<classpathentry kind="lib" path="lib/resteasy_libs/jackson-core-asl-1.9.12.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
