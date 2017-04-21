@@ -1,7 +1,9 @@
 package uo.sdi.dto;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement(name = "userInfo")
 public class UserInfo {
 
 	private Long id;
