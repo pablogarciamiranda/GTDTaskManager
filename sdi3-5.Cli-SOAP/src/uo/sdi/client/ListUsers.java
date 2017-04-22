@@ -4,16 +4,15 @@ import java.util.List;
 
 import alb.util.menu.Action;
 
-import com.sdi.ws.AdminService;
-import com.sdi.ws.EJBAdminServiceService;
-import com.sdi.ws.UserInfo;
+import uo.sdi.ws.AdminService;
+import uo.sdi.ws.EJBAdminServiceService;
+import uo.sdi.ws.UserInfo;
 
 public class ListUsers implements Action {
 
 	@Override
 	public void execute() throws Exception {
-		AdminService service = new EJBAdminServiceService()
-				.getAdminServicePort();
+		AdminService service = new EJBAdminServiceService().getAdminServicePort();
 		List<UserInfo> users = service.findAllUsersInfo();
 		printHeader();
 		for (UserInfo u : users) {

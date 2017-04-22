@@ -40,7 +40,7 @@ public class TaskServiceRestImpl implements TaskServiceRest {
 	}
 
 	@Override
-	public Response findCategoriesByUserId(Long id) throws BusinessException {
+	public Response findCategoriesByUserIdR(Long id) throws BusinessException {
 
 		List<Category> categories = service.findCategoriesByUserId(id);
 
@@ -54,8 +54,12 @@ public class TaskServiceRestImpl implements TaskServiceRest {
 	}
 
 	@Override
-	public Long createTask(Task task) throws BusinessException {
-		return service.createTask(task);
+	public Response createTask(Task task) throws BusinessException {
+		service.createTask(task);
+		return Response.ok().header("Access-Control-Allow-Origin", "*").
+				header("Access-Control-Allow-Headers", "Content-Type").
+				header("Access-Control-Allow-Methods",
+						"GET, POST, DELETE, PUT").build();
 	}
 
 	@Override
@@ -64,8 +68,9 @@ public class TaskServiceRestImpl implements TaskServiceRest {
 	}
 
 	@Override
-	public void markTaskAsFinished(Long id) throws BusinessException {
+	public Response markTaskAsFinished(final Long id) throws BusinessException {
 		service.markTaskAsFinished(id);
+		return Response.ok().header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@Override
@@ -94,9 +99,15 @@ public class TaskServiceRestImpl implements TaskServiceRest {
 	}
 
 	@Override
-	public List<Task> findTasksByCategoryId(Long catId)
-			throws BusinessException {
-		return service.findTasksByCategoryId(catId);
+	public Response findTasksByCategoryIdR(Long catId) throws BusinessException {
+		List<Task> tasks = service.findTasksByCategoryId(catId);
+		return Response
+				.ok()
+				// 200
+				.entity(tasks)
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods",
+						"GET, POST, DELETE, PUT").build();
 	}
 
 	@Override
@@ -109,6 +120,16 @@ public class TaskServiceRestImpl implements TaskServiceRest {
 	public List<Task> findFinishedInboxTasksByUserId(Long userId)
 			throws BusinessException {
 		return service.findFinishedInboxTasksByUserId(userId);
+	}
+
+	@Override
+	public List<Category> findCategoriesByUserId(Long id) throws BusinessException {
+		return service.findCategoriesByUserId(id);	
+	}
+
+	@Override
+	public List<Task> findTasksByCategoryId(Long catId) throws BusinessException {
+		return service.findTasksByCategoryId(catId);
 	}
 
 }

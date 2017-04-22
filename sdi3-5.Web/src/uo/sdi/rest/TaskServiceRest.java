@@ -26,7 +26,7 @@ public interface TaskServiceRest {
 	public Long createCategory(Category category) throws BusinessException;
 
 	@PUT
-	@Path("categories/{id}/duplicate")
+	@Path("categories/duplicate/{id}")
 	public Long duplicateCategory(@PathParam("id") Long id)
 			throws BusinessException;
 
@@ -37,31 +37,40 @@ public interface TaskServiceRest {
 
 	@DELETE
 	@Path("categories/{id}/delete")
-	public void deleteCategory(@PathParam("id") Long id) throws BusinessException;
+	public void deleteCategory(@PathParam("id") Long id)
+			throws BusinessException;
 
 	@GET
-	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Path("categories/{id}")
-	public Category findCategoryById(@PathParam("id") Long id) throws BusinessException;
+	public Category findCategoryById(@PathParam("id") Long id)
+			throws BusinessException;
 
 	@GET
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({ MediaType.APPLICATION_JSON })
+	@Path("categories/userR/{id}")
+	public Response findCategoriesByUserIdR(@PathParam("id") Long id)
+			throws BusinessException;
+
+	@GET
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Path("categories/user/{id}")
-	public Response findCategoriesByUserId(@PathParam("id") Long id)
+	public List<Category> findCategoriesByUserId(@PathParam("id") Long id)
 			throws BusinessException;
 
 	@PUT
-	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Consumes({ MediaType.APPLICATION_JSON })
 	@Path("tasks")
-	public Long createTask(Task task) throws BusinessException;
-	
+	public Response createTask(Task task) throws BusinessException;
+
 	@DELETE
-	@Path("tasks/{id}/delete")
+	@Path("tasks/delete/{id}")
 	public void deleteTask(@PathParam("id") Long id) throws BusinessException;
 
 	@POST
-	@Path("tasks/{id}/finish")
-	public void markTaskAsFinished(@PathParam("id") Long id) throws BusinessException;
+	@Path("tasks/finish/{id}")
+	public Response markTaskAsFinished(@PathParam("id") Long id)
+			throws BusinessException;
 
 	@POST
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -69,41 +78,50 @@ public interface TaskServiceRest {
 	public void updateTask(Task task) throws BusinessException;
 
 	@GET
-	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Path("tasks/user/{id}")
-	public Task findTaskById(@PathParam("id")  Long id) throws BusinessException;
+	public Task findTaskById(@PathParam("id") Long id) throws BusinessException;
 
 	@GET
-	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Path("tasks/inbox/user/{id}")
-	public List<Task> findInboxTasksByUserId(@PathParam("id")  Long id) throws BusinessException;
-	
+	public List<Task> findInboxTasksByUserId(@PathParam("id") Long id)
+			throws BusinessException;
+
 	@GET
-	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Path("tasks/week/user/{id}")
-	public List<Task> findWeekTasksByUserId(@PathParam("id")  Long id) throws BusinessException;
+	public List<Task> findWeekTasksByUserId(@PathParam("id") Long id)
+			throws BusinessException;
 
 	@GET
-	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Path("tasks/today/user/{id}")
-	public List<Task> findTodayTasksByUserId(@PathParam("id")  Long id) throws BusinessException;
+	public List<Task> findTodayTasksByUserId(@PathParam("id") Long id)
+			throws BusinessException;
 
 	@GET
-	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@Produces({ MediaType.APPLICATION_JSON })
+	@Path("tasks/categoryR/{id}")
+	public Response findTasksByCategoryIdR(@PathParam("id") Long catId)
+			throws BusinessException;
+
+	@GET
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Path("tasks/category/{id}")
 	public List<Task> findTasksByCategoryId(@PathParam("id") Long catId)
 			throws BusinessException;
-	
+
 	@GET
-	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Path("tasks/finished/category/{id}")
 	public List<Task> findFinishedTasksByCategoryId(@PathParam("id") Long catId)
 			throws BusinessException;
-	
+
 	@GET
-	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Path("tasks/finished/inbox/category/{id}")
-	public List<Task> findFinishedInboxTasksByUserId(@PathParam("id") Long userId)
-			throws BusinessException;
+	public List<Task> findFinishedInboxTasksByUserId(
+			@PathParam("id") Long userId) throws BusinessException;
 
 }
