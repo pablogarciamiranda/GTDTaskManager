@@ -2,9 +2,9 @@ package uo.sdi.client;
 
 import java.util.List;
 
-import com.sdi.ws.AdminService;
-import com.sdi.ws.EJBAdminServiceService;
-import com.sdi.ws.User;
+import com.sdi.uo.AdminService;
+import com.sdi.uo.EJBAdminServiceService;
+import com.sdi.uo.User;
 
 public class Main {
 

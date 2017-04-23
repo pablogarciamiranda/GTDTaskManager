@@ -4,9 +4,9 @@ import java.util.List;
 
 import alb.util.menu.Action;
 
-import com.sdi.ws.AdminService;
-import com.sdi.ws.EJBAdminServiceService;
-import com.sdi.ws.UserInfo;
+import com.sdi.uo.AdminService;
+import com.sdi.uo.EJBAdminServiceService;
+import com.sdi.uo.UserInfo;
 
 public class ListUsers implements Action {
 
