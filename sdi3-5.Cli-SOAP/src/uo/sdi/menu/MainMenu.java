@@ -9,9 +9,9 @@ public class MainMenu extends BaseMenu {
 
 	public MainMenu() {
 
-		menuOptions = new Object[][] { { "List categories", ListUsers.class },
-				{ "List tasks from a category", DisableUser.class },
-				{ "Finish task", DeepDeleteUser.class } };
+		menuOptions = new Object[][] { { "List users", ListUsers.class },
+				{ "Enable/Disable user", DisableUser.class },
+				{ "Delete user", DeepDeleteUser.class } };
 	}
 
 	public static void main(String... args) {
