@@ -32,6 +32,7 @@ public class UserDaoJdbcImpl implements UserDao {
 			return new UserInfo()
 				.setId(  		rs.getLong("id") )
 				.setLogin(  	rs.getString("login") )
+				.setEmail(  	rs.getString("email") )
 				.setCompletedTasks(Integer.parseInt(rs.getString("finished")))
 				.setLateCompletedTasks(Integer.parseInt(rs.getString("finished_late")))
 				.setPlannedTasks(Integer.parseInt(rs.getString("planned")))
