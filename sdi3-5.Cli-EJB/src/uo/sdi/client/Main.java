@@ -4,7 +4,7 @@ import java.util.List;
 
 import uo.sdi.business.AdminService;
 import uo.sdi.business.impl.RemoteEJBServicesLocator;
-import uo.sdi.dto.User;
+import uo.sdi.dto.UserInfo;
 
 public class Main {
 
@@ -26,21 +26,19 @@ public class Main {
 
 	private void run() throws Exception {
 		AdminService service = new RemoteEJBServicesLocator().getAdminService();
-		List<User> users = service.findAllUsers();
+		List<UserInfo> users = service.findAllUsersInfo();
 		printHeader();
-		for (User u : users) {
+		for (UserInfo u : users) {
 			printLine(u);
 		}
 	}
 
 	private void printHeader() {
-		System.out.printf("%s %s %s %s\n", "_ID__", "_LOGIN_________",
-				"_PASSWORD___________", "_EMAIL___________", "_IS_ADMIN____");
+		System.out.printf("%s %s\n", "_ID__", "_LOGIN_________");
 	}
 
-	private void printLine(User u) {
-		System.out.printf("%-20s %-15s %-25s %-8s\n", u.getId(), u.getLogin(),
-				u.getPassword(), u.getEmail(), u.getIsAdmin());
+	private void printLine(UserInfo u) {
+		System.out.printf("%-20s %-15s", u.getId(), u.getLogin());
 	}
 
 }

@@ -12,8 +12,7 @@ public class ListUsers implements Action {
 
 	@Override
 	public void execute() throws Exception {
-		AdminService service = new EJBAdminServiceService()
-				.getAdminServicePort();
+		AdminService service = new EJBAdminServiceService().getAdminServicePort();
 		List<UserInfo> users = service.findAllUsersInfo();
 		printHeader();
 		for (UserInfo u : users) {

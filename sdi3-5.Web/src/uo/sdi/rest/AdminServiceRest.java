@@ -17,15 +17,15 @@ import uo.sdi.dto.User;
 public interface AdminServiceRest {
 	
 	@DELETE
-	@Path("users/{id}/delete")
+	@Path("users/delete/{id}")
 	public void deepDeleteUser(@PathParam("id") Long id) throws BusinessException;
 	
 	@POST
-	@Path("users/{id}/disable")
+	@Path("users/disable/{id}")
 	public void disableUser(@PathParam("id") Long id) throws BusinessException;
 	
 	@POST
-	@Path("users/{id}/enable")
+	@Path("users/enable/{id}")
 	public void enableUser(@PathParam("id") Long id) throws BusinessException;
 
 	@GET
