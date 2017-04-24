@@ -9,6 +9,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import uo.sdi.business.exception.BusinessException;
 import uo.sdi.dto.User;
@@ -32,6 +33,11 @@ public interface AdminServiceRest {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Path("users")
 	public List<User> findAllUsers() throws BusinessException;
+	
+	@GET
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("usersR")
+	public Response findAllUsersR() throws BusinessException;
 	
 	@GET
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})

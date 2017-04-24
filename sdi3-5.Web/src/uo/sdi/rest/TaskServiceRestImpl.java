@@ -57,9 +57,12 @@ public class TaskServiceRestImpl implements TaskServiceRest {
 	public Response createTask(Task task) throws BusinessException {
 		service.createTask(task);
 		return Response.ok().header("Access-Control-Allow-Origin", "*").
+				header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization").
+				header("Access-Control-Allow-Credentials", "true").
+				header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").
 				header("Access-Control-Allow-Headers", "Content-Type").
-				header("Access-Control-Allow-Methods",
-						"GET, POST, DELETE, PUT").build();
+				header("Access-Control-Max-Age", "1209600")
+				.build();
 	}
 
 	@Override
