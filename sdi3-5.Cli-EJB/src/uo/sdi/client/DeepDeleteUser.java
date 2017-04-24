@@ -1,12 +1,35 @@
 package uo.sdi.client;
 
+import uo.sdi.business.AdminService;
+import uo.sdi.business.exception.BusinessException;
+import uo.sdi.business.impl.RemoteEJBServicesLocator;
+import uo.sdi.dto.User;
+import alb.util.console.Console;
 import alb.util.menu.Action;
 
 public class DeepDeleteUser implements Action{
 
 	@Override
 	public void execute() throws Exception {
-		// TODO Auto-generated method stub
+		AdminService service = new RemoteEJBServicesLocator().getAdminService(); 
+		long id = Console.readLong("Enter an id");
+		
+		try{
+			
+			User user = service.findUserById(id);
+			if (user==null){
+				System.out.println("No hay ningun usuario con ese id");
+				return;
+			}
+			
+			service.deepDeleteUser(id);
+			System.out.println("El usuario con id "+id
+					+" ha sido eliminado adecuadamente");
+		} catch(BusinessException b){
+			System.out.println("The user could not be deleted due to: \n"
+					+b.getLocalizedMessage());
+		}
+		
 		
 	}
 

@@ -1,10 +1,19 @@
 package uo.sdi.dto;
 
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * An implementation of the DTO pattern to get info about users 
+ * 
+ * @author Fernando Freije
+ */
 @XmlRootElement(name = "userInfo")
-public class UserInfo {
+public class UserInfo implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	private Long id;
 
