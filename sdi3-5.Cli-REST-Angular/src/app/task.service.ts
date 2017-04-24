@@ -10,12 +10,14 @@ import { Category } from "app/category";
 export class TaskService {
   private taskService: string = 'http://10.0.2.2:8280/sdi3-5.Web/rest/TaskServiceRs';
   private task: Task;
+  private categoryId: number;
 
   constructor(private http: Http) {
 
   }
 
   fetchTasks(id:number): Observable<Task[]> {
+    this.categoryId = id;
     return this.http.get(this.taskService + '/tasks/categoryR/' + id).map(response => this.toTasks(response.json()));
   }
 
@@ -44,12 +46,12 @@ export class TaskService {
     });
   }
 
-  addTask(_title: string, _comments: string, _created: string, _planned: string, _finished: string, _categoryId: number, _userId: number){
+  addTask(_title: string, _comments: string, _created: string, _planned: string, _finished: string, _userId: number){
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    var task = JSON.stringify({title: _title, comments: _comments, created: _created, planned: _planned, finished: _finished, _categoryId, userId: _userId});
+    var task = JSON.stringify({title: _title, comments: _comments, created: _created, planned: _planned, finished: _finished, categoryId: this.categoryId, userId: _userId});
     
-    this.http.post(this.taskService + '/tasks', task, {headers: headers})
+    this.http.put(this.taskService + '/tasks', task, {headers: headers})
               .map(res => res.json())
               .subscribe(res=> console.log ("Value: " + res));
   }
