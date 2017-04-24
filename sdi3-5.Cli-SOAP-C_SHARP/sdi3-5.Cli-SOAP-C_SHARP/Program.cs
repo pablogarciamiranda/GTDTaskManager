@@ -10,6 +10,10 @@ namespace sdi3_5.Cli_SOAP_C_SHARP
     {
         static void Main(string[] args)
         {
+            AdminService.AdminService service = new AdminService.AdminServiceClient();
+
+            Console.WriteLine(service.findAllUsers());
+
         }
     }
 }
