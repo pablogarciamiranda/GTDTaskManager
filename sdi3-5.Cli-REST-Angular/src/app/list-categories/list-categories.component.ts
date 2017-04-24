@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TaskService } from "app/task.service";
 import { Task } from "app/task";
 import { Category } from "app/category";
+import { UserService } from "app/user.service";
 
 @Component({
   selector: 'app-list-categories',
@@ -10,23 +11,24 @@ import { Category } from "app/category";
 })
 export class ListCategoriesComponent implements OnInit {
 
-  private service: TaskService;
+  private tService: TaskService;
+  private uService: UserService;
   private categories: Category[];
   private userId: number;
 
-  constructor(taskService: TaskService) {
-    this.service = taskService;
+  constructor(taskService: TaskService, userService: UserService) {
+    this.tService = taskService;
+    this.uService = userService;
   }
 
   ngOnInit() {
+    this.loadCategories(this.uService.getUserId());
   }
 
-  loadCategories(id:number) {
-    this.service.fetchCategories(id).subscribe(
+  loadCategories(id: number) {
+    this.tService.fetchCategories(id).subscribe(
       categories => this.categories = categories,
       error => console.log('Error fetching categories')
     );
   }
-
-  
 }

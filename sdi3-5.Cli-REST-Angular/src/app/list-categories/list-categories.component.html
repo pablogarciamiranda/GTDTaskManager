@@ -1,5 +1,3 @@
-<input [(ngModel)]="userId" />
-<button (click)="loadCategories(userId)">Find categories by UserId</button>
 <div *ngFor="let category of categories">
   <p><span><strong>Id</strong>:</span> {{category.id}}</p>
   <p><span><strong>Name</strong>:</span> {{category.title}}</p>
