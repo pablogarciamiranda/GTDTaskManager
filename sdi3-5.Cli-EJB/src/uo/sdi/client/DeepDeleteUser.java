@@ -18,13 +18,13 @@ public class DeepDeleteUser implements Action{
 			
 			User user = service.findUserById(id);
 			if (user==null){
-				System.out.println("No hay ningun usuario con ese id");
+				System.out.println("There is no user with id:"+id);
 				return;
 			}
 			
 			service.deepDeleteUser(id);
-			System.out.println("El usuario con id "+id
-					+" ha sido eliminado adecuadamente");
+			System.out.println("The user with id "+id
+					+" has been successfully deleted");
 		} catch(BusinessException b){
 			System.out.println("The user could not be deleted due to: \n"
 					+b.getLocalizedMessage());

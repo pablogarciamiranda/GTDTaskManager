@@ -18,17 +18,19 @@ public class DisableUser implements Action{
 		try{
 			User user = service.findUserById(id);
 			if (user==null){
-				System.out.println("No hay ningun usuario con ese id");
+				System.out.println("There is no user with id:"+id);
 				return;
 			}
 				
 			if(user.getStatus().equals(UserStatus.ENABLED)){
 				service.disableUser(id);
-				System.out.println("El usuario con id "+id+" ha sido deshabilitado adecuadamente");
+				System.out.println("The user with id "+id+" has been "
+						+ "successfully disabled");
 			}
 			else{
 				service.enableUser(id);
-				System.out.println("El usuario con id "+id+" ha sido habilitado adecuadamente");
+				System.out.println("The user with id "+id+" has been "
+						+ "succesfully enabled");
 			}	
 		} catch(BusinessException_Exception b){
 			System.out.println("The user could not be disabled due to: \n"
