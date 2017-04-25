@@ -18,7 +18,7 @@ public class DisableUser implements Action {
 					.getAdminService();
 			Long id = null;
 			while (id == null) {
-				id = Console.readLong("Enter an id: ");
+				id = Console.readLong("Enter an id");
 				if (id == null || id < 0) {
 					System.out
 							.println("That input is not valid. Please, try again");
@@ -29,7 +29,7 @@ public class DisableUser implements Action {
 			User user = service.findUserById(id);
 
 			if (user == null)
-				throw new BusinessException("There is no user with" + "id "
+				throw new BusinessException("There is no user with " + "id "
 						+ id);
 
 			if (user.getStatus().equals(UserStatus.ENABLED)) {
@@ -42,7 +42,7 @@ public class DisableUser implements Action {
 						+ "successfully enabled");
 			}
 		} catch (BusinessException b) {
-			System.out.println("The user could not be disabled due to: \n"
+			System.out.println("The user could not be disabled due to: \n\t"
 					+ b.getLocalizedMessage());
 		} catch (Exception e) {
 			System.out.println("There was a problem with the system");
