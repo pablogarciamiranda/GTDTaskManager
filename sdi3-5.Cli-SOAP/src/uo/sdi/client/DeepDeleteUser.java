@@ -8,29 +8,39 @@ import com.sdi.uo.BusinessException_Exception;
 import com.sdi.uo.EJBAdminServiceService;
 import com.sdi.uo.User;
 
-public class DeepDeleteUser implements Action{
+public class DeepDeleteUser implements Action {
 
 	@Override
 	public void execute() throws Exception {
-		AdminService service = new EJBAdminServiceService().getAdminServicePort(); 
-		long id = Console.readLong("Enter an id");
-		
-		try{
-			
-			User user = service.findUserById(id);
-			if (user==null){
-				System.out.println("There is no user with id:"+id);
-				return;
+		try {
+			AdminService service = new EJBAdminServiceService()
+					.getAdminServicePort();
+			Long id = null;
+			while (id == null) {
+				id = Console.readLong("Enter an id: ");
+				if (id == null || id < 0) {
+					System.out
+							.println("That input is not valid. Please, try again");
+					id = null;
+				}
 			}
-			
+
+			User user = service.findUserById(id);
+
+			if (user == null)
+				throw new BusinessException_Exception("There is no user with"
+						+ "id " + id);
+
 			service.deepDeleteUser(id);
-			System.out.println("The user with id: "+id
-					+" has been successfully deleted");
-		} catch(BusinessException_Exception b){
+			System.out.println("The user with id: " + id
+					+ " has been successfully deleted");
+		} catch (BusinessException_Exception b) {
 			System.out.println("The user could not be deleted due to: \n"
-					+b.getLocalizedMessage());
+					+ b.getLocalizedMessage());
+		} catch (Exception e){
+			System.out.println("There was a problem with the system");
 		}
-		
+
 	}
 
 }

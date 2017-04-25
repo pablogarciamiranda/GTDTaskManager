@@ -11,12 +11,17 @@ public class ListUsers implements Action{
 
 	@Override
 	public void execute() throws Exception {
-		AdminService service = new RemoteEJBServicesLocator().getAdminService();
-		List<UserInfo> users = service.findAllUsersInfo();
-		printHeader();
-		for (UserInfo u : users) {
-			printLine(u);
+		try{
+			AdminService service = new RemoteEJBServicesLocator().getAdminService();
+			List<UserInfo> users = service.findAllUsersInfo();
+			printHeader();
+			for (UserInfo u : users) {
+				printLine(u);
+			}
+		} catch (Exception e){
+			System.out.println("There was a problem with the system");
 		}
+		
 	}
 
 	private void printHeader() {

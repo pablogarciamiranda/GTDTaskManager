@@ -8,32 +8,44 @@ import uo.sdi.dto.types.UserStatus;
 import alb.util.console.Console;
 import alb.util.menu.Action;
 
-public class DisableUser implements Action{
+public class DisableUser implements Action {
 
 	@Override
 	public void execute() throws Exception {
-		AdminService service = new RemoteEJBServicesLocator().getAdminService();
-		long id = Console.readLong("Enter an id: ");	
-		try{
+
+		try {
+			AdminService service = new RemoteEJBServicesLocator()
+					.getAdminService();
+			Long id = null;
+			while (id == null) {
+				id = Console.readLong("Enter an id: ");
+				if (id == null || id < 0) {
+					System.out
+							.println("That input is not valid. Please, try again");
+					id = null;
+				}
+			}
+
 			User user = service.findUserById(id);
-			if (user==null){
-				System.out.println("There is no user with id:"+id);
-				return;
-			}
-				
-			if(user.getStatus().equals(UserStatus.ENABLED)){
+
+			if (user == null)
+				throw new BusinessException("There is no user with" + "id "
+						+ id);
+
+			if (user.getStatus().equals(UserStatus.ENABLED)) {
 				service.disableUser(id);
-				System.out.println("The user with id "+id+" has been "
+				System.out.println("The user with id " + id + " has been "
 						+ "successfully disabled");
-			}
-			else{
+			} else {
 				service.enableUser(id);
-				System.out.println("The user with id "+id+" has been "
+				System.out.println("The user with id " + id + " has been "
 						+ "successfully enabled");
-			}	
-		} catch(BusinessException b){
+			}
+		} catch (BusinessException b) {
 			System.out.println("The user could not be disabled due to: \n"
-					+b.getLocalizedMessage());
+					+ b.getLocalizedMessage());
+		} catch (Exception e) {
+			System.out.println("There was a problem with the system");
 		}
 	}
 
