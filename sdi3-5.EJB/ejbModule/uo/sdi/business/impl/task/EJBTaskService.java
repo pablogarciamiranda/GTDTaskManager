@@ -201,5 +201,19 @@ public class EJBTaskService implements RemoteTaskService,
 					}
 				});
 	}
+	
+	@Override
+	public List<Task> findFinishedTodayTasksByUserId(final Long id)
+			throws BusinessException {
+		return new CommandExecutor<List<Task>>()
+				.execute(new Command<List<Task>>() {
+					@Override
+					public List<Task> execute() throws BusinessException {
+
+						return Factories.persistence.getTaskDao()
+								.findFinishedTasksTodayByUserId(id);
+					}
+				});
+	}
 
 }

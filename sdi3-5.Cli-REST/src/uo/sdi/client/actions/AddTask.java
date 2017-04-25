@@ -2,6 +2,7 @@ package uo.sdi.client.actions;
 
 import java.util.List;
 
+import uo.sdi.client.RestClient;
 import uo.sdi.client.exception.BusinessException;
 import uo.sdi.client.model.Category;
 import uo.sdi.client.model.Task;
@@ -9,20 +10,19 @@ import uo.sdi.client.model.User;
 import uo.sdi.client.service.AdminServicesRest;
 import uo.sdi.client.service.TaskServicesRest;
 import uo.sdi.client.service.UserServicesRest;
-import uo.sdi.client.validation.Authenticator;
 import uo.sdi.menu.Action;
 import alb.util.console.Console;
 
 public class AddTask implements Action {
-
-	Authenticator userValidation = new Authenticator();
 
 	@Override
 	public void execute(UserServicesRest userServiceRest,
 			AdminServicesRest adminServiceRest,
 			TaskServicesRest taskServicesRest) throws BusinessException {
 
-		User user = userValidation.validation(userServiceRest);
+		RestClient client = new RestClient();
+		User user = userServiceRest.findLoggableUser(client.getLogin());
+
 		if (user != null) {
 			Task task = new Task();
 
@@ -45,7 +45,7 @@ public class AddTask implements Action {
 
 			taskServicesRest.createTask(task);
 			System.out.println("The task " + task.getTitle()
-					+ "has been created.");
+					+ " has been created.");
 		}
 	}
 

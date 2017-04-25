@@ -56,13 +56,16 @@ public class TaskServiceRestImpl implements TaskServiceRest {
 	@Override
 	public Response createTask(Task task) throws BusinessException {
 		service.createTask(task);
-		return Response.ok().header("Access-Control-Allow-Origin", "*").
-				header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization").
-				header("Access-Control-Allow-Credentials", "true").
-				header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").
-				header("Access-Control-Allow-Headers", "Content-Type").
-				header("Access-Control-Max-Age", "1209600")
-				.build();
+		return Response
+				.ok()
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Headers",
+						"origin, content-type, accept, authorization")
+				.header("Access-Control-Allow-Credentials", "true")
+				.header("Access-Control-Allow-Methods",
+						"GET, POST, PUT, DELETE, OPTIONS, HEAD")
+				.header("Access-Control-Allow-Headers", "Content-Type")
+				.header("Access-Control-Max-Age", "1209600").build();
 	}
 
 	@Override
@@ -126,13 +129,21 @@ public class TaskServiceRestImpl implements TaskServiceRest {
 	}
 
 	@Override
-	public List<Category> findCategoriesByUserId(Long id) throws BusinessException {
-		return service.findCategoriesByUserId(id);	
+	public List<Category> findCategoriesByUserId(Long id)
+			throws BusinessException {
+		return service.findCategoriesByUserId(id);
 	}
 
 	@Override
-	public List<Task> findTasksByCategoryId(Long catId) throws BusinessException {
+	public List<Task> findTasksByCategoryId(Long catId)
+			throws BusinessException {
 		return service.findTasksByCategoryId(catId);
+	}
+
+	@Override
+	public List<Task> findFinishedTodayTasksByUserId(Long userId)
+			throws BusinessException {
+		return service.findFinishedTodayTasksByUserId(userId);
 	}
 
 }

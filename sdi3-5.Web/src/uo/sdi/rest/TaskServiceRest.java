@@ -53,7 +53,7 @@ public interface TaskServiceRest {
 			throws BusinessException;
 
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Path("categories/user/{id}")
 	public List<Category> findCategoriesByUserId(@PathParam("id") Long id)
 			throws BusinessException;
@@ -120,8 +120,13 @@ public interface TaskServiceRest {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("tasks/finished/inbox/category/{id}")
+	@Path("tasks/finished/inbox/user/{id}")
 	public List<Task> findFinishedInboxTasksByUserId(
 			@PathParam("id") Long userId) throws BusinessException;
 
+	@GET
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Path("tasks/finished/today/user/{id}")
+	public List<Task> findFinishedTodayTasksByUserId(
+			@PathParam("id") Long userId) throws BusinessException;
 }

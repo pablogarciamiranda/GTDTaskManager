@@ -1,33 +1,38 @@
 package uo.sdi.client.validation;
 
-import alb.util.console.Console;
-import uo.sdi.client.exception.BusinessException;
-import uo.sdi.client.model.User;
-import uo.sdi.client.service.UserServicesRest;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
-public class Authenticator {
+import javax.ws.rs.client.ClientRequestContext;
+import javax.ws.rs.client.ClientRequestFilter;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.xml.bind.DatatypeConverter;
 
-	public User validation(UserServicesRest userService) {
-		String login = Console.readString("> Introduce your name: ");
-		String password = Console.readString("> Introduce your password");
+public class Authenticator implements ClientRequestFilter {
+	private final String login;
+	private final String password;
 
-		User user = null;
+	public Authenticator(String login, String password) {
+		this.login = login;
+		this.password = password;
+	}
+
+	@Override
+	public void filter(ClientRequestContext ctx) throws IOException {
+		MultivaluedMap<String, Object> headers = ctx.getHeaders();
+		final String basicAuthentication = getBasicAuthentication();
+		headers.add("Authorization", basicAuthentication);
+	}
+
+	private String getBasicAuthentication() {
+		String token = this.login + ":" + this.password;
 		try {
-			user = userService.findLoggableUser(login);
-		} catch (BusinessException e) {
-			System.err.println(e.getMessage());
+			return "Basic "
+					+ DatatypeConverter.printBase64Binary(token
+							.getBytes("UTF-8"));
+		} catch (UnsupportedEncodingException ex) {
+			throw new IllegalStateException("Cannot encode with UTF-8", ex);
 		}
-		if (user == null) {
-			System.out
-					.println("There is not an user registered with that login, try again");
-			return null;
-		}
-		if (!user.getPassword().equals(password)) {
-			System.out.println("The password is incorrect, try again");
-			return null;
-		}
-		return user;
-
 	}
 
 }

@@ -163,4 +163,13 @@ public class TaskDaoJdbcImpl implements TaskDao {
 		
 	}
 
+	@Override
+	public List<Task> findFinishedTasksTodayByUserId(Long userId) {
+		return jdbcTemplate.queryForList(
+				"TASK_FIND_FINISHED_TODAY_BY_USER_ID", 
+				new TaskDtoMapper(),
+				userId
+			);
+	}
+
 }

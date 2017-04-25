@@ -10,7 +10,6 @@ import uo.sdi.client.service.UserServicesRest;
 import alb.util.console.Console;
 import alb.util.console.Printer;
 
-
 /**
  * Manages menu and its options.
  * 
@@ -55,7 +54,8 @@ public abstract class BaseMenu implements Action {
 		if (actionClass == null)
 			return;
 
-		createInstanceOf(actionClass).execute(userServiceRest, adminServiceRest, taskServicesRest);
+		createInstanceOf(actionClass).execute(userServiceRest,
+				adminServiceRest, taskServicesRest);
 	}
 
 	protected int getMenuOption() {
