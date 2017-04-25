@@ -1,4 +1,4 @@
-package uo.sdi.rest;
+package uo.sdi.rest.filter;
 
 import java.io.IOException;
 

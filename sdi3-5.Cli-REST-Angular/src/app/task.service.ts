@@ -18,10 +18,12 @@ export class TaskService {
 
   fetchTasks(id:number): Observable<Task[]> {
     this.categoryId = id;
+    //var header = this.generateHeader("admin1", "admin1"); 
     return this.http.get(this.taskService + '/tasks/categoryR/' + id).map(response => this.toTasks(response.json()));
   }
 
   fetchCategories(id:number): Observable<Task[]> {
+    //var header = this.generateHeader("admin1", "admin1"); 
     return this.http.get(this.taskService + '/categories/userR/' + id).map(response => this.toCategories(response.json()));
   }
 
@@ -47,17 +49,29 @@ export class TaskService {
   }
 
   addTask(_title: string, _comments: string, _created: string, _planned: string, _finished: string, _userId: number){
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
+    var header = new Headers(); 
+    header.append('Content-Type', 'application/json');
+
     var task = JSON.stringify({title: _title, comments: _comments, created: _created, planned: _planned, finished: _finished, categoryId: this.categoryId, userId: _userId});
     
-    this.http.put(this.taskService + '/tasks', task, {headers: headers})
+    this.http.put(this.taskService + '/tasks', task, {headers: header})
               .map(res => res.json())
               .subscribe(res=> console.log ("Value: " + res));
   }
 
   finishTask(id: number){
+    //var header = this.generateHeader("admin1", "admin1"); 
     this.http.post(this.taskService + '/tasks/finish/'+ id, "").subscribe();
+  }
+
+  private generateHeader(username, password) {
+    var base64Creds = btoa(username + ":" + password);
+    var auth = 'Basic ' + base64Creds;
+    console.log(auth);
+    var authHeader = new Headers();
+    authHeader.append("Authorization", auth);
+
+    return authHeader;
   }
 
   

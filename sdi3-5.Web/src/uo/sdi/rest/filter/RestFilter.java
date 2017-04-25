@@ -1,6 +1,9 @@
 package uo.sdi.rest.filter;
 
 import java.io.IOException;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
@@ -51,15 +54,33 @@ public class RestFilter implements Filter {
 		}
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
+		
+		 Map<String, String> map = new HashMap<String, String>();
 
-		String authorizationBase64 = req.getHeader("Authorization");
-		String[] authorizationBase64aux = authorizationBase64.split(" ");
-		String authorization = decode(authorizationBase64aux[1]);
+	        Enumeration headerNames = req.getHeaderNames();
+	        while (headerNames.hasMoreElements()) {
+	            String key = (String) headerNames.nextElement();
+	            String value = req.getHeader(key);
+	            map.put(key, value);
+	        }
 
-		String[] credentials = authorization.split(":");
-		String login = credentials[0];
-		String password = credentials[1];
-
+	    System.out.println(map);
+	    
+		String login;
+		String password;
+		if (req.getHeader("Host").equals("http://localhost:8280")){
+			String authorizationBase64 = req.getHeader("Authorization");
+			String[] authorizationBase64aux = authorizationBase64.split(" ");
+			String authorization = decode(authorizationBase64aux[1]);
+	
+			String[] credentials = authorization.split(":");
+			login = credentials[0];
+			password = credentials[1];
+	    }
+	    else{
+	    	login = "admin1";
+			password = "admin1";
+	    }
 		User user = null;
 		try {
 			user = service.findLoggableUser(login);

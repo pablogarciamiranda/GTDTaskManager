@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from "@angular/http";
+import { Http, Headers } from "@angular/http";
 import { User } from "app/user";
 import { Observable } from "rxjs/Observable";
 
@@ -13,6 +13,9 @@ export class UserService {
   }
 
   fetchUsers(): Observable<User[]> {
+    //var header = this.generateHeader("admin1", "admin1"); 
+
+    //console.log(header);
     return this.http.get(this.adminService + '/usersR').map(response => this.toUsers(response.json()));
   }
 
@@ -34,4 +37,19 @@ export class UserService {
   getUserId():number{
     return this.userId;
   }
-}
+
+    /**
+   * Generate HTTP header using HTTP basic Auth
+   */
+  private generateHeader(username, password) {
+
+    var base64Creds = btoa(username + ":" + password);
+    var auth = 'Basic ' + base64Creds;
+    console.log(auth);
+    var authHeader = new Headers();
+    authHeader.append("Authorization", auth);
+    authHeader.append("Access-Control-Allow-Credentials", "true");
+    return authHeader;
+  }
+
+} 
