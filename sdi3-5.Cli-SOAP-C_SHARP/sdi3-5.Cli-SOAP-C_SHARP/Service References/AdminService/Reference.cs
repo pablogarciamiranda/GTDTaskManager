@@ -111,7 +111,6 @@ namespace sdi3_5.Cli_SOAP_C_SHARP.AdminService {
         
         [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
         System.Threading.Tasks.Task<sdi3_5.Cli_SOAP_C_SHARP.AdminService.deepDeleteUserResponse> deepDeleteUserAsync(sdi3_5.Cli_SOAP_C_SHARP.AdminService.deepDeleteUser request);
-        bool findAllUsers();
     }
     
     /// <comentarios/>
