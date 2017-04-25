@@ -6,7 +6,6 @@ import javax.ws.rs.core.Response;
 
 import uo.sdi.business.AdminService;
 import uo.sdi.business.exception.BusinessException;
-import uo.sdi.dto.Category;
 import uo.sdi.dto.User;
 import uo.sdi.infraestructure.Factories;
 
@@ -41,9 +40,12 @@ public class AdminServiceRestImpl implements AdminServiceRest {
 		return Response
 				.ok()
 				.entity(users)
-				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Origin", "http://localhost:4200")
 				.header("Access-Control-Allow-Methods",
-						"GET, POST, DELETE, PUT").build();
+						"GET, POST, DELETE, PUT")
+				.header("Access-Control-Allow-Headers", "Authorization")
+				.header("Access-Control-Allow-Credentials", "true")
+				.allow("OPTIONS").build();
 	}
 
 	@Override
