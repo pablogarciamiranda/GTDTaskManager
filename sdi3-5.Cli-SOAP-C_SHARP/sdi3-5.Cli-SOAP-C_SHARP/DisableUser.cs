@@ -10,8 +10,6 @@ namespace sdi3_5.Cli_SOAP_C_SHARP
     {
         public void Execute()
         {
-            try
-            {
                 AdminService.AdminService service = new AdminService.AdminServiceClient();
 
                 long id = Util.ReadLong("Enter an id",0);
@@ -20,9 +18,14 @@ namespace sdi3_5.Cli_SOAP_C_SHARP
                 requestUser.arg0 = id;
                 AdminService.user user = service.findUserById(requestUser).@return;
 
-               // if (user == null)
-                    //Como hago esto?
-                    // throw new AdminService.BusinessException("There is no user with " + "id "+ id);
+                if (user == null)
+                {
+                    Console.WriteLine("There is no user with " + "id " + id);
+                    return;
+                }
+                
+                   
+  
                 
                 if (user.status.Equals(AdminService.userStatus.ENABLED))
                 {
@@ -40,17 +43,7 @@ namespace sdi3_5.Cli_SOAP_C_SHARP
                         Console.WriteLine("The user with id " + id + " has been "
                             + "successfully enabled");
                 }
-            }
-            //No se como se hacen las exceptions
-            //catch (AdminService.BusinessException b)
-            //{
-            //    Console.WriteLine("The user could not be disabled due to: \n\t"
-            //            + b.message);
-            //}
-            catch (Exception e)
-            {
-                Console.WriteLine("There was a problem with the system");
-            }
+            
         }
     }
 }

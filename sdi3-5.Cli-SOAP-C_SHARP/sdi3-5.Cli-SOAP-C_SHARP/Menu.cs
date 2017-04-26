@@ -18,23 +18,23 @@ namespace sdi3_5.Cli_SOAP_C_SHARP
                 commands[0] = new EndProgram();
                 commands[1] = new ListUsers();
                 commands[2] = new DisableUser();
-                commands[3] = new ListUsers();
+                commands[3] = new DeepDeleteUser();
                 Console.WriteLine("Welcome to the SOAP client developed by Pablo García Miranda & Fernando Freije Fuente!" +
                    " \n\t\t1 - List users\n\t\t2 - Enable / Disable user\n\t\t3 - Delete user\n\t\t0 - Salir");
 
 
                option = Util.ReadInt("Enter an option", 0, commands.Count());
 
-                //try
-                //{
+                try
+                {
                     commands[option].Execute();
-                //}
-                //catch (Exception e)
-                //{
-                //    Console.WriteLine("There was a problem with the system");
-                //}
-            }
-            
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("There was a problem with the system");
+                }
+        }
+
         }
     }
 }

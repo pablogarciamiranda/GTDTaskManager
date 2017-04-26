@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="9qnXoHungjXveLt3UFetY1ESNT4=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="csZ5sudpe8YBba8luXAYZuzkpCw=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="EJBAdminServiceServiceSoapBinding1">
       <properties>
@@ -112,10 +112,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="AdminServicePort1" contract="AdminService.AdminService" bindingType="basicHttpBinding" address="http://freije-sobremesa:8280/sdi3-5.EJB/AdminService" bindingConfiguration="EJBAdminServiceServiceSoapBinding1">
+    <endpoint name="AdminServicePort" contract="AdminService.AdminService" bindingType="basicHttpBinding" address="http://freije-surface:8280/sdi3-5.EJB/AdminService" bindingConfiguration="EJBAdminServiceServiceSoapBinding1">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://FREIJE-SOBREMESA:8280/sdi3-5.EJB/AdminService</serializedValue>
+          <serializedValue>http://FREIJE-SURFACE:8280/sdi3-5.EJB/AdminService</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -187,7 +187,7 @@
           <serializedValue>False</serializedValue>
         </property>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>AdminServicePort1</serializedValue>
+          <serializedValue>AdminServicePort</serializedValue>
         </property>
         <property path="/kind" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

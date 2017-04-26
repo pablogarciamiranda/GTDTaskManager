@@ -19,10 +19,38 @@ namespace sdi3_5.Cli_SOAP_C_SHARP.AdminService {
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://admin.impl.business.sdi.uo/")]
     public partial class BusinessException : object, System.ComponentModel.INotifyPropertyChanged {
         
+        private string faultReasonField;
+        
+        private string faultCodeField;
+        
         private string messageField;
         
         /// <comentarios/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, IsNullable=true, Order=0)]
+        public string faultReason {
+            get {
+                return this.faultReasonField;
+            }
+            set {
+                this.faultReasonField = value;
+                this.RaisePropertyChanged("faultReason");
+            }
+        }
+        
+        /// <comentarios/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, IsNullable=true, Order=1)]
+        public string faultCode {
+            get {
+                return this.faultCodeField;
+            }
+            set {
+                this.faultCodeField = value;
+                this.RaisePropertyChanged("faultCode");
+            }
+        }
+        
+        /// <comentarios/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
         public string message {
             get {
                 return this.messageField;

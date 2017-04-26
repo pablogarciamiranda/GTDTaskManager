@@ -104,6 +104,8 @@
       <xs:element name="BusinessException" type="tns:BusinessException" />
       <xs:complexType name="BusinessException">
         <xs:sequence>
+          <xs:element name="faultReason" nillable="true" type="xs:string" />
+          <xs:element name="faultCode" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="message" type="xs:string" />
         </xs:sequence>
       </xs:complexType>
@@ -280,7 +282,7 @@
   </wsdl:binding>
   <wsdl:service name="EJBAdminServiceService">
     <wsdl:port name="AdminServicePort" binding="tns:EJBAdminServiceServiceSoapBinding">
-      <soap:address location="http://FREIJE-SOBREMESA:8280/sdi3-5.EJB/AdminService" />
+      <soap:address location="http://FREIJE-SURFACE:8280/sdi3-5.EJB/AdminService" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>
