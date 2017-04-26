@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="31c73027-a5e1-44f6-9432-ddf8e24fd018" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="c1ad8dee-9153-4df7-b834-cb7e851a6619" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,7 +22,7 @@
     <MetadataSource Address="http://localhost:8280/sdi3-5.EJB/AdminService?wsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="EJBAdminServiceService.wsdl" MetadataType="Wsdl" ID="49a3d340-a69a-47b0-b19b-5069cc7397bd" SourceId="1" SourceUrl="http://localhost:8280/sdi3-5.EJB/AdminService?wsdl" />
+    <MetadataFile FileName="EJBAdminServiceService.wsdl" MetadataType="Wsdl" ID="37f21b56-59e8-4cbc-a669-fd440183d799" SourceId="1" SourceUrl="http://localhost:8280/sdi3-5.EJB/AdminService?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

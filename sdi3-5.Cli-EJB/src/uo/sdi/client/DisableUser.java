@@ -16,14 +16,12 @@ public class DisableUser implements Action {
 		try {
 			AdminService service = new RemoteEJBServicesLocator()
 					.getAdminService();
-			Long id = null;
-			while (id == null) {
+			Long id = Console.readLong("Enter an id");
+			while (id == null || id < 0) {
+				System.out
+						.println("That input is not valid. Please, try again");
+				id = null;
 				id = Console.readLong("Enter an id");
-				if (id == null || id < 0) {
-					System.out
-							.println("That input is not valid. Please, try again");
-					id = null;
-				}
 			}
 
 			User user = service.findUserById(id);
