@@ -57,7 +57,7 @@ public class RestFilter implements Filter {
 		
 		 Map<String, String> map = new HashMap<String, String>();
 
-	        Enumeration headerNames = req.getHeaderNames();
+		Enumeration headerNames = req.getHeaderNames();
 	        while (headerNames.hasMoreElements()) {
 	            String key = (String) headerNames.nextElement();
 	            String value = req.getHeader(key);

@@ -1,6 +1,5 @@
 package uo.sdi.client.actions;
 
-import java.util.Date;
 import java.util.List;
 
 import uo.sdi.client.RestClient;
@@ -84,7 +83,7 @@ public class ListTasks implements Action {
 	}
 
 	private void printLineTask(Task t) {
-		String finished; 
+		String finished;
 		if (t.getFinished() == null)
 			finished = "";
 		else
@@ -94,15 +93,14 @@ public class ListTasks implements Action {
 			planned = "";
 		else
 			planned = t.getPlanned().toString();
-		String created ;
+		String created;
 		if (t.getCreated() == null)
 			created = "";
 		else
 			created = t.getCreated().toString();
 
 		System.out.printf("%-10s %-8s %-18s %-30s %-30s %-30s\n", t.getId(),
-				t.getCategoryId(), t.getTitle(), created,
-				planned, finished);
+				t.getCategoryId(), t.getTitle(), created, planned, finished);
 	}
 
 	private void printLineCategory(Category c) {

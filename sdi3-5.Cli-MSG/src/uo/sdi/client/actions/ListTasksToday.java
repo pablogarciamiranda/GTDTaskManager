@@ -1,91 +1,59 @@
 package uo.sdi.client.actions;
 
-import java.util.List;
+import javax.jms.Connection;
+import javax.jms.ConnectionFactory;
+import javax.jms.Destination;
+import javax.jms.JMSException;
+import javax.jms.MapMessage;
+import javax.jms.MessageProducer;
+import javax.jms.Session;
 
-import javax.ws.rs.ProcessingException;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.MediaType;
-
-import uo.sdi.client.model.Task;
-import uo.sdi.client.model.User;
-import uo.sdi.client.validation.Authenticator;
-import alb.util.console.Console;
+import uo.sdi.util.Jndi;
 import alb.util.menu.Action;
 
 public class ListTasksToday implements Action {
-	private static final String REST_TASK_SERVICE_URL = "http://localhost:8280"
-			+ "/sdi3-5.Web/rest/TaskServiceRs";
 
-	private static final String REST_USER_SERVICE_URL = "http://localhost:8280"
-			+ "/sdi3-5.Web/rest/UserServiceRs";
-
-	private User user;
+	private static final String JMS_CONNECTION_FACTORY = "jms/RemoteConnectionFactory";
+	private static final String NOTANEITOR_QUEUE = "jms/queue/SendMessagesQueue";
+	private Connection con;
+	private Session session;
+	private MessageProducer sender;
 
 	@Override
 	public void execute() throws Exception {
-		if (!authentication())
-			return;
-		List<Task> tasks = getListTasksToday();
-		
-		if (tasks == null){
-			System.out.println("There are not tasks finished for today");
-		}
-		showTasks(tasks);
-
+		initialize();
+		MapMessage msg = createMessage();
+		showMessage(msg);
+		sender.send(msg);
+		close();
 	}
 
-	private void showTasks(List<Task> tasks) {
-		for (Task task : tasks){
-			System.out.println(task);
-		}
+	private void showMessage(MapMessage msg) {
+		msg.toString();
 	}
 
-	private boolean authentication() {
-		String login = Console.readString("> Introduce your login: ");
-		String password = Console.readString("> Introduce your password: ");
-
-		User user = getUserByLogin(login, password);
-		if (user == null) {
-			System.out.println("The user does not exist, try again.");
-			return false;
-		}
-		if (!user.getPassword().equals(password)) {
-			System.out.println("The passwords do not match, try again.");
-			return false;
-		}
-		this.user = user;
-		return true;
-	}
-
-	private User getUserByLogin(String login, String password) {
+	private void close() {
 		try {
-			return (User) ClientBuilder.newClient()
-					.register(new Authenticator(login, password))
-					.target(REST_USER_SERVICE_URL).path("user/" + login)
-					.request().accept(MediaType.APPLICATION_XML).get()
-					.readEntity(User.class);
-		} catch (ProcessingException e) {
-			return null;
+			con.close();
+		} catch (JMSException e) {
+			e.printStackTrace();
 		}
 	}
 
-	private List<Task> getListTasksToday() {
-		GenericType<List<Task>> listt = new GenericType<List<Task>>() {
-		};
-		try {
-			List<Task> list = ClientBuilder
-					.newClient()
-					.register(
-							new Authenticator(user.getLogin(), user
-									.getPassword()))
-					.target(REST_TASK_SERVICE_URL)
-					.path("tasks/finished/today/user/" + user.getId())
-					.request().get().readEntity(listt);
-
-			return list;
-		} catch (ProcessingException e) {
-			return null;
-		}
+	private void initialize() throws JMSException {
+		ConnectionFactory factory = (ConnectionFactory) Jndi
+				.find(JMS_CONNECTION_FACTORY);
+		Destination queue = (Destination) Jndi.find(NOTANEITOR_QUEUE);
+		con = factory.createConnection("sdi", "password");
+		session = con.createSession(false, Session.AUTO_ACKNOWLEDGE);
+		sender = session.createProducer(queue);
+		con.start();
 	}
+
+	private MapMessage createMessage() throws JMSException {
+		MapMessage msg = session.createMapMessage();
+		msg.setString("command", "list");
+		return msg;
+	}
+
 }

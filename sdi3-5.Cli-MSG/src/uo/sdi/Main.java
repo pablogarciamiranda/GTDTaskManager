@@ -1,4 +1,4 @@
-package uo.sdi.client.actions;
+package uo.sdi;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
@@ -9,9 +9,8 @@ import javax.jms.MessageProducer;
 import javax.jms.Session;
 
 import uo.sdi.util.Jndi;
-import alb.util.console.Console;
 
-public class FinishTask implements alb.util.menu.Action {
+public class Main {
 
 	private static final String JMS_CONNECTION_FACTORY = "jms/RemoteConnectionFactory";
 	private static final String NOTANEITOR_QUEUE = "jms/queue/SendMessagesQueue";
@@ -19,19 +18,17 @@ public class FinishTask implements alb.util.menu.Action {
 	private Session session;
 	private MessageProducer sender;
 
-	@Override
-	public void execute() throws Exception {
+	public static void main(String[] args) throws JMSException {
+		new Main().run();
+	}
+
+	private void run() throws JMSException {
 		initialize();
-		// Id of the task
-		Long taskId = Console.readLong("> Choose a taskId to finish");
-		while (taskId == null || taskId < 0) {
-			System.out.println("That input is not valid. Please, try again");
-			taskId = null;
-			taskId = Console.readLong("> Choose a taskId to finish");
+		for (int i = 0; i < 5; i++) {
+			MapMessage msg = createMessage(i);
+			showMessage(msg);
+			sender.send(msg);
 		}
-		MapMessage msg = createMessage(taskId);
-		showMessage(msg);
-		sender.send(msg);
 		close();
 	}
 
@@ -43,6 +40,7 @@ public class FinishTask implements alb.util.menu.Action {
 		try {
 			con.close();
 		} catch (JMSException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -57,10 +55,14 @@ public class FinishTask implements alb.util.menu.Action {
 		con.start();
 	}
 
-	private MapMessage createMessage(Long taskId) throws JMSException {
+	private MapMessage createMessage(int i) throws JMSException {
 		MapMessage msg = session.createMapMessage();
-		msg.setString("command", "finish");
-		msg.setLong("taskId", taskId);
+		msg.setString("command", "add");
+		msg.setString("title", "Prueba " + i);
+		msg.setString("comments", "");
+		msg.setString("userId",
+				"272");
+		msg.setString("categoryId", "215");
 		return msg;
 	}
 

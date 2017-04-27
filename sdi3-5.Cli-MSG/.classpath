@@ -27,5 +27,8 @@
 	<classpathentry kind="lib" path="lib/resteasy_libs/resteasy-jackson-provider-3.0.16.Final.jar"/>
 	<classpathentry kind="lib" path="lib/resteasy_libs/resteasy-jaxb-provider-3.0.16.Final.jar"/>
 	<classpathentry kind="lib" path="lib/resteasy_libs/resteasy-jaxrs-3.0.16.Final.jar"/>
+	<classpathentry kind="lib" path="lib/jboss-jms-api_1.1_spec-1.0.0.Final.jar"/>
+	<classpathentry kind="lib" path="S:/wildfly/bin/client/jboss-client.jar"/>
+	<classpathentry kind="lib" path="lib/gson-2.3.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

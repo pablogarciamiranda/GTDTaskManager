@@ -8,10 +8,9 @@ import java.util.List;
 
 import uo.sdi.client.model.Task;
 
-
 public class FreijeyPabloUtil {
-	
-	public static Date today(){
+
+	public static Date today() {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());
 		cal.set(Calendar.HOUR_OF_DAY, 0);
@@ -22,14 +21,14 @@ public class FreijeyPabloUtil {
 		today.setTime(cal.getTimeInMillis());
 		return today;
 	}
-	
-	public static void orderAscending (List<Task> param){
-		Collections.sort(param, new Comparator<Task>(){
+
+	public static void orderAscending(List<Task> param) {
+		Collections.sort(param, new Comparator<Task>() {
 			@Override
 			public int compare(Task o1, Task o2) {
-				if (o1.getPlanned()==null)
+				if (o1.getPlanned() == null)
 					return 1;
-				if (o2.getPlanned()==null)
+				if (o2.getPlanned() == null)
 					return -1;
 				return o1.getPlanned().compareTo(o2.getPlanned());
 			}
