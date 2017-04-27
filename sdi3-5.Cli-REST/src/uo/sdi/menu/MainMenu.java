@@ -8,7 +8,6 @@ import uo.sdi.client.actions.AddTask;
 import uo.sdi.client.actions.FinishTask;
 import uo.sdi.client.actions.ListCategories;
 import uo.sdi.client.actions.ListTasks;
-import uo.sdi.menu.BaseMenu;
 
 public class MainMenu extends BaseMenu {
 
@@ -24,7 +23,9 @@ public class MainMenu extends BaseMenu {
 	public static void main(String... args) {
 		RegisterBuiltin.register(ResteasyProviderFactory.getInstance());
 		RestClient client = new RestClient();
+		
 		new MainMenu().execute(client.getUserService(),
-				client.getAdminService(), client.getTaskService());
+				client.getTaskService(), client);
+
 	}
 }

@@ -26,6 +26,12 @@ public interface TaskServicesRest {
 			throws BusinessException;
 
 	@GET
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Path("categories/{id}")
+	public Category findCategoryById(@PathParam("id") Long id)
+			throws BusinessException;
+	
+	@GET
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Path("tasks/category/{id}")
 	public List<Task> findTasksByCategoryId(@PathParam("id") Long catId)

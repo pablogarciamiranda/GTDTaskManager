@@ -3,8 +3,8 @@ package uo.sdi.menu;
 import java.util.ArrayList;
 import java.util.List;
 
+import uo.sdi.client.RestClient;
 import uo.sdi.client.exception.BusinessException;
-import uo.sdi.client.service.AdminServicesRest;
 import uo.sdi.client.service.TaskServicesRest;
 import uo.sdi.client.service.UserServicesRest;
 import alb.util.console.Console;
@@ -28,16 +28,14 @@ public abstract class BaseMenu implements Action {
 
 	@Override
 	public void execute(UserServicesRest userServiceRest,
-			AdminServicesRest adminServiceRest,
-			TaskServicesRest taskServicesRest) {
+			TaskServicesRest taskServicesRest, RestClient client) {
 		int opt;
 
 		do {
 			showMenu();
 			opt = getMenuOption();
 			try {
-				processOption(opt, userServiceRest, adminServiceRest,
-						taskServicesRest);
+				processOption(opt, userServiceRest, taskServicesRest, client);
 			} catch (BusinessException be) {
 				Printer.printBusinessException(be);
 			}
@@ -45,8 +43,8 @@ public abstract class BaseMenu implements Action {
 	}
 
 	protected void processOption(int option, UserServicesRest userServiceRest,
-			AdminServicesRest adminServiceRest,
-			TaskServicesRest taskServicesRest) throws BusinessException {
+			TaskServicesRest taskServicesRest, RestClient client)
+			throws BusinessException {
 		if (option == EXIT)
 			return;
 
@@ -55,7 +53,7 @@ public abstract class BaseMenu implements Action {
 			return;
 
 		createInstanceOf(actionClass).execute(userServiceRest,
-				adminServiceRest, taskServicesRest);
+				taskServicesRest, client);
 	}
 
 	protected int getMenuOption() {

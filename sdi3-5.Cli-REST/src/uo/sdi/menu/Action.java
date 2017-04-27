@@ -1,7 +1,7 @@
 package uo.sdi.menu;
 
+import uo.sdi.client.RestClient;
 import uo.sdi.client.exception.BusinessException;
-import uo.sdi.client.service.AdminServicesRest;
 import uo.sdi.client.service.TaskServicesRest;
 import uo.sdi.client.service.UserServicesRest;
 
@@ -15,6 +15,6 @@ import uo.sdi.client.service.UserServicesRest;
  */
 public interface Action {
 	void execute(UserServicesRest userServiceRest,
-			AdminServicesRest adminServiceRest,
-			TaskServicesRest taskServicesRest) throws BusinessException;
+			TaskServicesRest taskServicesRest, RestClient client)
+			throws BusinessException;
 }

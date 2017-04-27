@@ -26,7 +26,7 @@ public class FinishTask implements Action {
 			TaskServicesRest taskServicesRest) {
 		if (!authentication())
 			return;
-		String login = Console.readString("> Introduce the ID of the task you want to finish: ");
+		String taskId = Console.readString("> Introduce the ID of the task you want to finish: ");
 
 	}
 
