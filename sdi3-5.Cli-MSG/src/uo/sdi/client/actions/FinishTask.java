@@ -2,10 +2,12 @@ package uo.sdi.client.actions;
 
 import javax.jms.JMSException;
 import javax.jms.MapMessage;
+import javax.jms.Message;
+import javax.jms.ObjectMessage;
 
 import alb.util.console.Console;
 
-public class FinishTask extends AbstractListener {
+public class FinishTask extends SynchronousReceiver {
 
 	@Override
 	public void execute() throws Exception {
@@ -19,6 +21,12 @@ public class FinishTask extends AbstractListener {
 		}
 		MapMessage msg = createMessage(taskId);
 		requestProducer.send(msg);
+
+		Message message = responseConsumer.receive();
+
+		ObjectMessage m = (ObjectMessage) message;
+		System.out.println(m.getObject());
+		
 		close();
 	}
 

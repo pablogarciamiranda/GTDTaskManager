@@ -2,13 +2,17 @@ package uo.sdi.client.actions;
 
 import javax.jms.JMSException;
 import javax.jms.MapMessage;
+import javax.jms.Message;
+import javax.jms.ObjectMessage;
 
 import uo.sdi.client.model.Task;
 import alb.util.console.Console;
 
 import com.google.gson.Gson;
 
-public class AddTask extends AbstractListener {
+
+public class AddTask extends SynchronousReceiver {
+
 
 	@Override
 	public void execute() throws Exception {
@@ -45,6 +49,11 @@ public class AddTask extends AbstractListener {
 
 		MapMessage msg = createMessage(task);
 		requestProducer.send(msg);
+
+		Message message = responseConsumer.receive();
+
+		ObjectMessage m = (ObjectMessage) message;
+		System.out.println(m.getObject());
 		close();
 	}
 
@@ -64,7 +73,5 @@ public class AddTask extends AbstractListener {
 
 		return msg;
 	}
-
-
 
 }
