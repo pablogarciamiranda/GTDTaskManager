@@ -29,7 +29,7 @@ public class Login extends SynchronousReceiver{
 
 		m = (ObjectMessage) message;
 		
-		System.out.println("User or password was incorrect");
+		if(m==null)System.out.println("User or password was incorrect");
 		
 		} while (m.getObject()==null);
 		login = user;
