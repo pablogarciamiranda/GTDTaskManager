@@ -19,9 +19,12 @@ import javax.jms.ObjectMessage;
 import javax.jms.Session;
 
 import uo.sdi.business.TaskService;
+import uo.sdi.business.UserService;
 import uo.sdi.business.exception.BusinessException;
 import uo.sdi.business.impl.task.LocalTaskService;
+import uo.sdi.business.impl.user.LocalUserService;
 import uo.sdi.dto.Task;
+import uo.sdi.dto.User;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -31,6 +34,9 @@ public class GTDListener implements MessageListener {
 
 	@EJB(beanInterface = LocalTaskService.class)
 	private TaskService taskService;
+	
+	@EJB(beanInterface = LocalUserService.class)
+	private UserService userService;
 
 	@Resource(mappedName = "java:/ConnectionFactory")
 	private ConnectionFactory factory;
@@ -57,10 +63,30 @@ public class GTDListener implements MessageListener {
 		String cmd = m.getString("command");
 		if ("list".equals(cmd)) {
 			return listTodayTasks();
-		} else if ("finish".equals(cmd)) {
+		}
+		else if ("finish".equals(cmd)) {
 			return finishTask(m);
 		} else if ("add".equals(cmd)) {
 			return addTask(m);
+		}
+		else if ("login".equals(cmd)){
+			return login(m);
+		}
+		return null;
+	}
+
+	private Object login(MapMessage msg) {
+		
+		try {
+			String login = msg.getString("login");
+			String password = msg.getString("password");
+			User user = userService.findLoggableUser(login);
+			if (user.getPassword().equals(password)){
+				return user.getId();
+			}
+			return null;
+		} catch (JMSException | BusinessException e1) {
+			e1.printStackTrace();
 		}
 		return null;
 	}
