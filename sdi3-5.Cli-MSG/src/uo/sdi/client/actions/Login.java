@@ -22,17 +22,20 @@ public class Login extends SynchronousReceiver{
 		pass = Console
 				.readString("> Introduce your password");
 
-		MapMessage msg = createMessage(user, password);
+		MapMessage msg = createMessage(user, pass);
 		requestProducer.send(msg);
 
 		Message message = responseConsumer.receive();
 
 		m = (ObjectMessage) message;
 		
+		System.out.println("User or password was incorrect");
+		
 		} while (m.getObject()==null);
 		login = user;
 		password = pass;
 		id = (Long) m.getObject();
+		System.out.println("Login sucessful");
 		close();
 		
 	}

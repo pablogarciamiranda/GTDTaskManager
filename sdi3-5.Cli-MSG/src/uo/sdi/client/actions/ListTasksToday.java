@@ -26,6 +26,7 @@ public class ListTasksToday extends SynchronousReceiver {
 		msg.setString("command", "list");
 		msg.setString("login", login);
 		msg.setString("password",password);
+		msg.setLong("userId", id);
 
 		// Set the tempQueue that is the queue the server will respond to
 		msg.setJMSReplyTo(tempQueue);

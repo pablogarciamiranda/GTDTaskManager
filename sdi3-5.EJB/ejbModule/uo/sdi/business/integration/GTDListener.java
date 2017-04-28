@@ -81,6 +81,7 @@ public class GTDListener implements MessageListener {
 			String login = msg.getString("login");
 			String password = msg.getString("password");
 			User user = userService.findLoggableUser(login);
+			if (user==null) return null;
 			if (user.getPassword().equals(password)){
 				return user.getId();
 			}
