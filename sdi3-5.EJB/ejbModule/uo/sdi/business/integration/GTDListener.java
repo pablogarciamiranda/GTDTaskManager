@@ -34,11 +34,11 @@ public class GTDListener implements MessageListener {
 	private ConnectionFactory factory;
 
 	@Override
-	public void onMessage(Message msg) {
+	public void onMessage(Message message) {
 		System.out.println("GTD: Msg received");
 		try {
-			Object object = process(msg);
-			sendResponse((Serializable) object);
+			Object response = process(message);
+			sendResponse(message, (Serializable) response);
 		} catch (JMSException jex) {
 			jex.printStackTrace();
 		} catch (BusinessException e) {
@@ -67,41 +67,42 @@ public class GTDListener implements MessageListener {
 		Gson gson = new Gson();
 		Task task = null;
 		try {
+			// Deserialize object from JSON
 			task = gson.fromJson(msg.getString("task"), Task.class);
-		} catch (JsonSyntaxException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (JMSException e1) {
-			// TODO Auto-generated catch block
+		} catch (JsonSyntaxException | JMSException e1) {
 			e1.printStackTrace();
 		}
 		try {
 			taskService.createTask(task);
 			return "The task " + task.getTitle() + " has been added correctly.";
 		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return "The task has not been added";
 	}
 
 	private String finishTask(MapMessage msg) {
+		Long taskId = null;
 		try {
-			taskService.markTaskAsFinished(msg.getLong("taskId"));
+			taskId = msg.getLong("taskId");
+		} catch (JMSException e1) {
+			e1.printStackTrace();
+		}
+		try {
+			taskService.markTaskAsFinished(taskId);
+			return "The task with id '" + taskId
+					+ "' has been marked as finished.";
 		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JMSException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
-
+		return "The task with id '" + taskId
+				+ "' has not been marked as finished.";
 	}
 
 	private Object listTodayTasks() {
 		try {
-			return taskService.findFinishedTodayTasksByUserId(272L);
+			taskService.findFinishedTodayTasksByUserId(272L);
+			return "Perfecto";
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}
@@ -109,32 +110,39 @@ public class GTDListener implements MessageListener {
 	}
 
 	private boolean messageOfExpectedType(Message msg) {
-		// TODO Auto-generated method stub
-		return true;
+		return !(msg instanceof MapMessage) ? false : true;
 	}
 
-	private void sendResponse(Serializable object) {
+	private void sendResponse(Message request, Serializable processedMessage) {
 		Connection con = null;
 		try {
+			// We initialize the Connection and Session
 			con = factory.createConnection("sdi", "password");
 			Session session = con
 					.createSession(false, Session.AUTO_ACKNOWLEDGE);
-			ObjectMessage message = session.createObjectMessage();
-			message.setObject(object);
-			MessageProducer sender = session.createProducer(message
-					.getJMSReplyTo());
-			sender.send(message);
+
+			// Create the response to the Client with the processedMessage
+			ObjectMessage response = session.createObjectMessage();
+			response.setJMSCorrelationID(request.getJMSCorrelationID());
+			response.setObject(processedMessage);
+
+			// We send the send the response to the temporaryQueue
+			MessageProducer replyProducer = session.createProducer(null);
+			replyProducer.send(request.getJMSReplyTo(), response);
+
 		} catch (JMSException jex) {
 			jex.printStackTrace();
 		} finally {
 			close(con);
 		}
-
 	}
 
 	private void close(Connection con) {
-		// TODO Auto-generated method stub
-
+		try {
+			con.close();
+		} catch (JMSException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
