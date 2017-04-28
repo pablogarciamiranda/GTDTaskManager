@@ -14,7 +14,7 @@ import alb.util.menu.Action;
 public class ListTasksToday implements Action {
 
 	private static final String JMS_CONNECTION_FACTORY = "jms/RemoteConnectionFactory";
-	private static final String NOTANEITOR_QUEUE = "jms/queue/SendMessagesQueue";
+	private static final String NOTANEITOR_QUEUE = "jms/queue/MessagesQueue";
 	private Connection con;
 	private Session session;
 	private MessageProducer sender;
