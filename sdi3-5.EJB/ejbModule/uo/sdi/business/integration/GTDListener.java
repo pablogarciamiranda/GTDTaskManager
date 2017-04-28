@@ -34,7 +34,7 @@ public class GTDListener implements MessageListener {
 
 	@EJB(beanInterface = LocalTaskService.class)
 	private TaskService taskService;
-	
+
 	@EJB(beanInterface = LocalUserService.class)
 	private UserService userService;
 
@@ -62,26 +62,27 @@ public class GTDListener implements MessageListener {
 		MapMessage m = (MapMessage) msg;
 		String cmd = m.getString("command");
 		if ("list".equals(cmd)) {
-			return listTodayTasks();
-		}
-		else if ("finish".equals(cmd)) {
+			return listTodayTasks(m);
+		} else if ("finish".equals(cmd)) {
 			return finishTask(m);
 		} else if ("add".equals(cmd)) {
 			return addTask(m);
-		}
-		else if ("login".equals(cmd)){
+		} else if ("login".equals(cmd)) {
 			return login(m);
 		}
 		return null;
 	}
 
 	private Object login(MapMessage msg) {
-		
+
 		try {
 			String login = msg.getString("login");
 			String password = msg.getString("password");
 			User user = userService.findLoggableUser(login);
-			if (user.getPassword().equals(password)){
+			if (user == null) {
+				return null;
+			}
+			if (user.getPassword().equals(password)) {
 				return user.getId();
 			}
 			return null;
@@ -89,6 +90,28 @@ public class GTDListener implements MessageListener {
 			e1.printStackTrace();
 		}
 		return null;
+	}
+
+	private boolean verify(MapMessage msg) {
+		String login = null;
+		String password = null;
+		User user = null;
+		try {
+			login = msg.getString("login");
+			password = msg.getString("password");
+			user = userService.findLoggableUser(login);
+		} catch (JMSException e) {
+			e.printStackTrace();
+		} catch (BusinessException e) {
+			e.printStackTrace();
+		}
+		if (user == null) {
+			return false;
+		}
+		if (user.getPassword().equals(password)) {
+			return true;
+		}
+		return false;
 	}
 
 	private String addTask(MapMessage msg) {
@@ -101,6 +124,8 @@ public class GTDListener implements MessageListener {
 			e1.printStackTrace();
 		}
 		try {
+			if (!verify(msg))
+				return "Authentication error";
 			taskService.createTask(task);
 			return "The task " + task.getTitle() + " has been added correctly.";
 		} catch (BusinessException e) {
@@ -117,6 +142,8 @@ public class GTDListener implements MessageListener {
 			e1.printStackTrace();
 		}
 		try {
+			if (!verify(msg))
+				return "Authentication error";
 			taskService.markTaskAsFinished(taskId);
 			return "The task with id '" + taskId
 					+ "' has been marked as finished.";
@@ -127,9 +154,19 @@ public class GTDListener implements MessageListener {
 				+ "' has not been marked as finished.";
 	}
 
-	private Object listTodayTasks() {
+	private Object listTodayTasks(MapMessage msg) {
+		Long userId = null;
 		try {
-			List<Task> tasks = taskService.findFinishedTodayTasksByUserId(272L);
+			userId = msg.getLong("userId");
+		} catch (JMSException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			if (!verify(msg))
+				return "Authentication error";
+			List<Task> tasks = taskService
+					.findFinishedTodayTasksByUserId(userId);
 			return showTasks(tasks);
 		} catch (BusinessException e) {
 			e.printStackTrace();
