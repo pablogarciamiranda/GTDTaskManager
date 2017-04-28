@@ -87,7 +87,6 @@ public class GTDListener implements MessageListener {
 			User user = userService.findLoggableUser(login);
 
 			if (user == null) {
-				sendResponse(msg, auth_error);
 				return auth_error;
 			}
 			if (user.getPassword().equals(password)) {
@@ -133,7 +132,6 @@ public class GTDListener implements MessageListener {
 		}
 		try {
 			if (!verify(msg)) {
-				sendResponse(msg, auth_error);
 				return auth_error;
 			}
 			taskService.createTask(task);
@@ -153,7 +151,6 @@ public class GTDListener implements MessageListener {
 		}
 		try {
 			if (!verify(msg)) {
-				sendResponse(msg, auth_error);
 				return "Authentication error";
 			}
 			taskService.markTaskAsFinished(taskId);
@@ -175,7 +172,6 @@ public class GTDListener implements MessageListener {
 		}
 		try {
 			if (!verify(msg)) {
-				sendResponse(msg, auth_error);
 				return "Authentication error";
 			}
 			List<Task> tasks = taskService
