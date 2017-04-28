@@ -1,6 +1,5 @@
 package uo.sdi.client.actions;
 
-import java.io.Serializable;
 import java.util.Random;
 
 import javax.jms.Connection;
@@ -11,7 +10,6 @@ import javax.jms.JMSException;
 import javax.jms.MapMessage;
 import javax.jms.Message;
 import javax.jms.MessageConsumer;
-import javax.jms.MessageListener;
 import javax.jms.MessageProducer;
 import javax.jms.ObjectMessage;
 import javax.jms.Session;
@@ -20,7 +18,7 @@ import javax.jms.TemporaryQueue;
 import uo.sdi.util.Jndi;
 import alb.util.menu.Action;
 
-public class ListTasksToday implements Action, MessageListener {
+public class ListTasksToday implements Action {
 
 	private static final String JMS_CONNECTION_FACTORY = "jms/RemoteConnectionFactory";
 	private static final String MESSAGES_QUEUE = "jms/queue/MessagesQueue";
@@ -35,6 +33,12 @@ public class ListTasksToday implements Action, MessageListener {
 		initialize();
 		MapMessage msg = createMessage();
 		requestProducer.send(msg);
+
+		responseConsumer = session.createConsumer(tempQueue);
+		Message message = responseConsumer.receive();
+
+		ObjectMessage m = (ObjectMessage) message;
+		System.out.println(m.getObject());
 		close();
 	}
 
@@ -60,8 +64,6 @@ public class ListTasksToday implements Action, MessageListener {
 		// queue, and also it will be responsible of handling the messages of
 		// the tempQueue
 		tempQueue = session.createTemporaryQueue();
-		responseConsumer = session.createConsumer(tempQueue);
-		responseConsumer.setMessageListener(this);
 
 		con.start();
 	}
@@ -82,19 +84,4 @@ public class ListTasksToday implements Action, MessageListener {
 		long randomLong = random.nextLong();
 		return Long.toHexString(randomLong);
 	}
-	
-	@Override
-	public void onMessage(Message message) {
-		Serializable messageText = null;
-		try {
-			if (message instanceof ObjectMessage) {
-				ObjectMessage objectMessage = (ObjectMessage) message;
-				messageText = objectMessage.getObject();
-				System.out.println(messageText.toString());
-			}
-		} catch (JMSException e) {
-			// Handle the exception appropriately
-		}
-	}
-
 }

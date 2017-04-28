@@ -1,6 +1,5 @@
 package uo.sdi.client.actions;
 
-import java.io.Serializable;
 import java.util.Random;
 
 import javax.jms.Connection;
@@ -11,7 +10,6 @@ import javax.jms.JMSException;
 import javax.jms.MapMessage;
 import javax.jms.Message;
 import javax.jms.MessageConsumer;
-import javax.jms.MessageListener;
 import javax.jms.MessageProducer;
 import javax.jms.ObjectMessage;
 import javax.jms.Session;
@@ -24,7 +22,7 @@ import alb.util.menu.Action;
 
 import com.google.gson.Gson;
 
-public class AddTask implements Action, MessageListener {
+public class AddTask implements Action {
 
 	private static final String JMS_CONNECTION_FACTORY = "jms/RemoteConnectionFactory";
 	private static final String MESSAGES_QUEUE = "jms/queue/MessagesQueue";
@@ -69,6 +67,12 @@ public class AddTask implements Action, MessageListener {
 
 		MapMessage msg = createMessage(task);
 		requestProducer.send(msg);
+
+		responseConsumer = session.createConsumer(tempQueue);
+		Message message = responseConsumer.receive();
+
+		ObjectMessage m = (ObjectMessage) message;
+		System.out.println(m.getObject());
 		close();
 	}
 
@@ -90,13 +94,10 @@ public class AddTask implements Action, MessageListener {
 		requestProducer = session.createProducer(queue);
 		requestProducer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
 
-
 		// The client will receive the messages from the server in a temporary
 		// queue, and also it will be responsible of handling the messages of
 		// the tempQueue
 		tempQueue = session.createTemporaryQueue();
-		responseConsumer = session.createConsumer(tempQueue);
-		responseConsumer.setMessageListener(this);
 
 		con.start();
 	}
@@ -117,24 +118,11 @@ public class AddTask implements Action, MessageListener {
 
 		return msg;
 	}
-	
+
 	private String createRandomString() {
 		Random random = new Random(System.currentTimeMillis());
 		long randomLong = random.nextLong();
 		return Long.toHexString(randomLong);
 	}
 
-	@Override
-	public void onMessage(Message message) {
-		Serializable messageText = null;
-		try {
-			if (message instanceof ObjectMessage) {
-				ObjectMessage objectMessage = (ObjectMessage) message;
-				messageText = objectMessage.getObject();
-				System.out.println(messageText.toString());
-			}
-		} catch (JMSException e) {
-			// Handle the exception appropriately
-		}
-	}
 }

@@ -43,6 +43,13 @@ public class FinishTask implements Action, MessageListener {
 		}
 		MapMessage msg = createMessage(taskId);
 		requestProducer.send(msg);
+
+		responseConsumer = session.createConsumer(tempQueue);
+		Message message = responseConsumer.receive();
+
+		ObjectMessage m = (ObjectMessage) message;
+		System.out.println(m.getObject());
+		
 		close();
 	}
 
@@ -68,8 +75,6 @@ public class FinishTask implements Action, MessageListener {
 		// queue, and also it will be responsible of handling the messages of
 		// the tempQueue
 		tempQueue = session.createTemporaryQueue();
-		responseConsumer = session.createConsumer(tempQueue);
-		responseConsumer.setMessageListener(this);
 
 		con.start();
 	}
