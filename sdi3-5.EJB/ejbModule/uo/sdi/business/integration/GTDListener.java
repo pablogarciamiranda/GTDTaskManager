@@ -10,6 +10,7 @@ import javax.ejb.MessageDriven;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.DeliveryMode;
+import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.MapMessage;
 import javax.jms.Message;
@@ -40,6 +41,11 @@ public class GTDListener implements MessageListener {
 
 	@Resource(mappedName = "java:/ConnectionFactory")
 	private ConnectionFactory factory;
+
+	@Resource(mappedName = "java:/queue/InvalidMessagesQueue")
+	private Destination queue;
+
+	private static String auth_error = "Authentication error.";
 
 	@Override
 	public void onMessage(Message message) {
@@ -79,18 +85,19 @@ public class GTDListener implements MessageListener {
 			String login = msg.getString("login");
 			String password = msg.getString("password");
 			User user = userService.findLoggableUser(login);
-			
+
 			if (user == null) {
-				return null;
+				sendResponse(msg, auth_error);
+				return auth_error;
 			}
 			if (user.getPassword().equals(password)) {
 				return user.getId();
 			}
-			return null;
+			return auth_error;
 		} catch (JMSException | BusinessException e1) {
 			e1.printStackTrace();
 		}
-		return null;
+		return auth_error;
 	}
 
 	private boolean verify(MapMessage msg) {
@@ -125,8 +132,10 @@ public class GTDListener implements MessageListener {
 			e1.printStackTrace();
 		}
 		try {
-			if (!verify(msg))
-				return "Authentication error";
+			if (!verify(msg)) {
+				sendResponse(msg, auth_error);
+				return auth_error;
+			}
 			taskService.createTask(task);
 			return "The task " + task.getTitle() + " has been added correctly.";
 		} catch (BusinessException e) {
@@ -143,8 +152,10 @@ public class GTDListener implements MessageListener {
 			e1.printStackTrace();
 		}
 		try {
-			if (!verify(msg))
+			if (!verify(msg)) {
+				sendResponse(msg, auth_error);
 				return "Authentication error";
+			}
 			taskService.markTaskAsFinished(taskId);
 			return "The task with id '" + taskId
 					+ "' has been marked as finished.";
@@ -160,19 +171,20 @@ public class GTDListener implements MessageListener {
 		try {
 			userId = msg.getLong("userId");
 		} catch (JMSException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		try {
-			if (!verify(msg))
+			if (!verify(msg)) {
+				sendResponse(msg, auth_error);
 				return "Authentication error";
+			}
 			List<Task> tasks = taskService
 					.findFinishedTodayTasksByUserId(userId);
 			return showTasks(tasks);
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return "There was a problem when trying to list the tasks";
 	}
 
 	private String showTasks(List<Task> tasks) {
@@ -223,6 +235,13 @@ public class GTDListener implements MessageListener {
 			Session session = con
 					.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
+			if (processedMessage.equals(auth_error)) {
+				// Send the response to the InvalidQueue
+				ObjectMessage response = session.createObjectMessage();
+				response.setObject(processedMessage);
+				MessageProducer replyProducer = session.createProducer(queue);
+				replyProducer.send(response);
+			}
 			// Create the response to the Client with the processedMessage
 			ObjectMessage response = session.createObjectMessage();
 			response.setJMSCorrelationID(request.getJMSCorrelationID());

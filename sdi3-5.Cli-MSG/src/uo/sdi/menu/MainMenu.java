@@ -17,8 +17,6 @@ public class MainMenu extends BaseMenu {
 	}
 
 	public static void main(String... args) {
-		System.out
-				.println("Welcome to the MSG client developed by Pablo García Miranda & Fernando Freije Fuente!");
 		try {
 			new Login().execute();
 		} catch (Exception e) {
