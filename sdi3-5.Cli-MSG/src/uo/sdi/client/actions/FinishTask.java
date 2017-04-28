@@ -5,6 +5,7 @@ import java.util.Random;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
+import javax.jms.DeliveryMode;
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.MapMessage;
@@ -61,6 +62,7 @@ public class FinishTask implements Action, MessageListener {
 		con = factory.createConnection("sdi", "password");
 		session = con.createSession(false, Session.AUTO_ACKNOWLEDGE);
 		requestProducer = session.createProducer(queue);
+		requestProducer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
 
 		// The client will receive the messages from the server in a temporary
 		// queue, and also it will be responsible of handling the messages of
@@ -90,6 +92,7 @@ public class FinishTask implements Action, MessageListener {
 		return Long.toHexString(randomLong);
 	}
 
+	@Override
 	public void onMessage(Message message) {
 		Serializable messageText = null;
 		try {

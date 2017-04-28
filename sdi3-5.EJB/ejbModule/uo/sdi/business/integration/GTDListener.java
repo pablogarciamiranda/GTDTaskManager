@@ -1,6 +1,7 @@
 package uo.sdi.business.integration;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.ejb.ActivationConfigProperty;
@@ -8,6 +9,7 @@ import javax.ejb.EJB;
 import javax.ejb.MessageDriven;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
+import javax.jms.DeliveryMode;
 import javax.jms.JMSException;
 import javax.jms.MapMessage;
 import javax.jms.Message;
@@ -101,12 +103,48 @@ public class GTDListener implements MessageListener {
 
 	private Object listTodayTasks() {
 		try {
-			taskService.findFinishedTodayTasksByUserId(272L);
-			return "Perfecto";
+			List<Task> tasks = taskService.findFinishedTodayTasksByUserId(272L);
+			return showTasks(tasks);
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	private String showTasks(List<Task> tasks) {
+		String header = "%s %s %s %s %s %s \n";
+		String result = String.format(header, "_ID_", "_CATEGORY_ID",
+				"_NAME____________________________________",
+				"_CREATED_____________________",
+				"_PLANNED_____________________",
+				"_FINISHED_____________________");
+
+		for (Task t : tasks) {
+			result += showTask(t);
+		}
+		return result;
+	}
+
+	private String showTask(Task t) {
+		String finished;
+		if (t.getFinished() == null)
+			finished = "";
+		else
+			finished = t.getFinished().toString();
+		String planned;
+		if (t.getPlanned() == null)
+			planned = "";
+		else
+			planned = t.getPlanned().toString();
+		String created;
+		if (t.getCreated() == null)
+			created = "";
+		else
+			created = t.getCreated().toString();
+
+		String header = "%-10s %-8s %-18s %-30s %-30s %-30s\n";
+		return String.format(header, t.getId(), t.getCategoryId(),
+				t.getTitle(), created, planned, finished);
 	}
 
 	private boolean messageOfExpectedType(Message msg) {
@@ -128,6 +166,7 @@ public class GTDListener implements MessageListener {
 
 			// We send the send the response to the temporaryQueue
 			MessageProducer replyProducer = session.createProducer(null);
+			replyProducer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
 			replyProducer.send(request.getJMSReplyTo(), response);
 
 		} catch (JMSException jex) {
