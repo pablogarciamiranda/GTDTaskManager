@@ -25,9 +25,9 @@ public abstract class SynchronousReceiver implements Action {
 	protected MessageConsumer responseConsumer;
 	protected TemporaryQueue tempQueue;
 	
-	protected String login;
-	protected String password;
-	protected long id;
+	protected static String login;
+	protected static String password;
+	protected static long id;
 	
 	
 	@Override
