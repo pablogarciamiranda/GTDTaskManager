@@ -24,6 +24,8 @@ public class ListTasksToday extends SynchronousReceiver {
 	private MapMessage createMessage() throws JMSException {
 		MapMessage msg = session.createMapMessage();
 		msg.setString("command", "list");
+		msg.setString("login", login);
+		msg.setString("password",password);
 
 		// Set the tempQueue that is the queue the server will respond to
 		msg.setJMSReplyTo(tempQueue);

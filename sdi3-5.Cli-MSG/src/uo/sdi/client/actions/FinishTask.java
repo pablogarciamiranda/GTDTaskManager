@@ -34,6 +34,8 @@ public class FinishTask extends SynchronousReceiver {
 		MapMessage msg = session.createMapMessage();
 		msg.setString("command", "finish");
 		msg.setLong("taskId", taskId);
+		msg.setString("login", login);
+		msg.setString("password",password);
 
 		// Set the tempQueue that is the queue the server will respond to
 		msg.setJMSReplyTo(tempQueue);

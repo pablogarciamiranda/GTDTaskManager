@@ -45,7 +45,7 @@ public class AddTask extends SynchronousReceiver {
 		if (categoryId == 0)
 			categoryId = null;
 		task.setCategoryId(categoryId);
-		task.setUserId(272L);
+		task.setUserId(id);
 
 		MapMessage msg = createMessage(task);
 		requestProducer.send(msg);
@@ -65,6 +65,8 @@ public class AddTask extends SynchronousReceiver {
 		Gson gson = new Gson();
 		String jsonTask = gson.toJson(task);
 		msg.setString("task", jsonTask);
+		msg.setString("login", login);
+		msg.setString("password",password);
 
 		// Set the tempQueue that is the queue the server will respond to
 		msg.setJMSReplyTo(tempQueue);
