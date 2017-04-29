@@ -40,8 +40,8 @@ export class ListTasksComponent implements OnInit {
     );
   }
 
-  addTask(title: string, comments: string, created: string, planned: string, finished: string){
-    this.tService.addTask(title, comments, created, planned, finished, this.uService.getUserId());
+  addTask(title: string, comments: string, planned: string){
+    this.tService.addTask(title, comments, planned, this.uService.getUserId());
     setTimeout(() =>
     {
     this.loadTasks();

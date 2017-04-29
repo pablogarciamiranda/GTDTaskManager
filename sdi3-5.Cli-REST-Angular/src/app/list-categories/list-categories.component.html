@@ -1,7 +1,10 @@
+<hr/>
+<h3> List of categories
+</h3>
+<hr/>
 <div *ngFor="let category of categories">
   <p><span><strong>Id</strong>:</span> {{category.id}}</p>
   <p><span><strong>Name</strong>:</span> {{category.title}}</p>
-  <p><span><strong>UserId</strong>:</span> {{category.userId}}</p>
   <a routerLink="./{{category.id}}"> List tasks</a>
   <hr/>
 </div>
