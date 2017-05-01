@@ -31,7 +31,7 @@ public class Login extends SynchronousReceiver {
 			m = (ObjectMessage) message;
 
 			if (m.getObject().equals(auth_error))
-				System.out.println("User or password was incorrect");
+				System.out.println(auth_error);
 
 		} while (m.getObject().equals(auth_error));
 		login = user;
