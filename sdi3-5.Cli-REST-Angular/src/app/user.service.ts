@@ -13,9 +13,6 @@ export class UserService {
   }
 
   fetchUsers(): Observable<User[]> {
-    //var header = this.generateHeader("admin1", "admin1"); 
-
-    //console.log(header);
     return this.http.get(this.adminService + '/usersR').map(response => this.toUsers(response.json()));
   }
 

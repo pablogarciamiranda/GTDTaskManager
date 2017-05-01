@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   private categories: Category[];
   private login: string;
   private password: string;
+  private invalid: boolean;
 
   constructor(userService: UserService, taskService: TaskService, private router: Router) { 
     this.uService = userService;
@@ -47,6 +48,8 @@ export class LoginComponent implements OnInit {
       if (user.login == login && user.password == password){
         this.uService.setUserId(user.id);
         this.router.navigate(['/categories']);
+      } else {
+        this.invalid = true;
       }
     }
   }

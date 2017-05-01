@@ -59,7 +59,6 @@ public class RestClient {
 			return;
 		} catch (Exception e) {
 			System.out.println("There was a problem with the system");
-			login();
 			return;
 		}
 	}

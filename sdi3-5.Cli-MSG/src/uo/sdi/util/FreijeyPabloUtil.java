@@ -1,5 +1,8 @@
 package uo.sdi.util;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -33,5 +36,16 @@ public class FreijeyPabloUtil {
 				return o1.getPlanned().compareTo(o2.getPlanned());
 			}
 		});
+	}
+
+	public static boolean isDateValid(String date) {
+		try {
+			DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+			df.setLenient(false);
+			df.parse(date);
+			return true;
+		} catch (ParseException e) {
+			return false;
+		}
 	}
 }
