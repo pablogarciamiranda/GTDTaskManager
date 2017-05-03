@@ -1,7 +1,5 @@
 package uo.sdi.client.actions;
 
-import java.util.Queue;
-
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
@@ -11,12 +9,12 @@ import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TemporaryQueue;
 
-import com.google.gson.Gson;
-
 import uo.sdi.client.model.Task;
 import uo.sdi.util.Jndi;
 import alb.util.console.Console;
 import alb.util.menu.Action;
+
+import com.google.gson.Gson;
 
 public class AddTask implements Action {
 

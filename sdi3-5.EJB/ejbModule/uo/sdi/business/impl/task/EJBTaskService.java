@@ -6,8 +6,6 @@ import javax.ejb.Stateless;
 import javax.jws.WebService;
 
 import uo.sdi.business.exception.BusinessException;
-import uo.sdi.business.impl.command.Command;
-import uo.sdi.business.impl.command.CommandExecutor;
 import uo.sdi.business.impl.task.command.CreateCategoryCommand;
 import uo.sdi.business.impl.task.command.CreateTaskCommand;
 import uo.sdi.business.impl.task.command.DeleteCategoryCommand;
@@ -23,9 +21,8 @@ import uo.sdi.infraestructure.Factories;
  * Session Bean implementation class EJBTaskService
  */
 @Stateless
-@WebService(name="TaskService")
-public class EJBTaskService implements RemoteTaskService,
-		LocalTaskService {
+@WebService(name = "TaskService")
+public class EJBTaskService implements RemoteTaskService, LocalTaskService {
 
 	/**
 	 * Default constructor.
@@ -36,184 +33,103 @@ public class EJBTaskService implements RemoteTaskService,
 
 	@Override
 	public Long createCategory(Category category) throws BusinessException {
-		return new CommandExecutor<Long>().execute(new CreateCategoryCommand(
-				category));
+		return new CreateCategoryCommand(category).execute();
 	}
 
 	@Override
 	public Long duplicateCategory(Long id) throws BusinessException {
-		return new CommandExecutor<Long>()
-				.execute(new DuplicateCategoryCommand(id));
+		return new DuplicateCategoryCommand(id).execute();
 	}
 
 	@Override
 	public void updateCategory(Category category) throws BusinessException {
-		new CommandExecutor<Void>()
-				.execute(new UpdateCategoryCommand(category));
+		new UpdateCategoryCommand(category).execute();
 	}
 
 	@Override
 	public void deleteCategory(Long catId) throws BusinessException {
-		new CommandExecutor<Void>().execute(new DeleteCategoryCommand(catId));
+		new DeleteCategoryCommand(catId).execute();
 	}
 
 	@Override
 	public Category findCategoryById(final Long id) throws BusinessException {
-		return new CommandExecutor<Category>().execute(new Command<Category>() {
-			@Override
-			public Category execute() throws BusinessException {
-
-				return Factories.persistence.getCategoryDao().findById(id);
-			}
-		});
+		return Factories.persistence.getCategoryDao().findById(id);
 	}
 
 	@Override
 	public List<Category> findCategoriesByUserId(final Long id)
 			throws BusinessException {
-		return new CommandExecutor<List<Category>>()
-				.execute(new Command<List<Category>>() {
-					@Override
-					public List<Category> execute() throws BusinessException {
-
-						return Factories.persistence.getCategoryDao().findByUserId(id);
-					}
-				});
+		return Factories.persistence.getCategoryDao().findByUserId(id);
 	}
 
 	@Override
 	public Long createTask(Task task) throws BusinessException {
-		return new CommandExecutor<Long>().execute(new CreateTaskCommand(task));
+		return new CreateTaskCommand(task).execute();
 	}
 
 	@Override
 	public void deleteTask(final Long id) throws BusinessException {
-		new CommandExecutor<Void>().execute(new Command<Void>() {
-			@Override
-			public Void execute() throws BusinessException {
-				Factories.persistence.getTaskDao().delete(id);
-				return null;
-			}
-		});
+		Factories.persistence.getTaskDao().delete(id);
 	}
 
 	@Override
 	public void markTaskAsFinished(Long id) throws BusinessException {
-		new CommandExecutor<Void>().execute(new MarkTaskAsFinishedCommand(id));
+		new MarkTaskAsFinishedCommand(id).execute();
 	}
 
 	@Override
 	public void updateTask(Task task) throws BusinessException {
-		new CommandExecutor<Void>().execute(new UpdateTaskCommand(task));
+		new UpdateTaskCommand(task).execute();
 	}
 
 	@Override
 	public Task findTaskById(final Long id) throws BusinessException {
-		return new CommandExecutor<Task>().execute(new Command<Task>() {
-			@Override
-			public Task execute() throws BusinessException {
-
-				return Factories.persistence.getTaskDao().findById(id);
-			}
-		});
+		return Factories.persistence.getTaskDao().findById(id);
 	}
 
 	@Override
-	public List<Task> findInboxTasksByUserId(final Long id)
-			throws BusinessException {
-		return new CommandExecutor<List<Task>>()
-				.execute(new Command<List<Task>>() {
-					@Override
-					public List<Task> execute() throws BusinessException {
-
-						return Factories.persistence.getTaskDao().findInboxTasksByUserId(
-								id);
-					}
-				});
+	public List<Task> findInboxTasksByUserId(final Long id) {
+		return Factories.persistence.getTaskDao().findInboxTasksByUserId(id);
 	}
 
 	@Override
 	public List<Task> findWeekTasksByUserId(final Long id)
 			throws BusinessException {
-		return new CommandExecutor<List<Task>>()
-				.execute(new Command<List<Task>>() {
-					@Override
-					public List<Task> execute() throws BusinessException {
-
-						return Factories.persistence.getTaskDao().findWeekTasksByUserId(
-								id);
-					}
-				});
+		return Factories.persistence.getTaskDao().findWeekTasksByUserId(id);
 	}
 
 	@Override
 	public List<Task> findTodayTasksByUserId(final Long id)
 			throws BusinessException {
-		return new CommandExecutor<List<Task>>()
-				.execute(new Command<List<Task>>() {
-					@Override
-					public List<Task> execute() throws BusinessException {
-
-						return Factories.persistence.getTaskDao().findTodayTasksByUserId(
-								id);
-					}
-				});
+		return Factories.persistence.getTaskDao().findTodayTasksByUserId(id);
 	}
 
 	@Override
 	public List<Task> findTasksByCategoryId(final Long id)
 			throws BusinessException {
-		return new CommandExecutor<List<Task>>()
-				.execute(new Command<List<Task>>() {
-					@Override
-					public List<Task> execute() throws BusinessException {
+		return Factories.persistence.getTaskDao().findTasksByCategoryId(id);
 
-						return Factories.persistence.getTaskDao().findTasksByCategoryId(
-								id);
-					}
-				});
 	}
 
 	@Override
 	public List<Task> findFinishedTasksByCategoryId(final Long id)
 			throws BusinessException {
-		return new CommandExecutor<List<Task>>()
-				.execute(new Command<List<Task>>() {
-					@Override
-					public List<Task> execute() throws BusinessException {
-
-						return Factories.persistence.getTaskDao()
-								.findFinishedTasksByCategoryId(id);
-					}
-				});
+		return Factories.persistence.getTaskDao()
+				.findFinishedTasksByCategoryId(id);
 	}
 
 	@Override
 	public List<Task> findFinishedInboxTasksByUserId(final Long id)
 			throws BusinessException {
-		return new CommandExecutor<List<Task>>()
-				.execute(new Command<List<Task>>() {
-					@Override
-					public List<Task> execute() throws BusinessException {
-
-						return Factories.persistence.getTaskDao()
-								.findFinishedTasksInboxByUserId(id);
-					}
-				});
+		return Factories.persistence.getTaskDao()
+				.findFinishedTasksInboxByUserId(id);
 	}
-	
+
 	@Override
 	public List<Task> findFinishedTodayTasksByUserId(final Long id)
 			throws BusinessException {
-		return new CommandExecutor<List<Task>>()
-				.execute(new Command<List<Task>>() {
-					@Override
-					public List<Task> execute() throws BusinessException {
-
-						return Factories.persistence.getTaskDao()
-								.findFinishedTasksTodayByUserId(id);
-					}
-				});
+		return Factories.persistence.getTaskDao()
+				.findFinishedTasksTodayByUserId(id);
 	}
 
 }

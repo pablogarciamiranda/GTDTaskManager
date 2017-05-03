@@ -133,8 +133,12 @@ public class GTDListener implements MessageListener {
 	}
 
 	private void close(Connection con) {
-		// TODO Auto-generated method stub
-
+		try {
+			con.close();
+		} catch (JMSException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
