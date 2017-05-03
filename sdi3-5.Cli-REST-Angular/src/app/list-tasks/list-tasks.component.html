@@ -1,18 +1,21 @@
+<h3> Add Task
+</h3>
+<hr/>
 <input [(ngModel)]="title" placeholder="Title"/>
 <input [(ngModel)]="comments" placeholder="Comments"/>
-<input [(ngModel)]="created" placeholder="Created"/>
-<input [(ngModel)]="finished" placeholder="Finished"/>
-<button (click)="addTask(title,comments,created,finished)">Add Task</button>
+<input [(ngModel)]="planned" placeholder="Planned (YYYY-MM-dd)"/>
+<button (click)="addTask(title,comments,planned)">Add Task</button>
+<hr/>
+<h3> List of tasks
+</h3>
 <hr/>
 <div *ngFor="let task of tasks">
   <p><span><strong>Id</strong>:</span> {{task.id}}</p>
   <p><span><strong>Title</strong>:</span> {{task.title}}</p>
   <p><span><strong>Comments</strong>:</span> {{task.comments}}</p>
-  <p><span><strong>Created</strong>:</span> {{task.created}}</p>
-  <p><span><strong>Planned</strong>:</span> {{task.planned}}</p>
+  <p><span><strong>Created</strong>:</span> {{task.created | date: "yyyy-MM-dd"}}</p>
+  <p><span><strong>Planned</strong>:</span> {{task.planned | date: "yyyy-MM-dd"}}</p>
   <p><span><strong>Finished</strong>:</span> {{task.finished}}</p>
-  <p><span><strong>CategoryId</strong>:</span> {{task.categoryId}}</p>
-  <p><span><strong>UserId</strong>:</span> {{task.userId}}</p>
   <button (click)="finishTask(task.id)">Finish Task</button>
   <hr/>
 </div>

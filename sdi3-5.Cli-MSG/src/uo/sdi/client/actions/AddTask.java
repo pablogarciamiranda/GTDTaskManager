@@ -1,34 +1,22 @@
 package uo.sdi.client.actions;
 
-import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
-import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.MapMessage;
-import javax.jms.MessageProducer;
-import javax.jms.Session;
-import javax.jms.TemporaryQueue;
+import javax.jms.Message;
+import javax.jms.ObjectMessage;
 
 import uo.sdi.client.model.Task;
-import uo.sdi.util.Jndi;
+import uo.sdi.util.FreijeyPabloUtil;
 import alb.util.console.Console;
-import alb.util.menu.Action;
+import alb.util.date.DateUtil;
 
 import com.google.gson.Gson;
 
-public class AddTask implements Action {
-
-	private static final String JMS_CONNECTION_FACTORY = "jms/RemoteConnectionFactory";
-	private static final String NOTANEITOR_QUEUE = "jms/queue/MessagesQueue";
-	private Connection con;
-	private Session session;
-	private MessageProducer sender;
-	private TemporaryQueue tempQueue;
+public class AddTask extends SynchronousReceiver {
 
 	@Override
 	public void execute() throws Exception {
 		initialize();
-
 		Task task = new Task();
 
 		// Title of the task
@@ -57,45 +45,63 @@ public class AddTask implements Action {
 		if (categoryId == 0)
 			categoryId = null;
 		task.setCategoryId(categoryId);
-		task.setUserId(272L);
+		task.setUserId(id);
+
+		// Planned date
+		String response = "";
+		do {
+			response = Console
+					.readString("> Do you want a planned date? (y/n)");
+
+		} while (!response.equals("yes") && !response.equals("no")
+				&& !response.equals("y") && !response.equals("n"));
+
+		String date = "";
+		do {
+			System.out.println("> Please, introduce a valid date");
+			if (response.equals("yes") || response.equals("y")) {
+				String day = Console
+						.readString("\t> Introduce a valid day (dd)");
+				String month = Console
+						.readString("\t> Introduce a valid month (mm)");
+				String year = Console
+						.readString("\t> Introduce a valid year (yyyy)");
+				date = day + "/" + month + "/" + year;
+
+			}
+		} while (!FreijeyPabloUtil.isDateValid(date));
+
+		if (response.equals("yes") || response.equals("y")) {
+			task.setPlanned(DateUtil.fromString(date));
+		}
 
 		MapMessage msg = createMessage(task);
-		showMessage(msg);
-		sender.send(msg);
+		requestProducer.send(msg);
+
+		Message message = responseConsumer.receive();
+
+		ObjectMessage m = (ObjectMessage) message;
+		System.out.println(m.getObject());
 		close();
-	}
-
-	private void showMessage(MapMessage msg) {
-		msg.toString();
-	}
-
-	private void close() {
-		try {
-			con.close();
-		} catch (JMSException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void initialize() throws JMSException {
-		ConnectionFactory factory = (ConnectionFactory) Jndi
-				.find(JMS_CONNECTION_FACTORY);
-		Destination queue = (Destination) Jndi.find(NOTANEITOR_QUEUE);
-		con = factory.createConnection("sdi", "password");
-		session = con.createSession(false, Session.AUTO_ACKNOWLEDGE);
-		sender = session.createProducer(queue);
-		tempQueue = session.createTemporaryQueue();
-		con.start();
 	}
 
 	private MapMessage createMessage(Task task) throws JMSException {
 		MapMessage msg = session.createMapMessage();
 		msg.setString("command", "add");
+
+		// We convert the Task to JSON
 		Gson gson = new Gson();
 		String jsonTask = gson.toJson(task);
-
 		msg.setString("task", jsonTask);
+		msg.setString("login", login);
+		msg.setString("password", password);
+
+		// Set the tempQueue that is the queue the server will respond to
 		msg.setJMSReplyTo(tempQueue);
+		String correlationId = this.createRandomString();
+		msg.setJMSCorrelationID(correlationId);
+
 		return msg;
 	}
+
 }

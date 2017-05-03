@@ -8,7 +8,9 @@ import uo.sdi.client.model.User;
 import uo.sdi.client.service.TaskServicesRest;
 import uo.sdi.client.service.UserServicesRest;
 import uo.sdi.menu.Action;
+import uo.sdi.util.FreijeyPabloUtil;
 import alb.util.console.Console;
+import alb.util.date.*;
 
 public class AddTask implements Action {
 
@@ -60,10 +62,38 @@ public class AddTask implements Action {
 
 			// Owner of the task
 			task.setUserId(user.getId());
+			
+			//Planned date
+			String response = "";
+			do {
+				response = Console
+						.readString("> Do you want a planned date? (y/n)");
+
+			} while (!response.equals("yes") && !response.equals("no")
+					&& !response.equals("y") && !response.equals("n"));
+
+			String date = "";
+			do {
+				System.out.println("> Please, introduce a valid date");
+				if (response.equals("yes") || response.equals("y")) {
+					String day = Console.readString("\t> Introduce a valid day (dd)");
+					String month = Console
+							.readString("\t> Introduce a valid month (mm)");
+					String year = Console
+							.readString("\t> Introduce a valid year (yyyy)");
+					date = day + "/" + month + "/" + year;
+
+				}
+			} while (!FreijeyPabloUtil.isDateValid(date));
+			
+			if (response.equals("yes") || response.equals("y")){
+				task.setPlanned(DateUtil.fromString(date));
+			}
+			
 
 			taskServicesRest.createTask(task);
-			System.out.println("The task " + task.getTitle()
-					+ " has been created.");
+			System.out.println("The task '" + task.getTitle()
+					+ "' has been created.");
 
 		} catch (BusinessException b) {
 			System.out.println("The task can not be created due to: \n\t"

@@ -48,11 +48,11 @@ export class TaskService {
     });
   }
 
-  addTask(_title: string, _comments: string, _created: string, _planned: string, _finished: string, _userId: number){
+  addTask(_title: string, _comments: string, _planned: string, _userId: number){
     var header = new Headers(); 
     header.append('Content-Type', 'application/json');
 
-    var task = JSON.stringify({title: _title, comments: _comments, created: _created, planned: _planned, finished: _finished, categoryId: this.categoryId, userId: _userId});
+    var task = JSON.stringify({title: _title, comments: _comments, created: "", planned: _planned, finished: "", categoryId: this.categoryId, userId: _userId});
     
     this.http.put(this.taskService + '/tasks', task, {headers: header})
               .map(res => res.json())
@@ -60,7 +60,6 @@ export class TaskService {
   }
 
   finishTask(id: number){
-    //var header = this.generateHeader("admin1", "admin1"); 
     this.http.post(this.taskService + '/tasks/finish/'+ id, "").subscribe();
   }
 

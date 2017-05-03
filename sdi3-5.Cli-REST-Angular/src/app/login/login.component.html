@@ -1,3 +1,9 @@
-<input [(ngModel)]="login" placeholder="Login"/><br>
-<input [(ngModel)]="password" placeholder="Password" type="password"/><br>
-<button (click)="validate(login,password)">Login</button>
+<div [hidden]="!invalid" class="alert alert-danger">
+    The login or password are incorrect, try again.
+</div>
+
+<form #form="ngForm" (ngSubmit)="validate(login,password)">
+    <input #loginInput="ngModel" [(ngModel)]="login" name="login" type="text" placeholder="Login" required><br>
+    <input #passwordInput="ngModel" [(ngModel)]="password" name="password" type="password" placeholder="Password" required><br>
+    <button type="submit" [disabled]="form.invalid">Login</button>
+</form> 

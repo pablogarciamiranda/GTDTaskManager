@@ -27,5 +27,4 @@ public class MarkTaskAsFinishedCommand implements Command<Void> {
 		tDao.update( t );
 		return null;
 	}
-
 }
