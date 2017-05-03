@@ -3,7 +3,6 @@ package uo.sdi.client;
 import java.util.List;
 
 import uo.sdi.business.AdminService;
-import uo.sdi.business.impl.RemoteEJBServicesLocator;
 import uo.sdi.dto.UserInfo;
 import alb.util.menu.Action;
 
@@ -12,7 +11,7 @@ public class ListUsers implements Action{
 	@Override
 	public void execute() throws Exception {
 		try{
-			AdminService service = new RemoteEJBServicesLocator().getAdminService();
+			AdminService service = Services.getAdminService();
 			List<UserInfo> users = service.findAllUsersInfo();
 			printHeader();
 			for (UserInfo u : users) {

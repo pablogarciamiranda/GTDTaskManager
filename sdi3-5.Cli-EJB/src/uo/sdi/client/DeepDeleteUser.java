@@ -2,7 +2,6 @@ package uo.sdi.client;
 
 import uo.sdi.business.AdminService;
 import uo.sdi.business.exception.BusinessException;
-import uo.sdi.business.impl.RemoteEJBServicesLocator;
 import uo.sdi.dto.User;
 import alb.util.console.Console;
 import alb.util.menu.Action;
@@ -12,7 +11,7 @@ public class DeepDeleteUser implements Action {
 	@Override
 	public void execute() throws Exception {
 		try {
-			AdminService service = new RemoteEJBServicesLocator()
+			AdminService service = Services
 					.getAdminService();
 			Long id = Console.readLong("Enter an id");
 			while (id == null || id < 0) {

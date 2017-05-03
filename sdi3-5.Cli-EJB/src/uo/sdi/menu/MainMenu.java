@@ -16,7 +16,7 @@ public class MainMenu extends BaseMenu {
 
 	public static void main(String... args) {
 		System.out
-				.println("Welcome to the REST client developed by Pablo García Miranda & Fernando Freije Fuente!");
+				.println("Welcome to the EJB client developed by Pablo García Miranda & Fernando Freije Fuente!");
 		new MainMenu().execute();
 	}
 }
