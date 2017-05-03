@@ -1,8 +1,9 @@
-package uo.sdi.client;
+package uo.sdi.client.actions;
 
 import java.util.List;
 
 import uo.sdi.business.AdminService;
+import uo.sdi.client.service.Services;
 import uo.sdi.dto.UserInfo;
 import alb.util.menu.Action;
 

@@ -1,4 +1,4 @@
-package uo.sdi.client;
+package uo.sdi.client.service;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;

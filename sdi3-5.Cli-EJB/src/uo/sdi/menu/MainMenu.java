@@ -1,8 +1,8 @@
 package uo.sdi.menu;
 
-import uo.sdi.client.DeepDeleteUser;
-import uo.sdi.client.DisableUser;
-import uo.sdi.client.ListUsers;
+import uo.sdi.client.actions.DeepDeleteUser;
+import uo.sdi.client.actions.DisableUser;
+import uo.sdi.client.actions.ListUsers;
 import alb.util.menu.BaseMenu;
 
 public class MainMenu extends BaseMenu {
