@@ -19,11 +19,6 @@ import uo.sdi.persistence.PersistenceException;
 
 public class Jdbc {
 	
-//	private static final String DATABASE_URL;
-//	private static final String DATABASE_USER;
-//	private static final String DATABASE_PASSWORD;
-//	private static final String DATABASE_DRIVER;
-//	
 	private static Properties sqlQueries;
 	private static DataSource dataSource;
 	private static String CONFIG_FILE = "/persistence.properties";
@@ -31,38 +26,20 @@ public class Jdbc {
 	
 	static {
 		sqlQueries = loadProperties(CONFIG_FILE);
-	
 		String jndiKey = sqlQueries.getProperty("JNDI_DATASOURCE");
 
 		Context ctx = null;
 		try {
 			ctx = new InitialContext();
 		} catch (NamingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
 			dataSource = (DataSource) ctx.lookup(jndiKey);
 		} catch (NamingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-//		DATABASE_URL = sqlQueries.getProperty( "DATABASE_URL" );
-//		DATABASE_USER = sqlQueries.getProperty( "DATABASE_USER" );
-//		DATABASE_PASSWORD = sqlQueries.getProperty( "DATABASE_PASSWORD" );
-//		DATABASE_DRIVER = sqlQueries.getProperty( "DATABASE_DRIVER" ); 
-	
 	}
-
-//	private static DataSource configureDataSource(Properties dbConfig) {
-//		BasicDataSource ds = new BasicDataSource();
-//		ds.setDriverClassName( DATABASE_DRIVER );
-//		ds.setUsername( DATABASE_USER );
-//		ds.setPassword( DATABASE_PASSWORD );
-//		ds.setUrl( DATABASE_URL );
-//		return ds;
-//	}
 
 	private static ThreadLocal<Connection> threadLocal = new ThreadLocal<>();
 
@@ -71,7 +48,6 @@ public class Jdbc {
 			Connection con = dataSource.getConnection();
 			threadLocal.set(con);
 			return con;
-			
 			
 		} catch (SQLTimeoutException e) {
 			throw new PersistenceException("Timeout opennig JDBC conection", e);

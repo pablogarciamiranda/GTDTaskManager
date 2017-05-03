@@ -2,16 +2,10 @@ package uo.sdi.persistence;
 
 import uo.sdi.persistence.impl.CategoryDaoJdbcImpl;
 import uo.sdi.persistence.impl.TaskDaoJdbcImpl;
-import uo.sdi.persistence.impl.TransactionJdbcImpl;
 import uo.sdi.persistence.impl.UserDaoJdbcImpl;
 
 public class Persistence implements PersistenceFactory {
-	
-	@Override
-	public Transaction newTransaction() {
-		return new TransactionJdbcImpl();
-	}
-	
+
 	@Override
 	public UserDao getUserDao() {
 		return new UserDaoJdbcImpl();
