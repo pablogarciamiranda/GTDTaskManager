@@ -17,11 +17,11 @@ public class RestClient {
 	private TaskServicesRest taskService;
 	private String login;
 
-	public RestClient() {
+	public RestClient() throws InterruptedException {
 		login();
 	}
 
-	private void login() {
+	private void login() throws InterruptedException {
 		String login = Console.readString("> Introduce your name: ");
 		String password = Console.readString("> Introduce your password");
 
@@ -50,7 +50,8 @@ public class RestClient {
 			login();
 			return;
 		} catch (NotAuthorizedException e) {
-			System.err.println("NotAuthorizedException:");
+			System.err.println("NotAuthorizedException: " + e.getLocalizedMessage());
+			Thread.sleep(500);
 			System.out.println("Incorrect login, try again");
 			login();
 			return;

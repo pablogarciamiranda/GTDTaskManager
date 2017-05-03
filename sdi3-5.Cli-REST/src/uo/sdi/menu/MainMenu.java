@@ -20,7 +20,7 @@ public class MainMenu extends BaseMenu {
 				{ "Register a task", AddTask.class } };
 	}
 
-	public static void main(String... args) {
+	public static void main(String... args) throws InterruptedException {
 		RegisterBuiltin.register(ResteasyProviderFactory.getInstance());
 		RestClient client = new RestClient();
 		
