@@ -6,7 +6,6 @@ import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 
 import uo.sdi.client.exception.BusinessException;
 import uo.sdi.client.model.User;
-import uo.sdi.client.service.AdminServicesRest;
 import uo.sdi.client.service.TaskServicesRest;
 import uo.sdi.client.service.UserServicesRest;
 import uo.sdi.client.validation.Authenticator;
@@ -15,7 +14,6 @@ import alb.util.console.Console;
 public class RestClient {
 
 	private UserServicesRest userService;
-	private AdminServicesRest adminService;
 	private TaskServicesRest taskService;
 	private String login;
 
@@ -65,10 +63,6 @@ public class RestClient {
 
 	public UserServicesRest getUserService() {
 		return userService;
-	}
-
-	public AdminServicesRest getAdminService() {
-		return adminService;
 	}
 
 	public TaskServicesRest getTaskService() {
