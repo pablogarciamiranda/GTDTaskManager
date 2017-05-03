@@ -52,9 +52,9 @@ public class RestFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 
-		String login;
-		String password;
-		if (req.getHeader("Host").equals("http://localhost:8280")) {
+		String login = "";
+		String password = "";
+		if (req.getHeader("Host").equals("localhost:8280")) {
 			String authorizationBase64 = req.getHeader("Authorization");
 			String[] authorizationBase64aux = authorizationBase64.split(" ");
 			String authorization = decode(authorizationBase64aux[1]);
@@ -62,7 +62,7 @@ public class RestFilter implements Filter {
 			String[] credentials = authorization.split(":");
 			login = credentials[0];
 			password = credentials[1];
-		} else {
+		} else if (req.getHeader("Host").equals("10.0.2.2:8280")) {
 			login = "admin1";
 			password = "admin1";
 		}

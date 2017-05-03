@@ -38,25 +38,24 @@ public class RestClient {
 		User user = null;
 		try {
 			user = userService.findLoggableUser(login);
-			if (user == null || !user.getPassword().equals(password)) {
-				System.out.println("Incorrect login, try again");
-				login();
-				return;
-			} else {
+			if (user != null) {
 				this.login = login;
 				System.out
 						.println("Welcome to the REST client developed by Pablo García Miranda & Fernando Freije Fuente!");
+				return;
 			}
+
 		} catch (BusinessException e) {
 			System.out.println(e.getLocalizedMessage());
 			login();
 			return;
 		} catch (NotAuthorizedException e) {
+			System.err.println("NotAuthorizedException:");
 			System.out.println("Incorrect login, try again");
 			login();
 			return;
 		} catch (Exception e) {
-			System.out.println("There was a problem with the system");
+			System.err.println("There was a problem with the system");
 			return;
 		}
 	}
