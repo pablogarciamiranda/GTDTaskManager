@@ -57,4 +57,10 @@ public interface TaskServiceRest {
 	@Path("tasks/category/{id}")
 	public List<Task> findTasksByCategoryId(@PathParam("id") Long catId)
 			throws BusinessException;
+
+	@GET
+	@Produces({ MediaType.APPLICATION_JSON })
+	@Path("tasks/categoryR/{id}")
+	public Response findTasksByCategoryIdR(@PathParam("id") Long catId)
+			throws BusinessException;
 }

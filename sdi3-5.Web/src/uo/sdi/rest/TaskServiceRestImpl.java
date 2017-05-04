@@ -70,4 +70,16 @@ public class TaskServiceRestImpl implements TaskServiceRest {
 			throws BusinessException {
 		return service.findTasksByCategoryId(catId);
 	}
+
+	@Override
+	public Response findTasksByCategoryIdR(Long catId) throws BusinessException {
+		List<Task> tasks = service.findTasksByCategoryId(catId);
+		return Response
+				.ok()
+				// 200
+				.entity(tasks)
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods",
+						"GET, POST, DELETE, PUT").build();
+	}
 }

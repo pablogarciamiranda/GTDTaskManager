@@ -9,6 +9,7 @@ public class Application extends javax.ws.rs.core.Application {
 		Set<Class<?>> res = new HashSet<>();
 		res.add(UserServiceRestImpl.class);
 		res.add(TaskServiceRestImpl.class);
+		res.add(AdminServiceRestImpl.class);
 		return res;
 	}
 }
