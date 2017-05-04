@@ -177,7 +177,7 @@ public class GTDListener implements MessageListener {
 				return auth_error;
 			}
 			List<Task> tasks = taskService
-					.findFinishedTodayTasksByUserId(userId);
+					.findTodayTasksByUserId(userId);
 			return showTasks(tasks);
 		} catch (BusinessException e) {
 			e.printStackTrace();
