@@ -98,8 +98,6 @@ public class AddTask extends SynchronousReceiver {
 
 		// Set the tempQueue that is the queue the server will respond to
 		msg.setJMSReplyTo(tempQueue);
-		String correlationId = this.createRandomString();
-		msg.setJMSCorrelationID(correlationId);
 
 		return msg;
 	}

@@ -35,7 +35,6 @@ public class EJBUserService implements RemoteUserService, LocalUserService {
 
 	@Override
 	public User findLoggableUser(final String login) throws BusinessException {
-
 		return new FindByLoginCommand<User>(login).execute();
 	}
 

@@ -8,7 +8,7 @@ import javax.jms.ObjectMessage;
 import alb.util.console.Console;
 
 public class Login extends SynchronousReceiver {
-	
+
 	private static String auth_error = "Authentication error.";
 
 	@Override
@@ -53,8 +53,6 @@ public class Login extends SynchronousReceiver {
 
 		// Set the tempQueue that is the queue the server will respond to
 		msg.setJMSReplyTo(tempQueue);
-		String correlationId = this.createRandomString();
-		msg.setJMSCorrelationID(correlationId);
 
 		return msg;
 	}

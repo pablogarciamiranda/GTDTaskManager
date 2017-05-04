@@ -1,7 +1,5 @@
 package uo.sdi.client.actions;
 
-import java.util.Random;
-
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.DeliveryMode;
@@ -24,15 +22,14 @@ public abstract class SynchronousReceiver implements Action {
 	protected MessageProducer requestProducer;
 	protected MessageConsumer responseConsumer;
 	protected TemporaryQueue tempQueue;
-	
+
 	protected static String login;
 	protected static String password;
 	protected static long id;
-	
-	
+
 	@Override
 	public abstract void execute() throws Exception;
-	
+
 	protected void close() {
 		try {
 			con.close();
@@ -59,11 +56,4 @@ public abstract class SynchronousReceiver implements Action {
 
 		con.start();
 	}
-	
-	protected String createRandomString() {
-		Random random = new Random(System.currentTimeMillis());
-		long randomLong = random.nextLong();
-		return Long.toHexString(randomLong);
-	}
-
 }

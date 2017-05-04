@@ -12,7 +12,7 @@ public class ListTasksToday extends SynchronousReceiver {
 		initialize();
 		MapMessage msg = createMessage();
 		requestProducer.send(msg);
-		
+
 		Message message = responseConsumer.receive();
 
 		ObjectMessage m = (ObjectMessage) message;
@@ -20,18 +20,15 @@ public class ListTasksToday extends SynchronousReceiver {
 		close();
 	}
 
-
 	private MapMessage createMessage() throws JMSException {
 		MapMessage msg = session.createMapMessage();
 		msg.setString("command", "list");
 		msg.setString("login", login);
-		msg.setString("password",password);
+		msg.setString("password", password);
 		msg.setLong("userId", id);
 
 		// Set the tempQueue that is the queue the server will respond to
 		msg.setJMSReplyTo(tempQueue);
-		String correlationId = this.createRandomString();
-		msg.setJMSCorrelationID(correlationId);
 		return msg;
 	}
 

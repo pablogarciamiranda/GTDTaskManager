@@ -26,7 +26,7 @@ public class FinishTask extends SynchronousReceiver {
 
 		ObjectMessage m = (ObjectMessage) message;
 		System.out.println(m.getObject());
-		
+
 		close();
 	}
 
@@ -35,15 +35,11 @@ public class FinishTask extends SynchronousReceiver {
 		msg.setString("command", "finish");
 		msg.setLong("taskId", taskId);
 		msg.setString("login", login);
-		msg.setString("password",password);
+		msg.setString("password", password);
 
 		// Set the tempQueue that is the queue the server will respond to
 		msg.setJMSReplyTo(tempQueue);
-		String correlationId = this.createRandomString();
-		msg.setJMSCorrelationID(correlationId);
 		return msg;
 	}
-
-	
 
 }

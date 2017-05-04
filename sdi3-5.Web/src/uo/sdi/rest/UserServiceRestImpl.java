@@ -5,19 +5,9 @@ import uo.sdi.business.exception.BusinessException;
 import uo.sdi.dto.User;
 import uo.sdi.infraestructure.Factories;
 
-public class UserServiceRestImpl implements UserServiceRest{
-	
-	UserService service = Factories.services.getUserService();
-	
-	@Override
-	public Long registerUser(User user) throws BusinessException {
-		return service.registerUser(user);
-	}
+public class UserServiceRestImpl implements UserServiceRest {
 
-	@Override
-	public void updateUserDetails(User user) throws BusinessException {
-		service.updateUserDetails(user);
-	}
+	UserService service = Factories.services.getUserService();
 
 	@Override
 	public User findLoggableUser(String login) throws BusinessException {

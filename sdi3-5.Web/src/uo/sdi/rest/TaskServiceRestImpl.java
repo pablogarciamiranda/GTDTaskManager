@@ -15,26 +15,6 @@ public class TaskServiceRestImpl implements TaskServiceRest {
 	TaskService service = Factories.services.getTaskService();
 
 	@Override
-	public Long createCategory(Category category) throws BusinessException {
-		return service.createCategory(category);
-	}
-
-	@Override
-	public Long duplicateCategory(Long id) throws BusinessException {
-		return service.duplicateCategory(id);
-	}
-
-	@Override
-	public void updateCategory(Category category) throws BusinessException {
-		service.updateCategory(category);
-	}
-
-	@Override
-	public void deleteCategory(Long id) throws BusinessException {
-		service.deleteCategory(id);
-	}
-
-	@Override
 	public Category findCategoryById(Long id) throws BusinessException {
 		return service.findCategoryById(id);
 	}
@@ -69,63 +49,14 @@ public class TaskServiceRestImpl implements TaskServiceRest {
 	}
 
 	@Override
-	public void deleteTask(Long id) throws BusinessException {
-		service.deleteTask(id);
-	}
-
-	@Override
 	public Response markTaskAsFinished(final Long id) throws BusinessException {
 		service.markTaskAsFinished(id);
 		return Response.ok().header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@Override
-	public void updateTask(Task task) throws BusinessException {
-		service.updateTask(task);
-	}
-
-	@Override
 	public Task findTaskById(Long id) throws BusinessException {
 		return service.findTaskById(id);
-	}
-
-	@Override
-	public List<Task> findInboxTasksByUserId(Long id) throws BusinessException {
-		return service.findInboxTasksByUserId(id);
-	}
-
-	@Override
-	public List<Task> findWeekTasksByUserId(Long id) throws BusinessException {
-		return service.findWeekTasksByUserId(id);
-	}
-
-	@Override
-	public List<Task> findTodayTasksByUserId(Long id) throws BusinessException {
-		return service.findTodayTasksByUserId(id);
-	}
-
-	@Override
-	public Response findTasksByCategoryIdR(Long catId) throws BusinessException {
-		List<Task> tasks = service.findTasksByCategoryId(catId);
-		return Response
-				.ok()
-				// 200
-				.entity(tasks)
-				.header("Access-Control-Allow-Origin", "*")
-				.header("Access-Control-Allow-Methods",
-						"GET, POST, DELETE, PUT").build();
-	}
-
-	@Override
-	public List<Task> findFinishedTasksByCategoryId(Long catId)
-			throws BusinessException {
-		return service.findFinishedTasksByCategoryId(catId);
-	}
-
-	@Override
-	public List<Task> findFinishedInboxTasksByUserId(Long userId)
-			throws BusinessException {
-		return service.findFinishedInboxTasksByUserId(userId);
 	}
 
 	@Override
@@ -139,11 +70,4 @@ public class TaskServiceRestImpl implements TaskServiceRest {
 			throws BusinessException {
 		return service.findTasksByCategoryId(catId);
 	}
-
-	@Override
-	public List<Task> findFinishedTodayTasksByUserId(Long userId)
-			throws BusinessException {
-		return service.findFinishedTodayTasksByUserId(userId);
-	}
-
 }
