@@ -46,6 +46,7 @@ public class GTDListener implements MessageListener {
 	private Destination queue;
 
 	private static String auth_error = "Authentication error.";
+	private static String invalid_format = "Invalid format of the message";
 
 	@Override
 	public void onMessage(Message message) {
@@ -65,6 +66,8 @@ public class GTDListener implements MessageListener {
 			System.out.println("Not of expected type " + msg);
 			return null;
 		}
+		if (!messageOfExpectedType(msg))
+			return invalid_format;
 		MapMessage m = (MapMessage) msg;
 		String cmd = m.getString("command");
 		if ("list".equals(cmd)) {
@@ -76,7 +79,7 @@ public class GTDListener implements MessageListener {
 		} else if ("login".equals(cmd)) {
 			return login(m);
 		}
-		return null;
+		return invalid_format;
 	}
 
 	private Object login(MapMessage msg) {
@@ -129,6 +132,7 @@ public class GTDListener implements MessageListener {
 			task = gson.fromJson(msg.getString("task"), Task.class);
 		} catch (JsonSyntaxException | JMSException e1) {
 			e1.printStackTrace();
+			return "invalid_format";
 		}
 		try {
 			if (!verify(msg)) {
@@ -148,6 +152,7 @@ public class GTDListener implements MessageListener {
 			taskId = msg.getLong("taskId");
 		} catch (JMSException e1) {
 			e1.printStackTrace();
+			return invalid_format;
 		}
 		try {
 			if (!verify(msg)) {
@@ -169,10 +174,11 @@ public class GTDListener implements MessageListener {
 			userId = msg.getLong("userId");
 		} catch (JMSException e1) {
 			e1.printStackTrace();
+			return invalid_format;
 		}
 		try {
 			if (!verify(msg)) {
-				return "Authentication error";
+				return auth_error;
 			}
 			List<Task> tasks = taskService
 					.findFinishedTodayTasksByUserId(userId);
@@ -231,7 +237,8 @@ public class GTDListener implements MessageListener {
 			Session session = con
 					.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
-			if (processedMessage.equals(auth_error)) {
+			if (processedMessage.equals(auth_error)
+					||processedMessage.equals(invalid_format)) {
 				// Send the response to the InvalidQueue
 				ObjectMessage response = session.createObjectMessage();
 				response.setObject(processedMessage);

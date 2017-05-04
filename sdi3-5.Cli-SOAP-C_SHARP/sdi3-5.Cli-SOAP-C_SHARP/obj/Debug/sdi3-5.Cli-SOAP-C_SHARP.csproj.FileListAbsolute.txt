@@ -11,3 +11,5 @@ J:\entorno-sdi\work\sdi3\sdi3-5.Cli-SOAP-C_SHARP\sdi3-5.Cli-SOAP-C_SHARP\obj\Deb
 J:\entorno-sdi\work\sdi3\sdi3-5.Cli-SOAP-C_SHARP\sdi3-5.Cli-SOAP-C_SHARP\obj\Debug\sdi3-5.Cli-SOAP-C_SHARP.csprojResolveAssemblyReference.cache
 J:\entorno-sdi\work\sdi3\sdi3-5.Cli-SOAP-C_SHARP\sdi3-5.Cli-SOAP-C_SHARP\bin\Debug\sdi3-5.Cli-SOAP-C_SHARP.exe
 J:\entorno-sdi\work\sdi3\sdi3-5.Cli-SOAP-C_SHARP\sdi3-5.Cli-SOAP-C_SHARP\bin\Debug\sdi3-5.Cli-SOAP-C_SHARP.pdb
+S:\work\sdi3\sdi3-5.Cli-SOAP-C_SHARP\sdi3-5.Cli-SOAP-C_SHARP\obj\Debug\sdi3-5.Cli-SOAP-C_SHARP.exe
+S:\work\sdi3\sdi3-5.Cli-SOAP-C_SHARP\sdi3-5.Cli-SOAP-C_SHARP\obj\Debug\sdi3-5.Cli-SOAP-C_SHARP.pdb
