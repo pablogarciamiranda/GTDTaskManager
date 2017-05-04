@@ -62,10 +62,6 @@ public class GTDListener implements MessageListener {
 	}
 
 	private Object process(Message msg) throws BusinessException, JMSException {
-		if (!messageOfExpectedType(msg)) {
-			System.out.println("Not of expected type " + msg);
-			return null;
-		}
 		if (!messageOfExpectedType(msg))
 			return invalid_format;
 		MapMessage m = (MapMessage) msg;
