@@ -240,7 +240,6 @@ public class GTDListener implements MessageListener {
 			}
 			// Create the response to the Client with the processedMessage
 			ObjectMessage response = session.createObjectMessage();
-			response.setJMSCorrelationID(request.getJMSCorrelationID());
 			response.setObject(processedMessage);
 
 			// We send the send the response to the temporaryQueue

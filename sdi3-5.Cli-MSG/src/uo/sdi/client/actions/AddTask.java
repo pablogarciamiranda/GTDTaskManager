@@ -69,6 +69,8 @@ public class AddTask extends SynchronousReceiver {
 				date = day + "/" + month + "/" + year;
 
 			}
+			else
+				break;
 		} while (!FreijeyPabloUtil.isDateValid(date));
 
 		if (response.equals("yes") || response.equals("y")) {
