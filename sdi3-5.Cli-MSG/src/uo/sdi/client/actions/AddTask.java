@@ -57,9 +57,10 @@ public class AddTask extends SynchronousReceiver {
 				&& !response.equals("y") && !response.equals("n"));
 
 		String date = "";
-		do {
-			System.out.println("> Please, introduce a valid date");
-			if (response.equals("yes") || response.equals("y")) {
+		if (response.equals("yes") || response.equals("y")) {
+			do {
+				System.out.println("> Please, introduce a valid date");
+
 				String day = Console
 						.readString("\t> Introduce a valid day (dd)");
 				String month = Console
@@ -68,10 +69,8 @@ public class AddTask extends SynchronousReceiver {
 						.readString("\t> Introduce a valid year (yyyy)");
 				date = day + "/" + month + "/" + year;
 
-			}
-			else
-				break;
-		} while (!FreijeyPabloUtil.isDateValid(date));
+			} while (!FreijeyPabloUtil.isDateValid(date));
+		}
 
 		if (response.equals("yes") || response.equals("y")) {
 			task.setPlanned(DateUtil.fromString(date));

@@ -62,8 +62,8 @@ public class AddTask implements Action {
 
 			// Owner of the task
 			task.setUserId(user.getId());
-			
-			//Planned date
+
+			// Planned date
 			String response = "";
 			do {
 				response = Console
@@ -73,25 +73,24 @@ public class AddTask implements Action {
 					&& !response.equals("y") && !response.equals("n"));
 
 			String date = "";
-			do {
-				System.out.println("> Please, introduce a valid date");
-				if (response.equals("yes") || response.equals("y")) {
-					String day = Console.readString("\t> Introduce a valid day (dd)");
+			if (response.equals("yes") || response.equals("y")) {
+				do {
+					System.out.println("> Please, introduce a valid date");
+
+					String day = Console
+							.readString("\t> Introduce a valid day (dd)");
 					String month = Console
 							.readString("\t> Introduce a valid month (mm)");
 					String year = Console
 							.readString("\t> Introduce a valid year (yyyy)");
 					date = day + "/" + month + "/" + year;
 
-				}
-				else
-					break;
-			} while (!FreijeyPabloUtil.isDateValid(date));
-			
-			if (response.equals("yes") || response.equals("y")){
+				} while (!FreijeyPabloUtil.isDateValid(date));
+			}
+
+			if (response.equals("yes") || response.equals("y")) {
 				task.setPlanned(DateUtil.fromString(date));
 			}
-			
 
 			taskServicesRest.createTask(task);
 			System.out.println("The task '" + task.getTitle()
